@@ -3,14 +3,14 @@ issueTracker.controller('HomeController', [
     'authentication',
     'GRANT_TYPE',
     '$cookies',
-    'identity',
     '$route',
-    function HomeController($scope, authentication, GRANT_TYPE, $cookies, identity, $route) {
+    '$location',
+    function HomeController($scope, authentication, GRANT_TYPE, $cookies, $route, $location) {
         $scope.login = function (user) {
             user.grant_type = GRANT_TYPE;
             authentication.loginUser(user)
-                .then(function (result) {
-                    $cookies.put('access_token', result.data.access_token);
+                .then(function (response) {
+                    authentication.setAuthData(response.data);
                     $route.reload();
                 });
         };
@@ -26,11 +26,8 @@ issueTracker.controller('HomeController', [
                 });
         };
         $scope.logout = function () {
-            authentication.logoutUser()
-                .then(function (result) {
-                    $route.reload();
-                });
+            authentication.logoutUser();
         };
-        $scope.isAuthenticated = identity.isAuthenticated();
+        $scope.isAuthenticated = authentication.isAuthenticated();
     }
 ]);

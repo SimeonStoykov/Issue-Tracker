@@ -1,0 +1,35 @@
+<div class="col-sm-5">
+
+    <div class="form-box">
+        <div class="form-top">
+            <div class="form-top-left">
+                <h3>Register now</h3>
+                <p>Fill in the form below to get instant access:</p>
+            </div>
+            <div class="form-top-right">
+                <i class="fa fa-pencil"></i>
+            </div>
+        </div>
+        <div class="form-bottom">
+            <form role="form" name="register-user-form" method="post">
+                <div class="form-group">
+                    <label class="sr-only" for="register-email">Email</label>
+                    <input type="text" name="register-email" placeholder="Email..."
+                           class="form-control" id="register-email" ng-model="registerUser.email">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="register-password">Password</label>
+                    <input type="password" name="register-password" placeholder="Password..."
+                           class="form-control" id="register-password" ng-model="registerUser.password">
+                </div>
+                <div class="form-group">
+                    <label class="sr-only" for="register-confirm-password">Confirm password</label>
+                    <input type="password" name="register-confirm-password" placeholder="Confirm password..."
+                           class="form-control" id="register-confirm-password" ng-model="registerUser.confirmPassword">
+                </div>
+                <button type="submit" class="btn" ng-click="register(registerUser)">Register!</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

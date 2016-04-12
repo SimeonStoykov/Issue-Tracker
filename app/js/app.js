@@ -5,7 +5,7 @@ var issueTracker = angular.module('issueTracker', ['ngRoute', 'ngCookies'])
             $routeProvider
                 .when('/', {
                     templateUrl: 'views/home-dashboard.html',
-                    controller: 'HomeOrDashboardController'
+                    controller: 'HomeController'
                 })
                 .otherwise({ redirectTo: '/' });
         }])

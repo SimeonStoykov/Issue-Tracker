@@ -42,13 +42,24 @@ issueTracker.factory('authentication', [
         }
 
         function logoutUser() {
-            return $q.when($cookies.remove('access_token'));
+            localStorage.clear();
+        }
+
+        function setAuthData(data) {
+            localStorage['accessToken'] = data.access_token;
+            localStorage['username'] = data.userName;
+        }
+
+        function isAuthenticated(){
+            return localStorage['accessToken'];
         }
 
         return {
             registerUser: registerUser,
             loginUser: loginUser,
-            logoutUser: logoutUser
+            logoutUser: logoutUser,
+            setAuthData: setAuthData,
+            isAuthenticated: isAuthenticated
         };
     }
 ]);

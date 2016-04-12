@@ -29,6 +29,13 @@
   padding: 0;
 }
 
+.home-page-background{
+  background-color: #6CA4C8;
+}
+
+.dashboard-content {
+  margin-top: 60px;
+}
 
 body {
   font-family: 'Roboto', sans-serif;
