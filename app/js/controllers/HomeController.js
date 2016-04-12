@@ -2,13 +2,16 @@ issueTracker.controller('HomeController', [
     '$scope',
     'authentication',
     'GRANT_TYPE',
-    function HomeController($scope, authentication, GRANT_TYPE) {
+    '$cookies',
+    'identity',
+    '$route',
+    function HomeController($scope, authentication, GRANT_TYPE, $cookies, identity, $route) {
         $scope.login = function (user) {
             user.grant_type = GRANT_TYPE;
             authentication.loginUser(user)
                 .then(function (result) {
-                    console.log(result);
-                    console.log($scope);
+                    $cookies.put('access_token', result.data.access_token);
+                    $route.reload();
                 });
         };
         $scope.register = function (user) {
@@ -19,8 +22,15 @@ issueTracker.controller('HomeController', [
                         password: user.password,
                         grant_type: GRANT_TYPE
                     };
-                    authentication.loginUser(loginUserData);
+                    $scope.login(loginUserData);
                 });
         };
+        $scope.logout = function () {
+            authentication.logoutUser()
+                .then(function (result) {
+                    $route.reload();
+                });
+        };
+        $scope.isAuthenticated = identity.isAuthenticated();
     }
 ]);

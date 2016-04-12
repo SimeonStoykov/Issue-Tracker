@@ -1,11 +1,13 @@
 issueTracker.controller('HomeOrDashboardController', [
     '$scope',
     '$controller',
-    function ($scope, $controller) {
+    'identity',
+    function HomeOrDashboardController($scope, $controller, identity) {
         var scope = $scope;
-        var auth = false;
-        if (auth) {
+
+        if(identity.isAuthenticated()){
             return $controller('DashboardController', {$scope: scope});
         }
         return $controller('HomeController', {$scope: scope});
-    }]);
+    }
+]);
