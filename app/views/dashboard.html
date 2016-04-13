@@ -1,45 +1,42 @@
 <div ng-include="'views/navbar.html'"></div>
 <div ng-controller="DashboardController">
-    <h1>Dashboard</h1>
-    <div class="row">
-        <div class="col-sm-6">
-            <h3>Affiliated projects</h3>
+    <div class="row dashboard-content">
+        <h1 class="dashboard-label">Dashboard</h1>
+        <div class="col-md-3 aff-projects-panel">
+            <h3 class="aff-projects-label">Affiliated projects</h3>
             <div ng-repeat="project in affiliatedProjects">
                 <a ng-href="#/projects/{{project.Id}}">{{project.Name}}</a>
             </div>
         </div>
-        <div class="col-sm-6">
-            <h3>Your issues</h3>
-            <table class="table table-stripped">
+        <div class="col-md-9 issues-panel">
+            <h3 class="issues-label">Your issues</h3>
+
+            <table class="table table-striped table-hover issues-table">
                 <thead>
-                <tr>
-                    <td class="hoverable" ng-click="order('Title')">
-                        Issue
-                        <span class="sortorder" ng-show="predicate === 'Title'" ng-class="{reverse:reverse}"></span>
-                    </td>
-                    <td class="hoverable" ng-click="order('Project.Name')">
-                        Project
-                        <span class="sortorder" ng-show="predicate === 'Project.Name'" ng-class="{reverse:reverse}"></span>
-                    </td>
-                    <td class="hoverable" ng-click="order('DueDate')">
-                        Due Date
-                        <span class="sortorder" ng-show="predicate === 'DueDate'" ng-class="{reverse:reverse}"></span>
-                    </td>
-                </tr>
+                    <tr>
+                        <th class="text-center">Title</th>
+                        <th class="text-center">Description</th>
+                        <th class="text-center">Project</th>
+                        <th class="text-center">Due Date</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="issue in issues | orderBy:predicate:reverse">
-                    <td>{{issue.Title}}</td>
-                    <td class="hoverable" ng-click="viewProject(issue.Project.Id)">{{issue.Project.Name}}</td>
-                    <td>{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
-                </tr>
+                    <tr dir-paginate="issue in issues | orderBy: DueDate | itemsPerPage: paginationParams.pageSize"
+                        total-items="totalUserIssuesCount" current-page="paginationParams.pagNumber">
+                        <td class="col-md-3">
+                            <a href="#/issues/{{issue.Id}}">{{issue.Title}}</a>
+                        </td>
+                        <td class="col-md-5">{{issue.Description}}</td>
+                        <td class="col-md-2">
+                            <a href="#/projects/{{issue.Project.Id}}">{{issue.Project.Name}}</a>
+                        </td>
+                        <td class="col-md-2">{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
+                    </tr>
                 </tbody>
             </table>
 
-            <pagination total-items="allUserIssues" ng-model="paginationParams.pageNumber"
-                        items-per-page="paginationParams.pageSize" ng-change="getIssues()"
-                        max-size="10" boundary-links="true">
-            </pagination>
+            <dir-pagination-controls ng-class="{active: }" on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+            </dir-pagination-controls>
 
         </div>
     </div>

@@ -1,7 +1,7 @@
-var issueTracker = angular.module('issueTracker', [
+    var issueTracker = angular.module('issueTracker', [
         'ngRoute',
         'angular-loading-bar',
-        'ui.bootstrap.pagination'
+        'angularUtils.directives.dirPagination'
     ])
     .config([
         '$routeProvider',
@@ -15,6 +15,10 @@ var issueTracker = angular.module('issueTracker', [
                 .when('/projects/:id', {
                     templateUrl: 'views/project.html',
                     controller: 'ProjectsController'
+                })
+                .when('/issues/:id', {
+                    templateUrl: 'views/issue.html',
+                    controller: 'IssuesController'
                 })
                 .otherwise({redirectTo: '/'});
 

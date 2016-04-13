@@ -15,15 +15,24 @@ issueTracker.controller('DashboardController', [
         var params = {
             pageNumber: 1,
             pageSize: 5,
-            orderBy: 'DueDate'
+            orderBy: 'DueDate desc'
         };
 
         $scope.paginationParams = params;
 
         issuesService.getCurrentUserIssues(params)
-            .then(function(){
-
+            .then(function (response) {
+                $scope.issues = response.data.Issues;
+                $scope.totalUserIssuesCount = response.data.TotalPages * $scope.paginationParams.pageSize;
             });
 
+        $scope.pageChanged = function (newPage) {
+            params.pageNumber = newPage;
+            issuesService.getCurrentUserIssues(params)
+                .then(function (response) {
+                    $scope.issues = response.data.Issues;
+                    $scope.totalUserIssuesCount = response.data.TotalPages * $scope.paginationParams.pageSize;
+                });
+        };
     }
 ]);

@@ -1,5 +1,29 @@
 /* app css stylesheet */
 
+.issues-panel {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.active a {
+  color: #FFFFFF !important;
+  background-color: #32a5e7 !important;
+}
+
+.dashboard-label {
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.issues-table {
+  width: 95% !important;
+  margin: 0 auto;
+}
+
+.issues-panel, .aff-projects-panel {
+  padding: 0 !important;
+}
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -36,7 +60,7 @@
 }
 
 .dashboard-content {
-  margin-top: 60px;
+  padding: 20px;
 }
 
 body {
