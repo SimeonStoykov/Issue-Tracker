@@ -2,9 +2,8 @@ issueTracker.factory('authentication', [
     '$http',
     '$q',
     'BASE_URL',
-    '$cookies',
-    '$route',
-    function ($http, $q, BASE_URL, $cookies, $route) {
+    function ($http, $q, BASE_URL) {
+
         function registerUser(user) {
             var deffered = $q.defer();
 
@@ -26,8 +25,9 @@ issueTracker.factory('authentication', [
                 },
                 transformRequest: function (params) {
                     var encodedParams = [];
-                    for (var key in params)
+                    for (var key in params) {
                         encodedParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
+                    }
                     return encodedParams.join('&');
                 }
             };
@@ -45,12 +45,19 @@ issueTracker.factory('authentication', [
             localStorage.clear();
         }
 
-        function setAuthData(data) {
-            localStorage['accessToken'] = data.access_token;
-            localStorage['username'] = data.userName;
+        function getCurrentUserInfo() {
+            var deffered = $q.defer();
+            $http.get(BASE_URL + 'Users/me')
+                .then(function (result) {
+                    deffered.resolve(result);
+                }, function (error) {
+                    deffered.reject(error);
+                });
+
+            return deffered.promise;
         }
 
-        function isAuthenticated(){
+        function isAuthenticated() {
             return localStorage['accessToken'];
         }
 
@@ -58,7 +65,7 @@ issueTracker.factory('authentication', [
             registerUser: registerUser,
             loginUser: loginUser,
             logoutUser: logoutUser,
-            setAuthData: setAuthData,
+            getCurrentUserInfo: getCurrentUserInfo,
             isAuthenticated: isAuthenticated
         };
     }

@@ -1,1 +1,46 @@
-<div>dashboard {{dashboard}}</div>
+<div ng-include="'views/navbar.html'"></div>
+<div ng-controller="DashboardController">
+    <h1>Dashboard</h1>
+    <div class="row">
+        <div class="col-sm-6">
+            <h3>Affiliated projects</h3>
+            <div ng-repeat="project in affiliatedProjects">
+                <a ng-href="#/projects/{{project.Id}}">{{project.Name}}</a>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <h3>Your issues</h3>
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+                    <td class="hoverable" ng-click="order('Title')">
+                        Issue
+                        <span class="sortorder" ng-show="predicate === 'Title'" ng-class="{reverse:reverse}"></span>
+                    </td>
+                    <td class="hoverable" ng-click="order('Project.Name')">
+                        Project
+                        <span class="sortorder" ng-show="predicate === 'Project.Name'" ng-class="{reverse:reverse}"></span>
+                    </td>
+                    <td class="hoverable" ng-click="order('DueDate')">
+                        Due Date
+                        <span class="sortorder" ng-show="predicate === 'DueDate'" ng-class="{reverse:reverse}"></span>
+                    </td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="issue in issues | orderBy:predicate:reverse">
+                    <td>{{issue.Title}}</td>
+                    <td class="hoverable" ng-click="viewProject(issue.Project.Id)">{{issue.Project.Name}}</td>
+                    <td>{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <pagination total-items="allUserIssues" ng-model="paginationParams.pageNumber"
+                        items-per-page="paginationParams.pageSize" ng-change="getIssues()"
+                        max-size="10" boundary-links="true">
+            </pagination>
+
+        </div>
+    </div>
+</div>

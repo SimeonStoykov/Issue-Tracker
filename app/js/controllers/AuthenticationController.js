@@ -1,19 +1,25 @@
-issueTracker.controller('HomeController', [
+issueTracker.controller('AuthenticationController', [
     '$scope',
     'authentication',
     'GRANT_TYPE',
-    '$cookies',
     '$route',
-    '$location',
-    function HomeController($scope, authentication, GRANT_TYPE, $cookies, $route, $location) {
+    function AuthenticationController($scope, authentication, GRANT_TYPE, $route) {
+
         $scope.login = function (user) {
             user.grant_type = GRANT_TYPE;
             authentication.loginUser(user)
                 .then(function (response) {
-                    authentication.setAuthData(response.data);
-                    $route.reload();
+                    localStorage['accessToken'] = response.data.access_token;
+                    localStorage['username'] = response.data.userName;
+                    authentication.getCurrentUserInfo()
+                        .then(function(userInfo) {
+                            localStorage['currentUserId'] = userInfo.data.Id;
+                            localStorage['isAdmin'] = userInfo.data.isAdmin;
+                            $route.reload();
+                        })
                 });
         };
+
         $scope.register = function (user) {
             authentication.registerUser(user)
                 .then(function (result) {
@@ -25,9 +31,11 @@ issueTracker.controller('HomeController', [
                     $scope.login(loginUserData);
                 });
         };
+
         $scope.logout = function () {
             authentication.logoutUser();
         };
+
         $scope.isAuthenticated = authentication.isAuthenticated();
     }
 ]);
