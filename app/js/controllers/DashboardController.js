@@ -7,7 +7,6 @@ issueTracker.controller('DashboardController', [
         projectsService.getAffiliatedProjects()
             .then(function (projects) {
                 $scope.affiliatedProjects = projects;
-                console.log(projects);
             }, function (error) {
                 console.log(error);
             });

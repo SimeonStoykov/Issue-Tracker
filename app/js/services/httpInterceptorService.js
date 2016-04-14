@@ -1,11 +1,11 @@
-issueTracker.factory('httpInterceptor', [
+issueTracker.factory('httpInterceptorService', [
     '$q',
     '$injector',
     function ($q, $injector) {
         return {
             'request': function (config) {
-                var authentication = $injector.get('authentication');
-                if (authentication.isAuthenticated()) {
+                var authService = $injector.get('authService');
+                if (authService.isAuthenticated()) {
                     config.headers['Authorization'] = 'Bearer ' + localStorage['accessToken'];
                 }
 

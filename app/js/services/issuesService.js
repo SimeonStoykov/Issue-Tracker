@@ -34,32 +34,6 @@ issueTracker.factory('issuesService', [
             return deffered.promise;
         }
 
-        //function getIssuesForProject(projectId) {
-        //    var deffered = $q.defer();
-        //
-        //    $http.get(BASE_URL + 'Projects/' + projectId + '/Issues')
-        //        .then(function (result) {
-        //            deffered.resolve(result);
-        //        }, function (error) {
-        //            deffered.reject(error);
-        //        });
-        //
-        //    return deffered.promise;
-        //}
-        //
-        //function getProjectById(id) {
-        //    var deffered = $q.defer();
-        //
-        //    $http.get(BASE_URL + 'Projects/' + id)
-        //        .then(function (result) {
-        //            deffered.resolve(result);
-        //        }, function (error) {
-        //            deffered.reject(error);
-        //        });
-        //
-        //    return deffered.promise;
-        //}
-
         return {
             getIssuesForProject: getIssuesForProject,
             getCurrentUserIssues: getCurrentUserIssues

@@ -22,7 +22,7 @@
                 })
                 .otherwise({redirectTo: '/'});
 
-            $httpProvider.interceptors.push('httpInterceptor');
+            $httpProvider.interceptors.push('httpInterceptorService');
         }])
     .constant('BASE_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
     .constant('GRANT_TYPE', 'password');

@@ -1,4 +1,4 @@
-issueTracker.factory('authentication', [
+issueTracker.factory('authService', [
     '$http',
     '$q',
     'BASE_URL',

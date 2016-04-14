@@ -53,6 +53,14 @@
   padding: 0;
 }
 
+html, body {
+  height: 100% !important;
+}
+
+.view-content {
+  height: 100% !important;
+}
+
 .home-page-background{
   background-color: #6CA4C8;
   width: 100%;
@@ -64,11 +72,8 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-size: 15px !important;
   font-weight: 300;
-  color: #888;
-  line-height: 30px;
   text-align: center;
 }
 
@@ -268,25 +273,3 @@ footer a {
   color: #fff;
 }
 footer a:hover, footer a:focus { color: #fff; border-bottom: 1px dotted #fff; }
-
-
-/***** Media queries *****/
-
-@media (min-width: 992px) and (max-width: 1199px) {}
-
-@media (min-width: 768px) and (max-width: 991px) {}
-
-@media (max-width: 767px) {
-
-  .middle-border { min-height: auto; margin: 65px 30px 0 30px; border-right: 0;
-    border-top: 1px solid #fff; border-top: 1px solid rgba(255, 255, 255, 0.6); }
-
-}
-
-@media (max-width: 415px) {
-
-  h1, h2 { font-size: 32px; }
-
-}
-
-

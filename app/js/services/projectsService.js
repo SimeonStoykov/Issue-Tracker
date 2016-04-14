@@ -44,8 +44,6 @@ issueTracker.factory('projectsService', [
                 .then(function (response) {
                     var issues = response.data.Issues;
 
-                    console.log(response);
-
                     var relatedProjectsIds = issues.map(function (issue) {
                         return issue.Project.Id;
                     });
