@@ -17,6 +17,10 @@
                     templateUrl: 'views/project.html',
                     controller: 'ProjectsController'
                 })
+                .when('/projects/:id/edit', {
+                    templateUrl: 'views/edit-project.html',
+                    controller: 'ProjectsController'
+                })
                 .when('/issues/:id', {
                     templateUrl: 'views/issue.html',
                     controller: 'IssuesController'

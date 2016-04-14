@@ -1,11 +1,75 @@
 <div ng-include="'views/navbar.html'"></div>
 
-<div class="row">
-    <h3>Project page</h3>
-    <div class="col-md-4">
+<div class="container-fluid">
+    <div class="row project-page">
+        <h2>Project page</h2>
+        <div class="col-md-5 project-info">
+            <h3>Project Info</h3>
+            <div class="text-left">
+                <span class="project-key-font-size"><strong>{{project.ProjectKey}}</strong></span>
+                <a ng-href="#/projects/{{project.Id}}/edit" class="btn btn-success" ng-show="isUserProjectLead">Edit</a>
+                <a href="" class="btn btn-success" ng-show="isUserProjectLead">Add issue</a>
+            </div>
 
-    </div>
-    <div class="col-md-8">
+            <div class="text-left">
+                <label>Project key:</label>
+                {{project.ProjectKey}}
+            </div>
 
+            <div class="text-left">
+                <label>Name:</label>
+                {{project.Name}}
+            </div>
+
+            <div class="text-left">
+                <label>Description:</label>
+                {{project.Description}}
+            </div>
+
+            <div class="text-left">
+                <label>Lead Id:</label>
+                {{project.Lead.Id}} (<strong>{{project.Lead.Username}}</strong>)
+            </div>
+
+            <div class="text-left">
+                <label>Labels:</label>
+                {{projectLabels}}
+            </div>
+
+            <div class="text-left">
+                <label>Priorities:</label>
+                {{projectPriorities}}
+            </div>
+        </div>
+        <div class="col-md-7 project-page-issues">
+            <h3>Project Issues</h3>
+            <table class="table table-striped table-hover project-page-issues-table">
+                <thead>
+                <tr>
+                    <th class="text-center">Title</th>
+                    <th class="text-center">Description</th>
+                    <th class="text-center">Due Date</th>
+                    <th class="text-center">Assignee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr dir-paginate="issue in shownIssues | itemsPerPage: paginationParams.pageSize"
+                    total-items="issues.length" current-page="paginationParams.pageNumber">
+                    <td class="col-md-3">
+                        <a href="#/issues/{{issue.Id}}">{{issue.Title}}</a>
+                    </td>
+                    <td class="col-md-4">{{issue.Description}}</td>
+                    <td class="col-md-3">{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
+                    <td class="col-md-2">
+                        {{issue.Assignee.Username}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+            </dir-pagination-controls>
+
+        </div>
     </div>
 </div>
