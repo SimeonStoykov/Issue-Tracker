@@ -2,7 +2,8 @@ issueTracker.factory('authService', [
     '$http',
     '$q',
     'BASE_URL',
-    function ($http, $q, BASE_URL) {
+    'notificationService',
+    function ($http, $q, BASE_URL, notificationService) {
 
         function registerUser(user) {
             var deffered = $q.defer();
@@ -43,6 +44,7 @@ issueTracker.factory('authService', [
 
         function logoutUser() {
             localStorage.clear();
+            notificationService.showInfo('Logout successful!');
         }
 
         function getCurrentUserInfo() {

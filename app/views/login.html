@@ -5,7 +5,7 @@
         <div class="form-top">
             <div class="form-top-left">
                 <h3>Login</h3>
-                <p>Enter username and password to log on:</p>
+                <p>Enter email and password to log on:</p>
             </div>
             <div class="form-top-right">
                 <i class="fa fa-lock"></i>
@@ -13,18 +13,34 @@
         </div>
 
         <div class="form-bottom">
-            <form role="form" name="login-user-form" method="post">
-                <div class="form-group">
-                    <label class="sr-only" for="login-username">Username</label>
-                    <input type="text" name="login-username" placeholder="Username..."
-                           class="form-control" id="login-username" ng-model="loginUser.username">
+            <form role="form" name="loginUserForm" method="post">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : loginUserForm.loginEmail.$invalid && loginUserForm.loginEmail.$dirty }">
+                    <label class="sr-only" for="loginEmail">Email</label>
+                    <input type="email" name="loginEmail" placeholder="Email..."
+                           class="form-control" id="loginEmail" ng-model="loginUser.username" required="required">
+                    <p ng-show="loginUserForm.loginEmail.$error.required && loginUserForm.loginEmail.$dirty"
+                       class="help-block">Email is required</p>
+                    <p ng-show="loginUserForm.loginEmail.$error.email && loginUserForm.loginEmail.$dirty"
+                       class="help-block">Invalid email format</p>
                 </div>
-                <div class="form-group">
-                    <label class="sr-only" for="login-password">Password</label>
-                    <input type="password" name="login-password" placeholder="Password..."
-                           class="form-control" id="login-password" ng-model="loginUser.password">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : loginUserForm.loginPassword.$invalid && loginUserForm.loginPassword.$dirty }">
+                    <label class="sr-only" for="loginPassword">Password</label>
+                    <input type="password" name="loginPassword" placeholder="Password..." ng-minlength="6"
+                           class="form-control" id="loginPassword" ng-model="loginUser.password" required="required">
+                    <p ng-show="loginUserForm.loginPassword.$error.required && loginUserForm.loginPassword.$dirty"
+                       class="help-block">Password is required</p>
+                    <p ng-show="loginUserForm.loginPassword.$viewValue.length !== 0
+                             && loginUserForm.loginPassword.$viewValue.length < 6
+                             && loginUserForm.loginPassword.$dirty"
+                       class="help-block">
+                        Password must be at least 6 characters long
+                    </p>
                 </div>
-                <button type="submit" class="btn" ng-click="login(loginUser)">Login!</button>
+                <button type="submit" ng-disabled="loginUserForm.$invalid && loginUserForm.$dirty" class="btn"
+                        ng-click="login(loginUser)">Login
+                </button>
             </form>
         </div>
 

@@ -1,7 +1,8 @@
     var issueTracker = angular.module('issueTracker', [
         'ngRoute',
         'angular-loading-bar',
-        'angularUtils.directives.dirPagination'
+        'angularUtils.directives.dirPagination',
+        'ngMessages'
     ])
     .config([
         '$routeProvider',
@@ -19,6 +20,11 @@
                 .when('/issues/:id', {
                     templateUrl: 'views/issue.html',
                     controller: 'IssuesController'
+                })
+                .when('/logout', {
+                    templateUrl: 'views/navbar.html',
+                    controller: 'AuthenticationController',
+                    redirectTo: '/'
                 })
                 .otherwise({redirectTo: '/'});
 

@@ -3,7 +3,8 @@ issueTracker.controller('AuthenticationController', [
     'authService',
     'GRANT_TYPE',
     '$route',
-    function AuthenticationController($scope, authService, GRANT_TYPE, $route) {
+    'notificationService',
+    function AuthenticationController($scope, authService, GRANT_TYPE, $route, notificationService) {
 
         $scope.login = function (user) {
             user.grant_type = GRANT_TYPE;
@@ -16,19 +17,25 @@ issueTracker.controller('AuthenticationController', [
                             localStorage['currentUserId'] = userInfo.data.Id;
                             localStorage['isAdmin'] = userInfo.data.isAdmin;
                             $route.reload();
+                            notificationService.showInfo('Login successful!');
                         })
+                }, function(error){
+                    notificationService.showError("Login error", error);
                 });
         };
 
         $scope.register = function (user) {
             authService.registerUser(user)
-                .then(function (result) {
+                .then(function(result) {
                     var loginUserData = {
                         username: user.email,
                         password: user.password,
                         grant_type: GRANT_TYPE
                     };
+                    notificationService.showInfo('Registration successful!');
                     $scope.login(loginUserData);
+                }, function(error) {
+                    notificationService.showError("Registration error", error);
                 });
         };
 

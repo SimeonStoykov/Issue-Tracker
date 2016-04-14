@@ -13,23 +13,62 @@
         </div>
 
         <div class="form-bottom">
-            <form role="form" name="register-user-form" method="post">
-                <div class="form-group">
-                    <label class="sr-only" for="register-email">Email</label>
-                    <input type="text" name="register-email" placeholder="Email..."
-                           class="form-control" id="register-email" ng-model="registerUser.email">
+            <form role="form" name="registerUserForm" method="post">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : registerUserForm.registerEmail.$invalid && registerUserForm.registerEmail.$dirty }">
+                    <label class="sr-only" for="registerEmail">Email</label>
+                    <input type="email" name="registerEmail" placeholder="Email..."
+                           class="form-control" id="registerEmail" ng-model="registerUser.email" required="required">
+                    <p ng-show="registerUserForm.registerEmail.$error.required && registerUserForm.registerEmail.$dirty"
+                       class="help-block">Email is required</p>
+                    <p ng-show="registerUserForm.registerEmail.$error.email && registerUserForm.registerEmail.$dirty"
+                       class="help-block">Invalid email format</p>
                 </div>
-                <div class="form-group">
-                    <label class="sr-only" for="register-password">Password</label>
-                    <input type="password" name="register-password" placeholder="Password..."
-                           class="form-control" id="register-password" ng-model="registerUser.password">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : registerUserForm.registerPassword.$invalid && registerUserForm.registerPassword.$dirty }">
+                    <label class="sr-only" for="registerPassword">Password</label>
+                    <input type="password" name="registerPassword" placeholder="Password..." ng-minlength="6"
+                           class="form-control" id="registerPassword" ng-model="registerUser.password"
+                           required="required">
+                    <p ng-show="registerUserForm.registerPassword.$error.required && registerUserForm.registerPassword.$dirty"
+                       class="help-block">
+                        Password is required
+                    </p>
+                    <p ng-show="registerUserForm.registerPassword.$viewValue.length !== 0
+                             && registerUserForm.registerPassword.$viewValue.length < 6
+                             && registerUserForm.registerPassword.$dirty"
+                       class="help-block">
+                        Password must be at least 6 characters long
+                    </p>
                 </div>
-                <div class="form-group">
-                    <label class="sr-only" for="register-confirm-password">Confirm password</label>
-                    <input type="password" name="register-confirm-password" placeholder="Confirm password..."
-                           class="form-control" id="register-confirm-password" ng-model="registerUser.confirmPassword">
+                <div class="form-group"
+                     ng-class="{ 'has-error' : registerUserForm.registerConfirmPassword.$invalid && registerUserForm.registerConfirmPassword.$dirty }">
+                    <label class="sr-only" for="registerConfirmPassword">Confirm password</label>
+                    <input type="password" name="registerConfirmPassword" placeholder="Confirm password..."
+                           ng-minlength="6"
+                           class="form-control" id="registerConfirmPassword" ng-model="registerUser.confirmPassword"
+                           required="required">
+                    <p ng-show="registerUserForm.registerConfirmPassword.$error.required && registerUserForm.registerConfirmPassword.$dirty"
+                       class="help-block">
+                        Confirm Password is required
+                    </p>
+                    <p ng-show="registerUserForm.registerConfirmPassword.$viewValue.length !== 0
+                             && registerUserForm.registerConfirmPassword.$viewValue.length < 6
+                             && registerUserForm.registerConfirmPassword.$dirty" class="help-block">
+                        Confirm Password must be at least 6 characters long
+                    </p>
                 </div>
-                <button type="submit" class="btn" ng-click="register(registerUser)">Register!</button>
+                <p ng-show="registerUserForm.registerPassword.$viewValue !== registerUserForm.registerConfirmPassword.$viewValue
+                && registerUserForm.registerPassword.$valid && registerUserForm.registerConfirmPassword.$valid"
+                   class="help-block">
+                    Passwords don't match
+                </p>
+                <button type="submit" class="btn" ng-disabled="(registerUserForm.$invalid && registerUserForm.$dirty)
+                || (registerUserForm.registerPassword.$viewValue !== registerUserForm.registerConfirmPassword.$viewValue
+                && registerUserForm.registerPassword.$valid && registerUserForm.registerConfirmPassword.$valid)"
+                        ng-click="register(registerUser)">
+                    Register
+                </button>
             </form>
         </div>
 
