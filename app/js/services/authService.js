@@ -62,19 +62,6 @@ issueTracker.factory('authService', [
             notificationService.showInfo('Logout successful!');
         }
 
-        function getCurrentUserInfo() {
-            var deffered = $q.defer();
-
-            $http.get(BASE_URL + 'Users/me')
-                .then(function (result) {
-                    deffered.resolve(result);
-                }, function (error) {
-                    deffered.reject(error);
-                });
-
-            return deffered.promise;
-        }
-
         function isAuthenticated() {
             return localStorage['accessToken'];
         }
@@ -89,7 +76,6 @@ issueTracker.factory('authService', [
             loginUser: loginUser,
             changePassword: changePassword,
             logoutUser: logoutUser,
-            getCurrentUserInfo: getCurrentUserInfo,
             isAuthenticated: isAuthenticated,
             isAdmin: isAdmin
         };

@@ -1,10 +1,11 @@
 issueTracker.controller('AuthenticationController', [
     '$scope',
     'authService',
+    'usersService',
     'GRANT_TYPE',
     '$route',
     'notificationService',
-    function AuthenticationController($scope, authService, GRANT_TYPE, $route, notificationService) {
+    function AuthenticationController($scope, authService, usersService, GRANT_TYPE, $route, notificationService) {
 
         $scope.login = function (user) {
             user.grant_type = GRANT_TYPE;
@@ -12,7 +13,7 @@ issueTracker.controller('AuthenticationController', [
                 .then(function (response) {
                     localStorage['accessToken'] = response.data.access_token;
                     localStorage['username'] = response.data.userName;
-                    authService.getCurrentUserInfo()
+                    usersService.getCurrentUserInfo()
                         .then(function(userInfo) {
                             localStorage['currentUserId'] = userInfo.data.Id;
                             localStorage['isAdmin'] = userInfo.data.isAdmin;

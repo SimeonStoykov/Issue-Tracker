@@ -2,7 +2,7 @@ var issueTracker = angular.module('issueTracker', [
         'ngRoute',
         'angular-loading-bar',
         'angularUtils.directives.dirPagination',
-        'ngMessages'
+        'ui.bootstrap'
     ])
     .config([
         '$routeProvider',

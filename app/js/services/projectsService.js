@@ -67,6 +67,19 @@ issueTracker.factory('projectsService', [
             return deffered.promise;
         }
 
+        function editProject(id, projectData){
+            var deffered = $q.defer();
+
+            $http.put(BASE_URL + 'Projects/' + id, projectData)
+                .then(function (result) {
+                    deffered.resolve(result);
+                }, function (error) {
+                    deffered.reject(error);
+                });
+
+            return deffered.promise;
+        }
+
         function isUserProjectLead() {
             var deffered = $q.defer();
 
@@ -86,6 +99,7 @@ issueTracker.factory('projectsService', [
             getAllProjects: getAllProjects,
             getProjectById: getProjectById,
             getAffiliatedProjects: getAffiliatedProjects,
+            editProject: editProject,
             isUserProjectLead: isUserProjectLead
         };
     }

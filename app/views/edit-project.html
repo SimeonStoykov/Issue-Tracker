@@ -1,1 +1,50 @@
-edit
+<div ng-include="'views/navbar.html'"></div>
+
+<div class="container-fluid">
+    <div class="row project-page">
+        <h2>Edit project</h2>
+
+        <div class="col-md-5 col-md-offset-4">
+            <form class="form-horizontal well">
+                <div class="text-left">
+                    <span class="project-key-font-size"><strong>{{project.ProjectKey}}</strong></span>
+                </div>
+
+                <div class="text-left">
+                    <label>Project key:</label>
+                    {{project.ProjectKey}}
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="projectName">Name:</label>
+                    <input type="text" id="projectName" class="form-control" ng-model="project.Name">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="projectDescription">Description:</label>
+                    <textarea class="project-edit-description" name="projectDescription" id="projectDescription" cols="40" rows="10" ng-model="project.Description"></textarea>
+                </div>
+                <div class="form-group text-left">
+                    <label class="control-label" for="lead">Lead id:</label>
+                    {{project.selectedUser.Id}}
+                    <select name="usersSelect" id="lead" ng-options="user as user.Username for user in users"
+                            ng-model="project.selectedUser">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="priorities">Priorities:</label>
+                    <input type="text" id="priorities" class="form-control" ng-model="project.projectPriorities">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="addLabel">Add label:</label>
+                    <input type="text" id="addLabel" ng-model="labelToAdd" ng-model-options="modelOptions"
+                           uib-typeahead="label.Name for label in labels | filter:$viewValue | limitTo:10"
+                           class="form-control">
+                    <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
+                    <label class="control-label" for="labels">Labels:</label>
+                    <input type="text" id="labels" class="form-control" ng-model="project.projectLabels">
+                </div>
+                <button class="btn btn-primary" ng-click="editProject(project)">Save</button>
+            </form>
+
+        </div>
+    </div>
+</div>
