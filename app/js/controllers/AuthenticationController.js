@@ -39,10 +39,22 @@ issueTracker.controller('AuthenticationController', [
                 });
         };
 
+        $scope.changePassword = function(passwordInfo) {
+            authService.changePassword(passwordInfo)
+                .then(function(result) {
+                    notificationService.showInfo('Password changed successfully!');
+                    $route.reload();
+                }, function(error) {
+                    notificationService.showError("Password change error", error);
+                });
+        };
+
         $scope.logout = function () {
             authService.logoutUser();
         };
 
         $scope.isAuthenticated = authService.isAuthenticated();
+
+        $scope.username = localStorage['username'];
     }
 ]);

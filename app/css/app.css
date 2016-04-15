@@ -10,6 +10,19 @@
   background-color: #32a5e7 !important;
 }
 
+.change-password-content {
+  margin-top: 80px;
+}
+
+.change-password-btn {
+  width: 40%;
+}
+
+.change-password-field {
+  width: 95%;
+  margin: 0 auto !important;
+}
+
 .dashboard-label {
   margin-top: 25px;
   margin-bottom: 15px;

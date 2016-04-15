@@ -63,7 +63,7 @@
                    class="help-block">
                     Passwords don't match
                 </p>
-                <button type="submit" class="btn" ng-disabled="(registerUserForm.$invalid && registerUserForm.$dirty)
+                <button type="submit" class="btn btn-primary" ng-disabled="(registerUserForm.$invalid && registerUserForm.$dirty)
                 || (registerUserForm.registerPassword.$viewValue !== registerUserForm.registerConfirmPassword.$viewValue
                 && registerUserForm.registerPassword.$valid && registerUserForm.registerConfirmPassword.$valid)"
                         ng-click="register(registerUser)">

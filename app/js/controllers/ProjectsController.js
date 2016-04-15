@@ -3,7 +3,8 @@ issueTracker.controller('ProjectsController', [
     'projectsService',
     'issuesService',
     '$routeParams',
-    function ProjectsController($scope, projectsService, issuesService, $routeParams) {
+    'authService',
+    function ProjectsController($scope, projectsService, issuesService, $routeParams, authService) {
         projectsService.getProjectById($routeParams.id)
             .then(function (response) {
                 $scope.project = response.data;
@@ -42,5 +43,8 @@ issueTracker.controller('ProjectsController', [
 
                 $scope.shownIssues = $scope.issues.slice(startIndex, endIndex);
             });
+
+        $scope.isAdmin = authService.isAdmin();
+
     }
 ]);

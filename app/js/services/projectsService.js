@@ -3,7 +3,8 @@ issueTracker.factory('projectsService', [
     '$q',
     'BASE_URL',
     'issuesService',
-    function ($http, $q, BASE_URL, issuesService) {
+    '$routeParams',
+    function ($http, $q, BASE_URL, issuesService, $routeParams) {
 
         function getAllProjects() {
             var deffered = $q.defer();
@@ -66,10 +67,26 @@ issueTracker.factory('projectsService', [
             return deffered.promise;
         }
 
+        function isUserProjectLead() {
+            var deffered = $q.defer();
+
+            getProjectById($routeParams.id)
+                .then(function(response) {
+                    var project = response.data;
+                    var isUserProjectLead =  project.Lead.Id === localStorage['currentUserId'];
+                    deffered.resolve(isUserProjectLead);
+                }, function (error){
+                    deffered.reject(error);
+                });
+
+            return deffered.promise;
+        }
+
         return {
             getAllProjects: getAllProjects,
             getProjectById: getProjectById,
-            getAffiliatedProjects: getAffiliatedProjects
+            getAffiliatedProjects: getAffiliatedProjects,
+            isUserProjectLead: isUserProjectLead
         };
     }
 ]);

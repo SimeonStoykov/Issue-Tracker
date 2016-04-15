@@ -1,12 +1,14 @@
 <div class="navbar navbar-default navbar-fixed-top" ng-controller="AuthenticationController">
     <div class="container">
         <div class="navbar-header">
-            <a href="#/" class="navbar-brand">Dashboard</a>
-            <a href="#/projects" class="navbar-brand">Projects</a>
+            <a ng-href="#/" class="navbar-brand">Dashboard</a>
+            <a ng-href="#/projects" class="navbar-brand">Projects</a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/logout" ng-click="logout()">Logout</a></li>
+                <li><a>{{username}}</a></li>
+                <li><a ng-href="#/profile/password">Change password</a></li>
+                <li><a ng-href="#/logout" ng-click="logout()">Logout</a></li>
             </ul>
         </div>
     </div>

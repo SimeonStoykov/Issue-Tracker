@@ -20,6 +20,7 @@ issueTracker.factory('authService', [
 
         function loginUser(user) {
             var deffered = $q.defer();
+
             var config = {
                 headers: {
                     'Content-type': 'application/x-www-form-urlencoded'
@@ -32,7 +33,21 @@ issueTracker.factory('authService', [
                     return encodedParams.join('&');
                 }
             };
+
             $http.post(BASE_URL + 'api/Token', user, config)
+                .then(function (result) {
+                    deffered.resolve(result);
+                }, function (error) {
+                    deffered.reject(error);
+                });
+
+            return deffered.promise;
+        }
+
+        function changePassword(passwordInfo) {
+            var deffered = $q.defer();
+
+            $http.post(BASE_URL + 'api/Account/ChangePassword', passwordInfo)
                 .then(function (result) {
                     deffered.resolve(result);
                 }, function (error) {
@@ -49,6 +64,7 @@ issueTracker.factory('authService', [
 
         function getCurrentUserInfo() {
             var deffered = $q.defer();
+
             $http.get(BASE_URL + 'Users/me')
                 .then(function (result) {
                     deffered.resolve(result);
@@ -63,12 +79,19 @@ issueTracker.factory('authService', [
             return localStorage['accessToken'];
         }
 
+        function isAdmin() {
+            var isAdmin = localStorage['isAdmin'] === 'true';
+            return isAdmin;
+        }
+
         return {
             registerUser: registerUser,
             loginUser: loginUser,
+            changePassword: changePassword,
             logoutUser: logoutUser,
             getCurrentUserInfo: getCurrentUserInfo,
-            isAuthenticated: isAuthenticated
+            isAuthenticated: isAuthenticated,
+            isAdmin: isAdmin
         };
     }
 ]);

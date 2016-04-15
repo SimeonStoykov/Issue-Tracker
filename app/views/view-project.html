@@ -7,8 +7,8 @@
             <h3>Project Info</h3>
             <div class="text-left">
                 <span class="project-key-font-size"><strong>{{project.ProjectKey}}</strong></span>
-                <a ng-href="#/projects/{{project.Id}}/edit" class="btn btn-success" ng-show="isUserProjectLead">Edit</a>
-                <a href="" class="btn btn-success" ng-show="isUserProjectLead">Add issue</a>
+                <a ng-href="#/projects/{{project.Id}}/edit" class="btn btn-success" ng-show="isUserProjectLead || isAdmin">Edit</a>
+                <a href="" class="btn btn-success" ng-show="isUserProjectLead || isAdmin">Add issue</a>
             </div>
 
             <div class="text-left">
