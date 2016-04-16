@@ -4,45 +4,51 @@
     <div class="row project-page">
         <h2>Edit project</h2>
 
-        <div class="col-md-5 col-md-offset-4">
-            <form class="form-horizontal well">
-                <div class="text-left">
+        <div class="col-md-6 col-md-offset-3 edit-project-block">
+            <form class="form-horizontal well edit-project-well">
+                <div class="form-group text-left">
                     <span class="project-key-font-size"><strong>{{project.ProjectKey}}</strong></span>
                 </div>
-
-                <div class="text-left">
+                <div class="form-group text-left">
                     <label>Project key:</label>
                     {{project.ProjectKey}}
                 </div>
-                <div class="form-group">
+                <div class="form-group text-left">
                     <label class="control-label" for="projectName">Name:</label>
-                    <input type="text" id="projectName" class="form-control" ng-model="project.Name">
+                    <input type="text" id="projectName" class="form-control inline-inputs" ng-model="project.Name">
                 </div>
-                <div class="form-group">
+                <div class="form-group text-left">
                     <label class="control-label" for="projectDescription">Description:</label>
-                    <textarea class="project-edit-description" name="projectDescription" id="projectDescription" cols="40" rows="10" ng-model="project.Description"></textarea>
+                    <textarea class="form-control project-edit-description" name="projectDescription" id="projectDescription"
+                              ng-model="project.Description"></textarea>
                 </div>
                 <div class="form-group text-left">
                     <label class="control-label" for="lead">Lead id:</label>
                     {{project.selectedUser.Id}}
-                    <select name="usersSelect" id="lead" ng-options="user as user.Username for user in users"
+                    <select name="usersSelect" class="form-control inline-input-select" id="lead" ng-options="user as user.Username for user in users"
                             ng-model="project.selectedUser">
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-group text-left">
                     <label class="control-label" for="priorities">Priorities:</label>
-                    <input type="text" id="priorities" class="form-control" ng-model="project.projectPriorities">
+                    <input type="text" id="priorities" class="form-control project-view-priorities" ng-model="project.projectPriorities">
                 </div>
-                <div class="form-group">
+                <div class="form-group text-left">
                     <label class="control-label" for="addLabel">Add label:</label>
-                    <input type="text" id="addLabel" ng-model="labelToAdd" ng-model-options="modelOptions"
+                    <input type="text" id="addLabel" ng-change="getLabels()" ng-model="labelToAdd"
+                           ng-model-options="modelOptions"
                            uib-typeahead="label.Name for label in labels | filter:$viewValue | limitTo:10"
-                           class="form-control">
+                           class="form-control inline-input-label">
                     <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
-                    <label class="control-label" for="labels">Labels:</label>
-                    <input type="text" id="labels" class="form-control" ng-model="project.projectLabels">
                 </div>
-                <button class="btn btn-primary" ng-click="editProject(project)">Save</button>
+                <div class="form-group text-left">
+                    <label class="control-label">Labels:</label>
+                    <span class="tag label label-info inline-block-span" ng-repeat="label in project.editedLabels track by $index">
+                      <span class="text-span">{{label}}</span>
+                      <a ng-click="removeLabel(label)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                    </span>
+                </div>
+                <button class="btn btn-primary save-project-btn" ng-click="editProject(project)">Save</button>
             </form>
 
         </div>

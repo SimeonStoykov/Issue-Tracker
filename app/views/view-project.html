@@ -3,12 +3,15 @@
 <div class="container-fluid">
     <div class="row project-page">
         <h2>Project page</h2>
+
         <div class="col-md-5 project-info">
             <h3>Project Info</h3>
+
             <div class="text-left">
                 <span class="project-key-font-size"><strong>{{project.ProjectKey}}</strong></span>
-                <a ng-href="#/projects/{{project.Id}}/edit" class="btn btn-success" ng-show="isUserProjectLead || isAdmin">Edit</a>
-                <a href="" class="btn btn-success" ng-show="isUserProjectLead || isAdmin">Add issue</a>
+                <a ng-href="#/projects/{{project.Id}}/edit" class="btn btn-success"
+                   ng-show="isUserProjectLead || isAdmin">Edit</a>
+                <a ng-href="#/projects/{{project.Id}}/add-issue" ng-click="openAddIssueModal()" class="btn btn-success" ng-show="isUserProjectLead || isAdmin">Add issue</a>
             </div>
 
             <div class="text-left">
@@ -33,7 +36,9 @@
 
             <div class="text-left">
                 <label>Labels:</label>
-                {{project.projectLabels}}
+                <span class="tag label label-info inline-block-span" ng-repeat="label in project.Labels track by $index">
+                      <span>{{label.Name}}</span>
+                </span>
             </div>
 
             <div class="text-left">
@@ -73,3 +78,5 @@
         </div>
     </div>
 </div>
+
+<!--<script type="text/ng-template" id="modalContainer"></script>-->

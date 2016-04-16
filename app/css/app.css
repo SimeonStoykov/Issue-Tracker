@@ -15,7 +15,11 @@
 }
 
 .change-password-btn {
-  width: 40%;
+  width: 35%;
+}
+
+.save-project-btn {
+  width: 19%;
 }
 
 .change-password-field {
@@ -65,7 +69,50 @@
 }
 
 .project-edit-description {
-  height: 200px;
+  width: 83% !important;
+  height: 100px !important;
+  display: inline-block !important;
+}
+
+.inline-inputs {
+  display: inline-block !important;
+  width: 90% !important;
+}
+
+.project-view-priorities {
+  display: inline-block !important;
+  width: 85% !important;
+}
+
+.inline-input-label {
+  display: inline-block !important;
+  width: 60% !important;
+}
+
+.inline-input-select {
+  display: inline-block !important;
+  width: 45% !important;
+}
+
+.inline-block-span {
+  display: inline-block !important;
+  margin-right: 5px;
+  text-align: center;
+  font-size: 13px !important;
+  margin-top: 3px;
+}
+
+.edit-project-block {
+  padding: 0 !important;
+}
+
+.text-span {
+  line-height: 20px;
+}
+
+.edit-project-well {
+  padding: 25px 35px !important;
+  padding-bottom: 20px !important;
 }
 
 .menu {

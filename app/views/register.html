@@ -28,7 +28,7 @@
                      ng-class="{ 'has-error' : registerUserForm.registerPassword.$invalid && registerUserForm.registerPassword.$dirty }">
                     <label class="sr-only" for="registerPassword">Password</label>
                     <input type="password" name="registerPassword" placeholder="Password..." ng-minlength="6"
-                           class="form-control" id="registerPassword" ng-model="registerUser.password"
+                           class="form-control home-pass" id="registerPassword" ng-model="registerUser.password"
                            required="required">
                     <p ng-show="registerUserForm.registerPassword.$error.required && registerUserForm.registerPassword.$dirty"
                        class="help-block">
@@ -46,7 +46,7 @@
                     <label class="sr-only" for="registerConfirmPassword">Confirm password</label>
                     <input type="password" name="registerConfirmPassword" placeholder="Confirm password..."
                            ng-minlength="6"
-                           class="form-control" id="registerConfirmPassword" ng-model="registerUser.confirmPassword"
+                           class="form-control home-pass" id="registerConfirmPassword" ng-model="registerUser.confirmPassword"
                            required="required">
                     <p ng-show="registerUserForm.registerConfirmPassword.$error.required && registerUserForm.registerConfirmPassword.$dirty"
                        class="help-block">
@@ -63,7 +63,7 @@
                    class="help-block">
                     Passwords don't match
                 </p>
-                <button type="submit" class="btn btn-primary" ng-disabled="(registerUserForm.$invalid && registerUserForm.$dirty)
+                <button type="submit" class="btn btn-primary btn-form" ng-disabled="(registerUserForm.$invalid && registerUserForm.$dirty)
                 || (registerUserForm.registerPassword.$viewValue !== registerUserForm.registerConfirmPassword.$viewValue
                 && registerUserForm.registerPassword.$valid && registerUserForm.registerConfirmPassword.$valid)"
                         ng-click="register(registerUser)">

@@ -31,6 +31,14 @@ var issueTracker = angular.module('issueTracker', [
                         requiresAdminOrLead: true
                     }
                 })
+                .when('/projects/:id/add-issue', {
+                    templateUrl: 'views/view-project.html',
+                    controller: 'ProjectsController',
+                    access: {
+                        requiresAuthentication: true,
+                        requiresAdminOrLead: true
+                    }
+                })
                 .when('/issues/:id', {
                     templateUrl: 'views/issue.html',
                     controller: 'IssuesController'
@@ -65,18 +73,18 @@ var issueTracker = angular.module('issueTracker', [
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
 
-            if (next.access.requiresAuthentication && !authService.isAuthenticated()) {
+            if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                 $location.path('/');
-            } else if (next.access.requiresAdminOrLead && !authService.isAdmin()) {
+            } else if (next.access && next.access.requiresAdminOrLead && !authService.isAdmin()) {
                 projectsService.isUserProjectLead()
                     .then(function (isUserProjectLead) {
                         if (!isUserProjectLead) {
-                            $location.path(previousRoute);
+                            $location.path('/projects/' + $route.current.params.id);
                             notificationService.showError('You must be admin or project lead to perform this action!');
                         }
                     }, function (error) {
-                        $location.path(previousRoute);
-                        notificationService.showError('You must be admin or project lead to perform this action!');
+                        $location.path('/projects/' + $route.current.params.id);
+                        notificationService.showError('You can not access this resource that way!');
                     });
             }
 

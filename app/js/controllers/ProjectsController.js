@@ -7,19 +7,19 @@ issueTracker.controller('ProjectsController', [
     'usersService',
     'labelsService',
     '$location',
-    function ProjectsController($scope, projectsService, issuesService, $routeParams, authService, usersService, labelsService, $location) {
+    'notificationService',
+    '$uibModal',
+    function ProjectsController($scope, projectsService, issuesService, $routeParams, authService,
+                                usersService, labelsService, $location, notificationService, $uibModal) {
 
         projectsService.getProjectById($routeParams.id)
             .then(function (response) {
                 $scope.project = response.data;
-                console.log($scope.project);
                 $scope.isUserProjectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
 
-                $scope.project.Labels = $scope.project.Labels.map(function (label) {
+                $scope.project.editedLabels = $scope.project.Labels.map(function (label) {
                     return label.Name;
                 });
-
-                $scope.project.projectLabels = $scope.project.Labels.join(', ');
 
                 $scope.project.Priorities = $scope.project.Priorities.map(function (priority) {
                     return priority.Name;
@@ -27,14 +27,7 @@ issueTracker.controller('ProjectsController', [
 
                 $scope.project.projectPriorities = $scope.project.Priorities.join(', ');
 
-                issuesService.getIssuesForProject($routeParams.id)
-                    .then(function (response) {
-                        $scope.issues = response.data;
-                        var endIndex = $scope.paginationParams.pageNumber * $scope.paginationParams.pageSize;
-                        var startIndex = 0;
-
-                        $scope.shownIssues = $scope.issues.slice(startIndex, endIndex);
-                    });
+                $scope.getIssuesForProject();
 
                 usersService.getAllUsers()
                     .then(function (response) {
@@ -57,6 +50,17 @@ issueTracker.controller('ProjectsController', [
             $scope.shownIssues = $scope.issues.slice(startIndex, endIndex);
         };
 
+        $scope.getIssuesForProject = function () {
+            issuesService.getIssuesForProject($routeParams.id)
+                .then(function (response) {
+                    $scope.issues = response.data;
+                    var endIndex = $scope.paginationParams.pageNumber * $scope.paginationParams.pageSize;
+                    var startIndex = 0;
+
+                    $scope.shownIssues = $scope.issues.slice(startIndex, endIndex);
+                });
+        };
+
         $scope.isAdmin = authService.isAdmin();
 
         $scope.editProject = function (project) {
@@ -66,7 +70,7 @@ issueTracker.controller('ProjectsController', [
                 };
             });
 
-            var labelsToAdd = project.projectLabels.split(', ').map(function (label) {
+            var labelsToAdd = $scope.project.editedLabels.map(function (label) {
                 return {
                     Name: label
                 };
@@ -83,17 +87,20 @@ issueTracker.controller('ProjectsController', [
             projectsService.editProject($routeParams.id, projectToEdit)
                 .then(function (response) {
                     $location.path("projects/" + $routeParams.id);
-                    console.log(response);
-                })
+                    notificationService.showInfo('Project edited successfully!');
+                }, function (error) {
+                    notificationService.showError('Editing project failed!', error);
+                });
         };
 
         $scope.addLabel = function (label) {
-            if ($scope.project.projectLabels === '') {
-                $scope.project.projectLabels += label;
-            } else {
-                $scope.project.projectLabels += ', ' + label;
-            }
+            $scope.project.editedLabels.push(label);
             $scope.labelToAdd = '';
+        };
+
+        $scope.removeLabel = function (label) {
+            var indexOfTheLabel = $scope.project.editedLabels.indexOf(label);
+            $scope.project.editedLabels.splice(indexOfTheLabel, 1);
         };
 
         $scope.modelOptions = {
@@ -108,11 +115,18 @@ issueTracker.controller('ProjectsController', [
             filter: $scope.labelToAdd ? $scope.labelToAdd : ''
         };
 
-        labelsService.getLabels(params)
-            .then(function (response) {
-                $scope.labels = response.data;
+        $scope.getLabels = function () {
+            labelsService.getLabels(params)
+                .then(function (response) {
+                    $scope.labels = response.data;
+                });
+        };
+
+        $scope.openAddIssueModal = function() {
+            $uibModal.open({
+                templateUrl : 'views/add-issue.html',
+                controller: 'AddIssueModalController'
             });
-
-
+        };
     }
 ]);

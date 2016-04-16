@@ -28,7 +28,7 @@
                      ng-class="{ 'has-error' : loginUserForm.loginPassword.$invalid && loginUserForm.loginPassword.$dirty }">
                     <label class="sr-only" for="loginPassword">Password</label>
                     <input type="password" name="loginPassword" placeholder="Password..." ng-minlength="6"
-                           class="form-control" id="loginPassword" ng-model="loginUser.password" required="required">
+                           class="form-control home-pass" id="loginPassword" ng-model="loginUser.password" required="required">
                     <p ng-show="loginUserForm.loginPassword.$error.required && loginUserForm.loginPassword.$dirty"
                        class="help-block">Password is required</p>
                     <p ng-show="loginUserForm.loginPassword.$viewValue.length !== 0
@@ -38,7 +38,7 @@
                         Password must be at least 6 characters long
                     </p>
                 </div>
-                <button type="submit" ng-disabled="loginUserForm.$invalid && loginUserForm.$dirty" class="btn btn-primary"
+                <button type="submit" ng-disabled="loginUserForm.$invalid && loginUserForm.$dirty" class="btn btn-primary btn-form"
                         ng-click="login(loginUser)">Login
                 </button>
             </form>

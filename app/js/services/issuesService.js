@@ -34,9 +34,23 @@ issueTracker.factory('issuesService', [
             return deffered.promise;
         }
 
+        function addIssueToProject(issue) {
+            var deffered = $q.defer();
+
+            $http.post(BASE_URL + 'Issues', issue)
+                .then(function (result) {
+                    deffered.resolve(result);
+                }, function (error) {
+                    deffered.reject(error);
+                });
+
+            return deffered.promise;
+        }
+
         return {
             getIssuesForProject: getIssuesForProject,
-            getCurrentUserIssues: getCurrentUserIssues
+            getCurrentUserIssues: getCurrentUserIssues,
+            addIssueToProject: addIssueToProject
         };
     }
 ]);
