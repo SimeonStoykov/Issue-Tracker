@@ -1,16 +1,12 @@
-issueTracker.controller('ProjectsController', [
+issueTracker.controller('EditProjectController', [
     '$scope',
     'projectsService',
-    'issuesService',
     '$routeParams',
-    'authService',
     'usersService',
     'labelsService',
     '$location',
     'notificationService',
-    '$uibModal',
-    function ProjectsController($scope, projectsService, issuesService, $routeParams, authService,
-                                usersService, labelsService, $location, notificationService, $uibModal) {
+    function EditProjectController($scope, projectsService, $routeParams, usersService, labelsService, $location, notificationService) {
 
         projectsService.getProjectById($routeParams.id)
             .then(function (response) {
@@ -27,8 +23,6 @@ issueTracker.controller('ProjectsController', [
 
                 $scope.project.projectPriorities = $scope.project.Priorities.join(', ');
 
-                $scope.getIssuesForProject();
-
                 usersService.getAllUsers()
                     .then(function (response) {
                         $scope.users = response.data;
@@ -37,31 +31,6 @@ issueTracker.controller('ProjectsController', [
                         })[0];
                     });
             });
-
-        $scope.paginationParams = {
-            pageNumber: 1,
-            pageSize: 5
-        };
-
-        $scope.pageChanged = function (newPage) {
-            var endIndex = newPage * $scope.paginationParams.pageSize;
-            var startIndex = endIndex - $scope.paginationParams.pageSize;
-
-            $scope.shownIssues = $scope.issues.slice(startIndex, endIndex);
-        };
-
-        $scope.getIssuesForProject = function () {
-            issuesService.getIssuesForProject($routeParams.id)
-                .then(function (response) {
-                    $scope.issues = response.data;
-                    var endIndex = $scope.paginationParams.pageNumber * $scope.paginationParams.pageSize;
-                    var startIndex = 0;
-
-                    $scope.shownIssues = $scope.issues.slice(startIndex, endIndex);
-                });
-        };
-
-        $scope.isAdmin = authService.isAdmin();
 
         $scope.editProject = function (project) {
             var prioritiesToAdd = project.projectPriorities.split(', ').map(function (priority) {
@@ -120,13 +89,6 @@ issueTracker.controller('ProjectsController', [
                 .then(function (response) {
                     $scope.labels = response.data;
                 });
-        };
-
-        $scope.openAddIssueModal = function() {
-            $uibModal.open({
-                templateUrl : 'views/add-issue.html',
-                controller: 'AddIssueModalController'
-            });
         };
     }
 ]);

@@ -4,6 +4,19 @@ issueTracker.factory('issuesService', [
     'BASE_URL',
     function ($http, $q, BASE_URL) {
 
+        function getIssueById(issueId) {
+            var deffered = $q.defer();
+
+            $http.get(BASE_URL + 'Issues/' + issueId)
+                .then(function (result) {
+                    deffered.resolve(result);
+                }, function (error) {
+                    deffered.reject(error);
+                });
+
+            return deffered.promise;
+        }
+
         function getIssuesForProject(projectId) {
             var deffered = $q.defer();
 
@@ -48,6 +61,7 @@ issueTracker.factory('issuesService', [
         }
 
         return {
+            getIssueById: getIssueById,
             getIssuesForProject: getIssuesForProject,
             getCurrentUserIssues: getCurrentUserIssues,
             addIssueToProject: addIssueToProject

@@ -1,60 +1,65 @@
-
-    <div class="modal-header">
-        <h2>Add issue</h2>
+<div class="modal-header">
+    <h2 class="add-issue-title">Add issue</h2>
+    <div class="inline-inputs">
+        <i class="fa fa-times-circle fa-lg close-modal text-right" aria-hidden="true" ng-click="closeModal()"></i>
     </div>
+</div>
 
-    <div class="modal-body">
-        <form class="form-horizontal well edit-project-well">
-            <div class="form-group text-left">
-                <label for="issueTitle" class="control-label">Title: </label>
-                <input type="text" class="form-control" id="issueTitle" ng-model="issue.title">
-            </div>
-            <div class="form-group text-left">
-                <label for="issueDescription" class="control-label">Description: </label>
-                <input type="text" class="form-control" id="issueDescription" ng-model="issue.description">
-            </div>
-            <div class="form-group text-left">
-                <label class="control-label" for="projectSelect">Project:</label>
-                <select name="usersSelect" class="form-control inline-input-select" id="projectSelect"
-                        ng-options="project as project.Name for project in projects"
-                        ng-model="issue.selectedProject" ng-change="getPrioritiesForProject(issue.selectedProject)">
-                </select>
-            </div>
-            <div class="form-group text-left">
-                <label class="control-label" for="assigneeSelect">Assignee:</label>
-                <select name="usersSelect" class="form-control inline-input-select" id="assigneeSelect"
-                        ng-options="user as user.Username for user in users"
-                        ng-model="issue.assignee">
-                </select>
-            </div>
-            <div class="form-group text-left">
-                <label class="control-label" for="prioritySelect">Priority:</label>
-                <select name="usersSelect" class="form-control inline-input-select" id="prioritySelect"
-                        ng-options="priority as priority.Name for priority in priorities"
-                        ng-model="issue.priority">
-                </select>
-            </div>
-            <div class="form-group text-left">
-                <label class="control-label" for="dueDate">Due Date:</label>
-                <input type="date" id="dueDate" ng-model="issue.dueDate">
-            </div>
-            <div class="form-group text-left">
-                <label class="control-label" for="addLabel">Add label:</label>
-                <input type="text" id="addLabel" ng-change="getLabels()" ng-model="labelToAdd"
-                       ng-model-options="modelOptions"
-                       uib-typeahead="label.Name for label in labels | filter:$viewValue | limitTo:10"
-                       class="form-control inline-input-label">
-                <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
-            </div>
-            <div class="form-group text-left">
-                <label class="control-label">Labels:</label>
-                    <span class="tag label label-info inline-block-span" ng-repeat="label in issue.labels track by $index">
+<div class="modal-body">
+    <form class="form-horizontal well edit-project-well">
+        <div class="form-group text-left">
+            <label for="issueTitle" class="control-label">Title: </label>
+            <input type="text" class="form-control inline-inputs" id="issueTitle" ng-model="issue.title">
+        </div>
+        <div class="form-group text-left">
+            <label for="issueDescription" class="control-label">Description: </label>
+            <input type="text" class="form-control add-issue-description" id="issueDescription"
+                   ng-model="issue.description">
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="projectSelect">Project:</label>
+            <select name="usersSelect" class="form-control inline-input-select" id="projectSelect"
+                    ng-options="project as project.Name for project in projects"
+                    ng-model="issue.selectedProject" ng-change="getPrioritiesForProject(issue.selectedProject)">
+            </select>
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="assigneeSelect">Assignee:</label>
+            <select name="usersSelect" class="form-control inline-input-select" id="assigneeSelect"
+                    ng-options="user as user.Username for user in users"
+                    ng-model="issue.assignee">
+            </select>
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="prioritySelect">Priority:</label>
+            <select name="usersSelect" class="form-control inline-input-select" id="prioritySelect"
+                    ng-options="priority as priority.Name for priority in priorities"
+                    ng-model="issue.priority">
+            </select>
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="dueDate">Due Date:</label>
+            <input type="date" class="form-control add-issue-due-date" id="dueDate" ng-model="issue.dueDate">
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="addLabel">Add label:</label>
+            <input type="text" id="addLabel" ng-change="getLabels()" ng-model="labelToAdd"
+                   ng-model-options="modelOptions"
+                   uib-typeahead="label.Name for label in labels | filter:$viewValue | limitTo:10"
+                   class="form-control inline-input-label">
+            <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label">Labels:</label>
+                    <span class="tag label label-info inline-block-span"
+                          ng-repeat="label in issue.labels track by $index">
                       <span class="text-span">{{label}}</span>
-                      <a ng-click="removeLabel(label)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                      <a ng-click="removeLabel(label)"><i
+                              class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                     </span>
-            </div>
-            <button class="btn btn-primary save-project-btn" ng-click="addIssue(issue)">Add issue</button>
-            <button class="btn btn-danger save-project-btn" ng-click="closeModal()">Cancel</button>
-        </form>
-    </div>
+        </div>
+        <button class="btn btn-primary save-project-btn" ng-click="addIssue(issue)">Add issue</button>
+        <button class="btn btn-danger save-project-btn" ng-click="closeModal()">Cancel</button>
+    </form>
+</div>
 

@@ -1,16 +1,16 @@
 issueTracker.controller('AddIssueModalController', [
     '$scope',
-    '$uibModal',
     'projectsService',
     'usersService',
     'labelsService',
     'issuesService',
-    '$route',
+    'notificationService',
+    '$routeParams',
     '$location',
     '$uibModalInstance',
-    function AddIssueModalController($scope, $uibModal, projectsService, usersService, labelsService, issuesService,
-                                     $route, $location, $uibModalInstance) {
-        $scope.openedProjectId = $route.current.params.id;
+    function AddIssueModalController($scope, projectsService, usersService, labelsService, issuesService,
+                                     notificationService, $routeParams, $location, $uibModalInstance) {
+        $scope.openedProjectId = $routeParams.id;
         $scope.issue = {
             labels: []
         };
@@ -78,10 +78,13 @@ issueTracker.controller('AddIssueModalController', [
                 };
             });
 
+            //Date picker picks one day before the selected day so we add one additional day
+            var dueDate = new Date(issue.dueDate.setDate(issue.dueDate.getDate() + 1));
+
             var issueData = {
                 Title: issue.title,
                 Description: issue.description,
-                DueDate: issue.dueDate,
+                DueDate: dueDate,
                 ProjectId: issue.selectedProject.Id,
                 AssigneeId: issue.assignee.Id,
                 PriorityId: issue.priority.Id,
@@ -92,12 +95,15 @@ issueTracker.controller('AddIssueModalController', [
                 .then(function (response) {
                     $uibModalInstance.close();
                     $location.path('/projects/' + issue.selectedProject.Id);
+                    notificationService.showInfo('Issue added successfully!');
+                }, function(error) {
+                    notificationService.showError('Adding issue failed!', error);
                 });
         };
 
         $scope.closeModal = function () {
             $uibModalInstance.dismiss();
-            $location.path('/projects/' + $route.current.params.id);
-        }
+            $location.path('/projects/' + $routeParams.id);
+        };
     }
 ]);

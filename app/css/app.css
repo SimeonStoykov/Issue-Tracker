@@ -110,9 +110,39 @@
   line-height: 20px;
 }
 
+.add-issue-title {
+  display: inline-block;
+}
+
+.close-modal {
+  font-size: 28px !important;
+  position:absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.modal-header {
+  padding-bottom: 0 !important;
+}
+
+.close-modal:hover {
+  cursor: pointer;
+  color: red;
+}
+
 .edit-project-well {
   padding: 25px 35px !important;
   padding-bottom: 20px !important;
+}
+
+.add-issue-description {
+  display: inline-block !important;
+  width: 80% !important;
+}
+
+.add-issue-due-date {
+  display: inline-block !important;
+  width: 43% !important;
 }
 
 .menu {

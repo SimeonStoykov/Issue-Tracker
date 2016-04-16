@@ -18,14 +18,14 @@ var issueTracker = angular.module('issueTracker', [
                 })
                 .when('/projects/:id', {
                     templateUrl: 'views/view-project.html',
-                    controller: 'ProjectsController',
+                    controller: 'ViewProjectController',
                     access: {
                         requiresAuthentication: true
                     }
                 })
                 .when('/projects/:id/edit', {
                     templateUrl: 'views/edit-project.html',
-                    controller: 'ProjectsController',
+                    controller: 'EditProjectController',
                     access: {
                         requiresAuthentication: true,
                         requiresAdminOrLead: true
@@ -33,15 +33,18 @@ var issueTracker = angular.module('issueTracker', [
                 })
                 .when('/projects/:id/add-issue', {
                     templateUrl: 'views/view-project.html',
-                    controller: 'ProjectsController',
+                    controller: 'ViewProjectController',
                     access: {
                         requiresAuthentication: true,
                         requiresAdminOrLead: true
                     }
                 })
                 .when('/issues/:id', {
-                    templateUrl: 'views/issue.html',
-                    controller: 'IssuesController'
+                    templateUrl: 'views/view-issue.html',
+                    controller: 'ViewIssueController',
+                    access: {
+                        requiresAuthentication: true
+                    }
                 })
                 .when('/profile/password', {
                     templateUrl: 'views/change-password.html',
