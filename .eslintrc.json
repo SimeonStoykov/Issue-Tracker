@@ -1,0 +1,7 @@
+{
+	"extends": "angular",
+    "rules" : {
+	    "angular/di": [2,"array"],
+		"comma-dangle": ["error", "never"]
+	}
+}

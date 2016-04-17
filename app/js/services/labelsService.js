@@ -3,8 +3,7 @@ issueTracker.factory('labelsService', [
     '$http',
     '$q',
     'BASE_URL',
-    function ($http, $q, BASE_URL) {
-
+    function($http, $q, BASE_URL) {
         function getLabels(params) {
             var deffered = $q.defer();
 
@@ -13,9 +12,9 @@ issueTracker.factory('labelsService', [
             };
 
             $http.get(BASE_URL + 'Labels', config)
-                .then(function (result) {
+                .then(function(result) {
                     deffered.resolve(result);
-                }, function (error) {
+                }, function(error) {
                     deffered.reject(error);
                 });
 

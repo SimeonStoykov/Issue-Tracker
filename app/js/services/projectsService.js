@@ -1,11 +1,11 @@
 'use strict';
-issueTracker.factory('projectsService', [
+angular.module('issueTracker')
+    .factory('projectsService', [
     '$http',
     '$q',
     'BASE_URL',
     'issuesService',
-    '$routeParams',
-    function ($http, $q, BASE_URL, issuesService, $routeParams) {
+    function ($http, $q, BASE_URL, issuesService) {
 
         function getAllProjects(params) {
             var deffered = $q.defer();
