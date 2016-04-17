@@ -1,3 +1,4 @@
+'use strict';
 issueTracker.factory('projectsService', [
     '$http',
     '$q',
@@ -6,10 +7,14 @@ issueTracker.factory('projectsService', [
     '$routeParams',
     function ($http, $q, BASE_URL, issuesService, $routeParams) {
 
-        function getAllProjects() {
+        function getAllProjects(params) {
             var deffered = $q.defer();
 
-            $http.get(BASE_URL + 'Projects')
+            var config = {
+                params: params
+            };
+
+            $http.get(BASE_URL + 'Projects', config)
                 .then(function (result) {
                     deffered.resolve(result);
                 }, function (error) {
@@ -35,13 +40,13 @@ issueTracker.factory('projectsService', [
         function getAffiliatedProjects() {
             var deffered = $q.defer();
 
-            var params = {
+            var issuesParams = {
                 pageNumber: 1,
                 pageSize: 2147483647,
                 orderBy: 'DueDate'
             };
 
-            issuesService.getCurrentUserIssues(params)
+            issuesService.getCurrentUserIssues(issuesParams)
                 .then(function (response) {
                     var issues = response.data.Issues;
 
@@ -49,9 +54,15 @@ issueTracker.factory('projectsService', [
                         return issue.Project.Id;
                     });
 
-                    getAllProjects()
+                    var projectsParams = {
+                        pageNumber: 1,
+                        pageSize: 2147483647,
+                        filter: ''
+                    };
+
+                    getAllProjects(projectsParams)
                         .then(function(projectsResponse){
-                            var allProjects = projectsResponse.data;
+                            var allProjects = projectsResponse.data.Projects;
 
                             var affiliatedProjects = allProjects.filter(function(project){
                                 return project.Lead.Id === localStorage['currentUserId']
@@ -80,10 +91,10 @@ issueTracker.factory('projectsService', [
             return deffered.promise;
         }
 
-        function isUserProjectLead() {
+        function isUserProjectLead(projectId) {
             var deffered = $q.defer();
 
-            getProjectById($routeParams.id)
+            getProjectById(projectId)
                 .then(function(response) {
                     var project = response.data;
                     var isUserProjectLead =  project.Lead.Id === localStorage['currentUserId'];

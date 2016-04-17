@@ -1,3 +1,4 @@
+'use strict';
 issueTracker.controller('DashboardController', [
     '$scope',
     'projectsService',

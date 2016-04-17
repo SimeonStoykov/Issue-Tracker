@@ -41,7 +41,7 @@
   padding: 0 !important;
 }
 
-.project-page {
+.project-page, .view-issue-page {
   margin-top: 45px;
 }
 
@@ -52,6 +52,10 @@
 .project-page-issues {
   padding-right: 0 !important;
   padding-left: 0 !important;
+}
+
+.styled-status-li {
+  margin-top: 5px;
 }
 
 .project-page-issues-table {

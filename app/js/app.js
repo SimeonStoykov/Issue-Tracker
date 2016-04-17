@@ -1,3 +1,4 @@
+'use strict';
 var issueTracker = angular.module('issueTracker', [
         'ngRoute',
         'angular-loading-bar',
@@ -46,6 +47,14 @@ var issueTracker = angular.module('issueTracker', [
                         requiresAuthentication: true
                     }
                 })
+                .when('/issues/:id/edit', {
+                    templateUrl: 'views/edit-issue.html',
+                    controller: 'EditIssueController',
+                    access: {
+                        requiresAuthentication: true,
+                        requiresAdminOrLead: true
+                    }
+                })
                 .when('/profile/password', {
                     templateUrl: 'views/change-password.html',
                     controller: 'AuthenticationController',
@@ -60,6 +69,13 @@ var issueTracker = angular.module('issueTracker', [
                         requiresAuthentication: false
                     }
                 })
+                .when('/unauthorized', {
+                    templateUrl: 'views/unauthorized.html',
+                    controller: 'AuthenticationController',
+                    access: {
+                        requiresAuthentication: true
+                    }
+                })
                 .otherwise({redirectTo: '/'});
 
             $httpProvider.interceptors.push('httpInterceptorService');
@@ -69,28 +85,18 @@ var issueTracker = angular.module('issueTracker', [
     .run(function ($rootScope, $location, authService, projectsService, $route, notificationService) {
         var previousRoute;
 
-        $rootScope.$on('$locationChangeStart',function(evt, absNewUrl, absOldUrl) {
+        $rootScope.$on('$locationChangeStart', function (evt, absNewUrl, absOldUrl) {
             var hashIndex = absOldUrl.indexOf('#');
             previousRoute = absOldUrl.substring(hashIndex + 1);
         });
 
         $rootScope.$on('$routeChangeStart', function (event, next) {
-
             if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                 $location.path('/');
-            } else if (next.access && next.access.requiresAdminOrLead && !authService.isAdmin()) {
-                projectsService.isUserProjectLead()
-                    .then(function (isUserProjectLead) {
-                        if (!isUserProjectLead) {
-                            $location.path('/projects/' + $route.current.params.id);
-                            notificationService.showError('You must be admin or project lead to perform this action!');
-                        }
-                    }, function (error) {
-                        $location.path('/projects/' + $route.current.params.id);
-                        notificationService.showError('You can not access this resource that way!');
-                    });
+            } else if (next.access && next.access.requiresAdminOrLead && !authService.isAdmin()
+                && !$rootScope.isUserProjectLead) {
+                $location.path('/');
+                notificationService.showError('You don\'t have access to this action!');
             }
-
         });
     });
-

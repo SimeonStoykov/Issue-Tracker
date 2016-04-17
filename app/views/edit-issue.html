@@ -1,0 +1,91 @@
+<div ng-include="'views/navbar.html'"></div>
+
+<div class="container-fluid">
+    <div class="row view-issue-page">
+        <h2>Edit issue page</h2>
+
+        <div class="col-md-8">
+            <h3>Issue Info</h3>
+
+            <form>
+                <div class="form-group text-left">
+                    <span class="project-key-font-size"><strong>{{issue.IssueKey}}</strong></span>
+                </div>
+
+                <div class="form-group text-left">
+                    <label for="title">Title:</label>
+                    <input id="title" class="form-control" type="text" ng-model="issue.Title">
+                </div>
+
+                <div class="form-group text-left">
+                    <label for="description">Description:</label>
+                    <input id="description" class="form-control" type="text" ng-model="issue.Description">
+                </div>
+
+                <div class="form-group text-left">
+                    <label class="control-label" for="assigneeSelect">Assignee:</label>
+                    (current id: {{issue.assignee.Id}})
+                    <select name="assigneeSelect" class="form-control inline-input-select" id="assigneeSelect"
+                            ng-options="user as user.Username for user in users"
+                            ng-model="issue.assignee">
+                    </select>
+                </div>
+
+                <div class="form-group text-left">
+                    <label class="control-label" for="prioritySelect">Priority:</label>
+                    <select name="prioritySelect" class="form-control inline-input-select" id="prioritySelect"
+                            ng-options="priority as priority.Name for priority in priorities"
+                            ng-model="issue.priority">
+                    </select>
+                </div>
+
+                <div class="form-group text-left">
+                    <label for="dueDate">Due Date:</label>
+                    <input id="dueDate" class="form-control" type="date" ng-model="issue.DueDate">
+                </div>
+
+                <div class="text-left">
+                    <label>Author:</label>
+                    {{issue.Author.Username}}
+                </div>
+                <div class="text-left">
+                    <label>Project:</label>
+                    {{issue.Project.Name}}
+                </div>
+                <div class="text-left">
+                    <label>Status:</label>
+                    {{issue.Status.Name}}
+                </div>
+                <div class="form-group text-left">
+                    <label class="control-label" for="addLabel">Add label:</label>
+                    <input type="text" id="addLabel" ng-change="getLabels()" ng-model="labelToAdd"
+                           ng-model-options="modelOptions"
+                           uib-typeahead="label.Name for label in labels | filter:$viewValue | limitTo:10"
+                           class="form-control inline-input-label">
+                    <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
+                </div>
+                <div class="form-group text-left">
+                    <label class="control-label">Labels:</label>
+                    <span class="tag label label-info inline-block-span"
+                          ng-repeat="label in issue.labels track by $index">
+                    <span class="text-span">{{label}}</span>
+                    <a ng-click="removeLabel(label)">
+                        <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                    </span>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-md-4 project-page-issues">
+            <h3>Available Statuses</h3>
+            <ul>
+                <li class="text-left styled-status-li" ng-repeat="status in issue.AvailableStatuses">
+                    {{status.Name}}
+                    <button ng-click="changeIssueStatus(status.Id)" class="btn btn-success">
+                        Change
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

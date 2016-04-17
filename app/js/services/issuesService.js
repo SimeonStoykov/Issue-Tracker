@@ -1,3 +1,4 @@
+'use strict';
 issueTracker.factory('issuesService', [
     '$http',
     '$q',
@@ -60,11 +61,29 @@ issueTracker.factory('issuesService', [
             return deffered.promise;
         }
 
+        function changeIssueStatus(issueId, params) {
+            var deffered = $q.defer();
+
+            var config = {
+                params: params
+            };
+
+            $http.put(BASE_URL + 'Issues/' + issueId + '/changestatus', null, config)
+                .then(function (result) {
+                    deffered.resolve(result);
+                }, function (error) {
+                    deffered.reject(error);
+                });
+
+            return deffered.promise;
+        }
+
         return {
             getIssueById: getIssueById,
             getIssuesForProject: getIssuesForProject,
             getCurrentUserIssues: getCurrentUserIssues,
-            addIssueToProject: addIssueToProject
+            addIssueToProject: addIssueToProject,
+            changeIssueStatus: changeIssueStatus
         };
     }
 ]);

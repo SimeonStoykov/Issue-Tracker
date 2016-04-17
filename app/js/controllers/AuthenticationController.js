@@ -1,3 +1,4 @@
+'use strict';
 issueTracker.controller('AuthenticationController', [
     '$scope',
     'authService',

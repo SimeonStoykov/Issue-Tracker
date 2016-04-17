@@ -25,14 +25,14 @@
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="assigneeSelect">Assignee:</label>
-            <select name="usersSelect" class="form-control inline-input-select" id="assigneeSelect"
+            <select name="assigneeSelect" class="form-control inline-input-select" id="assigneeSelect"
                     ng-options="user as user.Username for user in users"
                     ng-model="issue.assignee">
             </select>
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="prioritySelect">Priority:</label>
-            <select name="usersSelect" class="form-control inline-input-select" id="prioritySelect"
+            <select name="prioritySelect" class="form-control inline-input-select" id="prioritySelect"
                     ng-options="priority as priority.Name for priority in priorities"
                     ng-model="issue.priority">
             </select>
@@ -51,12 +51,12 @@
         </div>
         <div class="form-group text-left">
             <label class="control-label">Labels:</label>
-                    <span class="tag label label-info inline-block-span"
-                          ng-repeat="label in issue.labels track by $index">
-                      <span class="text-span">{{label}}</span>
-                      <a ng-click="removeLabel(label)"><i
-                              class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
-                    </span>
+            <span class="tag label label-info inline-block-span"
+                  ng-repeat="label in issue.labels track by $index">
+              <span class="text-span">{{label}}</span>
+              <a ng-click="removeLabel(label)"><i
+                      class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+            </span>
         </div>
         <button class="btn btn-primary save-project-btn" ng-click="addIssue(issue)">Add issue</button>
         <button class="btn btn-danger save-project-btn" ng-click="closeModal()">Cancel</button>

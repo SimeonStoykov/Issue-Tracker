@@ -1,3 +1,4 @@
+'use strict';
 issueTracker.controller('EditProjectController', [
     '$scope',
     'projectsService',
@@ -6,12 +7,13 @@ issueTracker.controller('EditProjectController', [
     'labelsService',
     '$location',
     'notificationService',
-    function EditProjectController($scope, projectsService, $routeParams, usersService, labelsService, $location, notificationService) {
+    'authService',
+    function EditProjectController($scope, projectsService, $routeParams, usersService, labelsService, $location,
+                                   notificationService, authService) {
 
         projectsService.getProjectById($routeParams.id)
             .then(function (response) {
                 $scope.project = response.data;
-                $scope.isUserProjectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
 
                 $scope.project.editedLabels = $scope.project.Labels.map(function (label) {
                     return label.Name;
@@ -23,13 +25,15 @@ issueTracker.controller('EditProjectController', [
 
                 $scope.project.projectPriorities = $scope.project.Priorities.join(', ');
 
-                usersService.getAllUsers()
-                    .then(function (response) {
-                        $scope.users = response.data;
-                        $scope.project.selectedUser = $scope.users.filter(function (user) {
-                            return user.Id === $scope.project.Lead.Id;
-                        })[0];
-                    });
+                if($scope.isAdmin) {
+                    usersService.getAllUsers()
+                        .then(function (response) {
+                            $scope.users = response.data;
+                            $scope.project.selectedUser = $scope.users.filter(function (user) {
+                                return user.Id === $scope.project.Lead.Id;
+                            })[0];
+                        });
+                }
             });
 
         $scope.editProject = function (project) {
@@ -90,5 +94,7 @@ issueTracker.controller('EditProjectController', [
                     $scope.labels = response.data;
                 });
         };
+
+        $scope.isAdmin = authService.isAdmin();
     }
 ]);

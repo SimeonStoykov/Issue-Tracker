@@ -1,17 +1,20 @@
+'use strict';
 issueTracker.controller('ViewProjectController', [
     '$scope',
+    '$rootScope',
     'projectsService',
     'issuesService',
     '$route',
     'authService',
     'usersService',
     '$uibModal',
-    function ViewProjectController($scope, projectsService, issuesService, $route, authService, usersService, $uibModal) {
+    function ViewProjectController($scope, $rootScope, projectsService, issuesService, $route, authService, usersService, $uibModal) {
 
         projectsService.getProjectById($route.current.params.id)
             .then(function (response) {
                 $scope.project = response.data;
                 $scope.isUserProjectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
+                $rootScope.isUserProjectLead = $scope.isUserProjectLead;
 
                 $scope.project.editedLabels = $scope.project.Labels.map(function (label) {
                     return label.Name;

@@ -1,0 +1,75 @@
+<div ng-include="'views/navbar.html'"></div>
+
+<div class="container-fluid">
+    <div class="row view-issue-page">
+        <h2>Issue page</h2>
+
+        <div class="col-md-8">
+            <h3>Issue Info</h3>
+
+            <div class="text-left">
+                <span class="project-key-font-size"><strong>{{issue.IssueKey}}</strong></span>
+                <a ng-href="#/issues/{{issue.Id}}/edit" class="btn btn-success"
+                   ng-show="isAdmin || isUserProjectLead">Edit</a>
+            </div>
+
+            <div class="text-left">
+                <label>Title:</label>
+                {{issue.Title}}
+            </div>
+
+            <div class="text-left">
+                <label>Description:</label>
+                {{issue.Description}}
+            </div>
+
+            <div class="text-left">
+                <label>Assignee id:</label>
+                (current id: {{issue.Assignee.Id}})
+                {{issue.Assignee.Username}}
+            </div>
+
+            <div class="text-left">
+                <label>Priority Id:</label>
+                (current id: {{issue.Priority.Id}})
+                {{issue.Priority.Name}}
+            </div>
+
+            <div class="text-left">
+                <label>Due Date:</label>
+                {{issue.DueDate | date:'dd-MM-yyyy'}}
+            </div>
+
+            <div class="text-left">
+                <label>Author:</label>
+                {{issue.Author.Username}}
+            </div>
+            <div class="text-left">
+                <label>Project:</label>
+                {{issue.Project.Name}}
+            </div>
+            <div class="text-left">
+                <label>Status:</label>
+                {{issue.Status.Name}}
+            </div>
+            <div class="text-left">
+                <label>Labels:</label>
+                <span class="tag label label-info inline-block-span" ng-repeat="label in issue.Labels track by $index">
+                      <span>{{label.Name}}</span>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-4 project-page-issues">
+            <h3>Available Statuses</h3>
+            <ul>
+                <li class="text-left styled-status-li" ng-repeat="status in issue.AvailableStatuses">
+                    {{status.Name}}
+                    <button ng-click="changeIssueStatus(status.Id)" class="btn btn-success" ng-if="isUserIssueAssignee
+                    || isUserProjectLead || isAdmin">
+                        Change
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
