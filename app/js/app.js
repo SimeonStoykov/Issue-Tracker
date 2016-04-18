@@ -12,7 +12,7 @@ angular.module('issueTracker', [
     .config([
         '$routeProvider',
         '$httpProvider',
-        function ($routeProvider, $httpProvider) {
+        function($routeProvider, $httpProvider) {
             $routeProvider
                 .when('/', {
                     templateUrl: 'views/home/home-dashboard.html',
@@ -94,21 +94,17 @@ angular.module('issueTracker', [
         'projectsService',
         '$route',
         'notificationService',
-        function ($rootScope, $location, authService, projectsService, $route, notificationService) {
-            var previousRoute;
+        function($rootScope, $location, authService, projectsService, $route, notificationService) {
+            //var previousRoute;
+            //
+            //$rootScope.$on('$locationChangeStart', function(evt, absNewUrl, absOldUrl) {
+            //    var hashIndex = absOldUrl.indexOf('#');
+            //    previousRoute = absOldUrl.substring(hashIndex + 1);
+            //});
 
-            $rootScope.$on('$locationChangeStart', function (evt, absNewUrl, absOldUrl) {
-                var hashIndex = absOldUrl.indexOf('#');
-                previousRoute = absOldUrl.substring(hashIndex + 1);
-            });
-
-            $rootScope.$on('$routeChangeStart', function (event, next) {
+            $rootScope.$on('$routeChangeStart', function(event, next) {
                 if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                     $location.path('/');
-                } else if (next.access && next.access.requiresAdminOrLead && !authService.isAdmin()
-                    && !$rootScope.isUserProjectLead) {
-                    $location.path('/');
-                    notificationService.showError('You don\'t have access to this action!');
                 } else if (next.access && next.access.requiresAdmin && !authService.isAdmin()) {
                     $location.path('/');
                     notificationService.showError('You don\'t have access to this action!');

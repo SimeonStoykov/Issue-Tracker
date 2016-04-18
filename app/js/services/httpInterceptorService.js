@@ -4,9 +4,9 @@ angular.module('issueTracker')
     .factory('httpInterceptorService', [
         '$q',
         '$injector',
-        function ($q, $injector) {
+        function($q, $injector) {
             return {
-                'request': function (config) {
+                'request': function(config) {
                     var authService = $injector.get('authService');
                     if (authService.isAuthenticated()) {
                         config.headers['Authorization'] = 'Bearer ' + localStorage['accessToken'];
@@ -15,17 +15,17 @@ angular.module('issueTracker')
                     return config;
                 },
 
-                'requestError': function (rejection) {
+                'requestError': function(rejection) {
                     //do something with the error
                     return $q.reject(rejection);
                 },
 
-                'response': function (response) {
+                'response': function(response) {
                     // do something on success of request
                     return response;
                 },
 
-                'responseError': function (rejection) {
+                'responseError': function(rejection) {
                     // do something on error like:
                     //if(response.status == 401){
                     //     userUnauthorized();

@@ -6,7 +6,8 @@ angular.module('issueTracker')
         '$q',
         'BASE_URL',
         'issuesService',
-        function ($http, $q, BASE_URL, issuesService) {
+        'usersService',
+        function($http, $q, BASE_URL, issuesService, usersService) {
 
             function getAllProjects(params) {
                 var deffered = $q.defer();
@@ -48,7 +49,7 @@ angular.module('issueTracker')
                 };
 
                 issuesService.getCurrentUserIssues(issuesParams)
-                    .then(function (response) {
+                    .then(function(response) {
                         var issues = response.data.Issues;
                         var notDistinctAffiliatedProjects = issues.map(function (issue) {
                             return issue.Project;
@@ -80,7 +81,7 @@ angular.module('issueTracker')
 
                                 deffered.resolve(affiliatedProjects);
                             })
-                    }, function (error) {
+                    }, function(error) {
                         deffered.reject(error);
                     });
 
@@ -91,9 +92,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.put(BASE_URL + 'Projects/' + id, projectData)
-                    .then(function (result) {
+                    .then(function(result) {
                         deffered.resolve(result);
-                    }, function (error) {
+                    }, function(error) {
                         deffered.reject(error);
                     });
 
@@ -104,11 +105,17 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 getProjectById(projectId)
-                    .then(function (response) {
+                    .then(function(response) {
                         var project = response.data;
+
+                        usersService.getCurrentUserInfo()
+                            .then(function(response) {
+                                console.log(response);
+                            });
+
                         var isUserProjectLead = project.Lead.Id === localStorage['currentUserId'];
                         deffered.resolve(isUserProjectLead);
-                    }, function (error) {
+                    }, function(error) {
                         deffered.reject(error);
                     });
 

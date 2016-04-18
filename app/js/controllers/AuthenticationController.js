@@ -8,22 +8,22 @@ angular.module('issueTracker')
         'GRANT_TYPE',
         '$route',
         'notificationService',
-        function AuthenticationController($scope, authService, usersService, GRANT_TYPE, $route, notificationService) {
+        function AuthenticationController($scope, authService, usersService, GRANT_TYPE, $route, notificationService, $rootScope) {
 
             $scope.login = function (user) {
                 user.grant_type = GRANT_TYPE;
                 authService.loginUser(user)
-                    .then(function (response) {
+                    .then(function(response) {
                         localStorage['accessToken'] = response.data.access_token;
                         localStorage['username'] = response.data.userName;
                         usersService.getCurrentUserInfo()
-                            .then(function (userInfo) {
+                            .then(function(userInfo) {
                                 localStorage['currentUserId'] = userInfo.data.Id;
                                 localStorage['isAdmin'] = userInfo.data.isAdmin;
                                 $route.reload();
                                 notificationService.showInfo('Login successful!');
                             })
-                    }, function (error) {
+                    }, function(error) {
                         notificationService.showError("Login error", error);
                     });
             };

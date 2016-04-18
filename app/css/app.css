@@ -76,8 +76,21 @@
   width: 50% !important;
 }
 
-.comments-panel {
+.comment-text-label {
+  width: 100% !important;
+  font-size: 17px !important;
+}
+
+.comments-panel, .add-comment {
   width: 50% !important;
+}
+
+.comment-textarea {
+  height: 150px !important;
+}
+
+.add-comment-btn {
+  margin: 10px;
 }
 
 .all-projects-label {
@@ -85,7 +98,6 @@
 }
 
 .all-projects {
-  width: 88% !important;
   margin: 0 auto !important;
 }
 
@@ -196,7 +208,7 @@
 }
 
 .calendar-icon {
-  color: black !important;
+  color: limegreen !important;
 }
 
 .menu:before {

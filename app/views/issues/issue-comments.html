@@ -1,0 +1,14 @@
+<div class="comments-panel">
+    <h3>Comments</h3>
+    <div class="panel panel-primary" ng-repeat="comment in comments">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                {{comment.Author.Username}}
+                {{comment.CreatedOn | date:'dd-MM-yyyy HH:mm:ss'}}
+            </h3>
+        </div>
+        <div class="panel-body">
+            {{comment.Text}}
+        </div>
+    </div>
+</div>
