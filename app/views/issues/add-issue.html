@@ -13,8 +13,9 @@
         </div>
         <div class="form-group text-left">
             <label for="issueDescription" class="control-label">Description: </label>
-            <input type="text" class="form-control add-issue-description" id="issueDescription"
-                   ng-model="issue.description">
+            <textarea class="form-control add-issue-description" id="issueDescription"
+                      ng-model="issue.description" cols="30" rows="10">
+            </textarea>
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="projectSelect">Project:</label>
@@ -38,8 +39,16 @@
             </select>
         </div>
         <div class="form-group text-left">
-            <label class="control-label" for="dueDate">Due Date:</label>
-            <input type="date" class="form-control add-issue-due-date" id="dueDate" ng-model="issue.dueDate">
+            <label class="control-label">Due Date:</label>
+            <p class="input-group date-input-group">
+                <input type="text" class="form-control add-issue-due-date" uib-datepicker-popup="{{format}}"
+                       ng-model="issue.dueDate" ng-model-options="dateOptions" is-open="calendar.isOpened"
+                       datepicker-options="datePickerOptions" required="required" close-text="Close" placeholder="day-month-year"/>
+
+                <button type="button" class="btn btn-primary" ng-click="openCalendar()">
+                    <i class="glyphicon glyphicon-calendar calendar-icon"></i>
+                </button>
+            </p>
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="addLabel">Add label:</label>

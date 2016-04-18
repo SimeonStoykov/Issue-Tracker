@@ -1,4 +1,4 @@
-<div ng-include="'views/navbar.html'"></div>
+<div ng-include="'views/common/navbar.html'"></div>
 
 <div class="container-fluid">
     <div class="row project-page">
@@ -11,7 +11,8 @@
                 <span class="project-key-font-size"><strong>{{project.ProjectKey}}</strong></span>
                 <a ng-href="#/projects/{{project.Id}}/edit" class="btn btn-success"
                    ng-show="isUserProjectLead || isAdmin">Edit</a>
-                <a ng-href="#/projects/{{project.Id}}/add-issue" ng-click="openAddIssueModal()" class="btn btn-success" ng-show="isUserProjectLead || isAdmin">Add issue</a>
+                <a ng-href="#/projects/{{project.Id}}/add-issue" ng-click="openAddIssueModal()" class="btn btn-success"
+                   ng-show="isUserProjectLead || isAdmin">Add issue</a>
             </div>
 
             <div class="text-left">

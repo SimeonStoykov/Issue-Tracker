@@ -1,4 +1,4 @@
-<div ng-include="'views/navbar.html'"></div>
+<div ng-include="'views/common/navbar.html'"></div>
 
 <div class="container-fluid">
     <div class="row project-page">
@@ -30,7 +30,8 @@
                     </span>
                     <span ng-if="isAdmin">
                         {{project.selectedUser.Id}}
-                        <select name="usersSelect" ng-if="isAdmin" class="form-control inline-input-select" id="lead" ng-options="user as user.Username for user in users"
+                        <select name="usersSelect" ng-if="isAdmin" class="form-control inline-input-select" id="lead"
+                                ng-options="user as user.Username for user in users"
                                 ng-model="project.selectedUser">
                         </select>
                     </span>

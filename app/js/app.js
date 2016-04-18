@@ -1,9 +1,13 @@
 'use strict';
-var issueTracker = angular.module('issueTracker', [
+angular.module('issueTracker', [
         'ngRoute',
         'angular-loading-bar',
         'angularUtils.directives.dirPagination',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'ngMaterial',
+        'ngAnimate',
+        'ngAria',
+        '720kb.datepicker'
     ])
     .config([
         '$routeProvider',
@@ -11,21 +15,29 @@ var issueTracker = angular.module('issueTracker', [
         function ($routeProvider, $httpProvider) {
             $routeProvider
                 .when('/', {
-                    templateUrl: 'views/home-dashboard.html',
+                    templateUrl: 'views/home/home-dashboard.html',
                     controller: 'AuthenticationController',
                     access: {
                         requiresAuthentication: false
                     }
                 })
+                .when('/projects', {
+                    templateUrl: 'views/projects/view-all-projects.html',
+                    controller: 'ViewAllProjectsController',
+                    access: {
+                        requiresAuthentication: true,
+                        requiresAdmin: true
+                    }
+                })
                 .when('/projects/:id', {
-                    templateUrl: 'views/view-project.html',
+                    templateUrl: 'views/projects/view-project.html',
                     controller: 'ViewProjectController',
                     access: {
                         requiresAuthentication: true
                     }
                 })
                 .when('/projects/:id/edit', {
-                    templateUrl: 'views/edit-project.html',
+                    templateUrl: 'views/projects/edit-project.html',
                     controller: 'EditProjectController',
                     access: {
                         requiresAuthentication: true,
@@ -33,7 +45,7 @@ var issueTracker = angular.module('issueTracker', [
                     }
                 })
                 .when('/projects/:id/add-issue', {
-                    templateUrl: 'views/view-project.html',
+                    templateUrl: 'views/projects/view-project.html',
                     controller: 'ViewProjectController',
                     access: {
                         requiresAuthentication: true,
@@ -41,14 +53,14 @@ var issueTracker = angular.module('issueTracker', [
                     }
                 })
                 .when('/issues/:id', {
-                    templateUrl: 'views/view-issue.html',
+                    templateUrl: 'views/issues/view-issue.html',
                     controller: 'ViewIssueController',
                     access: {
                         requiresAuthentication: true
                     }
                 })
                 .when('/issues/:id/edit', {
-                    templateUrl: 'views/edit-issue.html',
+                    templateUrl: 'views/issues/edit-issue.html',
                     controller: 'EditIssueController',
                     access: {
                         requiresAuthentication: true,
@@ -56,7 +68,7 @@ var issueTracker = angular.module('issueTracker', [
                     }
                 })
                 .when('/profile/password', {
-                    templateUrl: 'views/change-password.html',
+                    templateUrl: 'views/common/change-password.html',
                     controller: 'AuthenticationController',
                     access: {
                         requiresAuthentication: true
@@ -69,34 +81,37 @@ var issueTracker = angular.module('issueTracker', [
                         requiresAuthentication: false
                     }
                 })
-                .when('/unauthorized', {
-                    templateUrl: 'views/unauthorized.html',
-                    controller: 'AuthenticationController',
-                    access: {
-                        requiresAuthentication: true
-                    }
-                })
                 .otherwise({redirectTo: '/'});
 
             $httpProvider.interceptors.push('httpInterceptorService');
         }])
     .constant('BASE_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
     .constant('GRANT_TYPE', 'password')
-    .run(function ($rootScope, $location, authService, projectsService, $route, notificationService) {
-        var previousRoute;
+    .run([
+        '$rootScope',
+        '$location',
+        'authService',
+        'projectsService',
+        '$route',
+        'notificationService',
+        function ($rootScope, $location, authService, projectsService, $route, notificationService) {
+            var previousRoute;
 
-        $rootScope.$on('$locationChangeStart', function (evt, absNewUrl, absOldUrl) {
-            var hashIndex = absOldUrl.indexOf('#');
-            previousRoute = absOldUrl.substring(hashIndex + 1);
-        });
+            $rootScope.$on('$locationChangeStart', function (evt, absNewUrl, absOldUrl) {
+                var hashIndex = absOldUrl.indexOf('#');
+                previousRoute = absOldUrl.substring(hashIndex + 1);
+            });
 
-        $rootScope.$on('$routeChangeStart', function (event, next) {
-            if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
-                $location.path('/');
-            } else if (next.access && next.access.requiresAdminOrLead && !authService.isAdmin()
-                && !$rootScope.isUserProjectLead) {
-                $location.path('/');
-                notificationService.showError('You don\'t have access to this action!');
-            }
-        });
-    });
+            $rootScope.$on('$routeChangeStart', function (event, next) {
+                if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
+                    $location.path('/');
+                } else if (next.access && next.access.requiresAdminOrLead && !authService.isAdmin()
+                    && !$rootScope.isUserProjectLead) {
+                    $location.path('/');
+                    notificationService.showError('You don\'t have access to this action!');
+                } else if (next.access && next.access.requiresAdmin && !authService.isAdmin()) {
+                    $location.path('/');
+                    notificationService.showError('You don\'t have access to this action!');
+                }
+            });
+        }]);

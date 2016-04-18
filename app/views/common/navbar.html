@@ -2,7 +2,8 @@
     <div class="container">
         <div class="navbar-header">
             <a ng-href="#/" class="navbar-brand">Dashboard</a>
-            <a ng-href="#/projects" class="navbar-brand">Projects</a>
+            <a ng-if="isAdmin" ng-href="#/projects" class="navbar-brand">Projects</a>
+            <a ng-if="isAdmin" ng-href="#/projects/add" class="navbar-brand">Add new project</a>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">

@@ -1,4 +1,4 @@
-<div ng-include="'views/navbar.html'"></div>
+<div ng-include="'views/common/navbar.html'"></div>
 
 <div class="container-fluid">
     <div class="row view-issue-page">
@@ -14,12 +14,13 @@
 
                 <div class="form-group text-left">
                     <label for="title">Title:</label>
-                    <input id="title" class="form-control" type="text" ng-model="issue.Title">
+                    <input id="title" class="form-control inline-inputs" type="text" ng-model="issue.Title">
                 </div>
 
                 <div class="form-group text-left">
                     <label for="description">Description:</label>
-                    <input id="description" class="form-control" type="text" ng-model="issue.Description">
+                    <textarea class="form-control edit-issue-description" id="description" ng-model="issue.Description">
+                    </textarea>
                 </div>
 
                 <div class="form-group text-left">
@@ -40,8 +41,16 @@
                 </div>
 
                 <div class="form-group text-left">
-                    <label for="dueDate">Due Date:</label>
-                    <input id="dueDate" class="form-control" type="date" ng-model="issue.DueDate">
+                    <label class="control-label">Due Date:</label>
+                    <p class="input-group date-input-group">
+                        <input type="text" class="form-control edit-issue-due-date" uib-datepicker-popup="{{format}}"
+                               ng-model="issue.DueDate" ng-model-options="dateOptions" is-open="calendar.isOpened"
+                               datepicker-options="datePickerOptions" required="required" close-text="Close" placeholder="day-month-year"/>
+
+                        <button type="button" class="btn btn-primary" ng-click="openCalendar()">
+                            <i class="glyphicon glyphicon-calendar calendar-icon"></i>
+                        </button>
+                    </p>
                 </div>
 
                 <div class="text-left">
@@ -73,6 +82,7 @@
                         <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                     </span>
                 </div>
+                <button class="btn btn-primary" ng-click="editIssue(issue)">Save</button>
             </form>
 
         </div>

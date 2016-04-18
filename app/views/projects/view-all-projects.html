@@ -1,0 +1,25 @@
+<div ng-include="'views/common/navbar.html'"></div>
+
+<div class="container-fluid">
+    <div class="row project-page">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="all-projects">
+                <h2 class="">All projects</h2>
+                <div class="row" dir-paginate="project in projects | itemsPerPage: projectsParams.pageSize"
+                     total-items="totalProjectsCount" current-page="projectsParams.pageNumber">
+                    <h4 class="all-projects-label col-md-9">{{project.Name}}</h4>
+                    <div class="col-md-3">
+                        <a ng-href="#/projects/{{project.Id}}" class="btn btn-success">
+                            View
+                        </a>
+                        <a ng-href="#/projects/{{project.Id}}/edit" class="btn btn-success">
+                            Edit
+                        </a>
+                    </div>
+                </div>
+                <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+                </dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

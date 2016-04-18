@@ -72,6 +72,23 @@
   clear: both;
 }
 
+.issue-info-label {
+  width: 50% !important;
+}
+
+.comments-panel {
+  width: 50% !important;
+}
+
+.all-projects-label {
+  display: inline-block !important;
+}
+
+.all-projects {
+  width: 88% !important;
+  margin: 0 auto !important;
+}
+
 .project-edit-description {
   width: 83% !important;
   height: 100px !important;
@@ -142,11 +159,33 @@
 .add-issue-description {
   display: inline-block !important;
   width: 80% !important;
+  height: 100px !important;
+}
+
+.edit-issue-description {
+  display: inline-block !important;
+  width: 86% !important;
+  height: 150px !important;
+}
+
+.edit-issue-due-date {
+  display: inline-block !important;
+  width: 20% !important;
 }
 
 .add-issue-due-date {
   display: inline-block !important;
-  width: 43% !important;
+  width: 38% !important;
+}
+
+.edit-issue-due-date {
+  display: inline-block !important;
+  width: 20% !important;
+}
+
+.date-input-group {
+  display: inline-block !important;
+  width: 80% !important;
 }
 
 .menu {
@@ -154,6 +193,10 @@
   border-bottom: 0.1em solid black;
   margin-bottom: 2em;
   padding: 0 0 0.5em;
+}
+
+.calendar-icon {
+  color: black !important;
 }
 
 .menu:before {
