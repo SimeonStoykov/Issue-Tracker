@@ -6,7 +6,6 @@
 
         <div class="col-md-8">
             <h3>Issue Info</h3>
-
             <form>
                 <div class="form-group text-left">
                     <span class="project-key-font-size"><strong>{{issue.IssueKey}}</strong></span>
@@ -42,15 +41,7 @@
 
                 <div class="form-group text-left">
                     <label class="control-label">Due Date:</label>
-                    <p class="input-group date-input-group">
-                        <input type="text" class="form-control edit-issue-due-date" uib-datepicker-popup="{{format}}"
-                               ng-model="issue.DueDate" ng-model-options="dateOptions" is-open="calendar.isOpened"
-                               datepicker-options="datePickerOptions" required="required" close-text="Close" placeholder="day-month-year"/>
-
-                        <button type="button" class="btn btn-info" ng-click="openCalendar()">
-                            <i class="glyphicon glyphicon-calendar calendar-icon"></i>
-                        </button>
-                    </p>
+                    <div date-picker date="issue.DueDate"></div>
                 </div>
 
                 <div class="text-left">
@@ -84,7 +75,6 @@
                 </div>
                 <button class="btn btn-primary" ng-click="editIssue(issue)">Save</button>
             </form>
-
         </div>
         <div class="col-md-4 project-page-issues">
             <h3>Available Statuses</h3>

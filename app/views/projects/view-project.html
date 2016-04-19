@@ -37,7 +37,8 @@
 
             <div class="text-left">
                 <label>Labels:</label>
-                <span class="tag label label-info inline-block-span" ng-repeat="label in project.Labels track by $index">
+                <span class="tag label label-info inline-block-span"
+                      ng-repeat="label in project.Labels track by $index">
                       <span>{{label.Name}}</span>
                 </span>
             </div>
@@ -49,6 +50,25 @@
         </div>
         <div class="col-md-7 project-page-issues">
             <h3>Project Issues</h3>
+            <div>
+                <button class="btn btn-primary" ng-click="showMyIssues()">Show my issues</button>
+                <button class="btn btn-primary" ng-click="showAllIssues()"> Show all issues</button>
+                <label for="filterBy">Filter by: </label>
+                <select id="filterBy" ng-model="filterBy" class="form-group" ng-change="filterChanged()">
+                    <option selected disabled value="">Select option</option>
+                    <option selected value="title">Title</option>
+                    <option value="description">Description</option>
+                    <option value="dueDate">Due Date</option>
+                    <option value="assignee">Assignee</option>
+                </select>
+                <input type="text" ng-show="filterBy === 'title'" placeholder="Enter issue title..."
+                       ng-model="search.Title">
+                <input type="text" ng-show="filterBy === 'description'" placeholder="Enter issue description..."
+                       ng-model="search.Description">
+                <div date-picker date="search.DueDate" ng-show="filterBy === 'dueDate'"></div>
+                <input type="text" ng-show="filterBy === 'assignee'" placeholder="Enter issue assignee..."
+                       ng-model="search.Assignee.Username">
+            </div>
             <table class="table table-striped table-hover project-page-issues-table">
                 <thead>
                 <tr>
@@ -59,8 +79,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr dir-paginate="issue in shownIssues | itemsPerPage: paginationParams.pageSize"
-                    total-items="issues.length" current-page="paginationParams.pageNumber">
+                <tr dir-paginate="issue in issues | filter: search | itemsPerPage: paginationParams.pageSize">
                     <td class="col-md-3">
                         <a href="#/issues/{{issue.Id}}">{{issue.Title}}</a>
                     </td>

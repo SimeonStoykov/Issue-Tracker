@@ -1,0 +1,8 @@
+<p class="input-group date-input-group">
+    <input type="text" class="form-control add-issue-due-date" uib-datepicker-popup="{{format}}"
+           ng-model="date" ng-model-options="dateOptions" is-open="calendar.isOpened"
+           datepicker-options="datePickerOptions" required="required" close-text="Close" placeholder="day-month-year"/>
+    <button type="button" class="btn btn-info" ng-click="openCalendar()">
+        <i class="glyphicon glyphicon-calendar calendar-icon"></i>
+    </button>
+</p>

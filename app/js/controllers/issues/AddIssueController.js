@@ -101,26 +101,6 @@ angular.module('issueTracker')
                     });
             };
 
-            $scope.format = 'dd-MM-yyyy';
-
-            $scope.datePickerOptions = {
-                maxDate: new Date(2020, 5, 22),
-                minDate: new Date(),
-                startingDay: 1
-            };
-
-            $scope.openCalendar = function() {
-                $scope.calendar.isOpened = true;
-            };
-
-            $scope.calendar = {
-                isOpened: false
-            };
-
-            $scope.dateOptions = {
-                timezone: 'UTC+00:00'
-            };
-
             $scope.closeModal = function() {
                 $uibModalInstance.dismiss();
                 $location.path('/projects/' + $routeParams.id);
