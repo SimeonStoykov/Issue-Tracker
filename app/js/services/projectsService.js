@@ -17,9 +17,9 @@ angular.module('issueTracker')
                 };
 
                 $http.get(BASE_URL + 'Projects', config)
-                    .then(function (result) {
+                    .then(function(result) {
                         deffered.resolve(result);
-                    }, function (error) {
+                    }, function(error) {
                         deffered.reject(error);
                     });
 
@@ -30,9 +30,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.get(BASE_URL + 'Projects/' + id)
-                    .then(function (result) {
+                    .then(function(result) {
                         deffered.resolve(result);
-                    }, function (error) {
+                    }, function(error) {
                         deffered.reject(error);
                     });
 
@@ -51,7 +51,7 @@ angular.module('issueTracker')
                 issuesService.getCurrentUserIssues(issuesParams)
                     .then(function(response) {
                         var issues = response.data.Issues;
-                        var notDistinctAffiliatedProjects = issues.map(function (issue) {
+                        var notDistinctAffiliatedProjects = issues.map(function(issue) {
                             return issue.Project;
                         });
 
@@ -62,7 +62,7 @@ angular.module('issueTracker')
                         };
 
                         getAllProjects(projectsParams)
-                            .then(function (projectsResponse) {
+                            .then(function(projectsResponse) {
                                 projectsResponse.data.Projects.forEach(function (project) {
                                     notDistinctAffiliatedProjects.push({
                                         Id: project.Id,
@@ -122,12 +122,26 @@ angular.module('issueTracker')
                 return deffered.promise;
             }
 
+            function addNewProject(projectData) {
+                var deffered = $q.defer();
+
+                $http.post(BASE_URL + 'Projects', projectData)
+                    .then(function(result) {
+                        deffered.resolve(result);
+                    }, function(error) {
+                        deffered.reject(error);
+                    });
+
+                return deffered.promise;
+            }
+
             return {
                 getAllProjects: getAllProjects,
                 getProjectById: getProjectById,
                 getAffiliatedProjects: getAffiliatedProjects,
                 editProject: editProject,
-                isUserProjectLead: isUserProjectLead
+                isUserProjectLead: isUserProjectLead,
+                addNewProject: addNewProject
             };
         }
     ]);

@@ -4,7 +4,15 @@
     <div class="row project-page">
         <div class="col-md-5 col-md-offset-4">
             <div class="all-projects">
-                <h2>All projects</h2>
+                <div class="row">
+                    <h2 class="col-md-7 all-projects-header">All projects</h2>
+                    <div class="col-md-5">
+                        <a ng-href="#/projects/add" class="btn btn-primary add-project-btn"
+                           ng-click="openAddProjectModal()">
+                            Add project
+                        </a>
+                    </div>
+                </div>
                 <div class="row" dir-paginate="project in projects | itemsPerPage: projectsParams.pageSize"
                      total-items="totalProjectsCount" current-page="projectsParams.pageNumber">
                     <h4 class="all-projects-label col-md-7">{{project.Name}}</h4>

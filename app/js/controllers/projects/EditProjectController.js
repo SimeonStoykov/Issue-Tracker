@@ -14,14 +14,14 @@ angular.module('issueTracker')
                                        notificationService, authService) {
 
             projectsService.getProjectById($routeParams.id)
-                .then(function (response) {
+                .then(function(response) {
                     $scope.project = response.data;
 
-                    $scope.project.editedLabels = $scope.project.Labels.map(function (label) {
+                    $scope.project.editedLabels = $scope.project.Labels.map(function(label) {
                         return label.Name;
                     });
 
-                    $scope.project.Priorities = $scope.project.Priorities.map(function (priority) {
+                    $scope.project.Priorities = $scope.project.Priorities.map(function(priority) {
                         return priority.Name;
                     });
 
@@ -29,23 +29,23 @@ angular.module('issueTracker')
 
                     if ($scope.isAdmin) {
                         usersService.getAllUsers()
-                            .then(function (response) {
+                            .then(function(response) {
                                 $scope.users = response.data;
-                                $scope.project.selectedUser = $scope.users.filter(function (user) {
+                                $scope.project.selectedUser = $scope.users.filter(function(user) {
                                     return user.Id === $scope.project.Lead.Id;
                                 })[0];
                             });
                     }
                 });
 
-            $scope.editProject = function (project) {
-                var prioritiesToAdd = project.projectPriorities.split(', ').map(function (priority) {
+            $scope.editProject = function(project) {
+                var prioritiesToAdd = project.projectPriorities.split(',').map(function(priority) {
                     return {
-                        Name: priority
+                        Name: priority.trim()
                     };
                 });
 
-                var labelsToAdd = $scope.project.editedLabels.map(function (label) {
+                var labelsToAdd = $scope.project.editedLabels.map(function(label) {
                     return {
                         Name: label
                     };
@@ -60,20 +60,20 @@ angular.module('issueTracker')
                 };
 
                 projectsService.editProject($routeParams.id, projectToEdit)
-                    .then(function (response) {
+                    .then(function(response) {
                         $location.path("projects/" + $routeParams.id);
                         notificationService.showInfo('Project edited successfully!');
-                    }, function (error) {
+                    }, function(error) {
                         notificationService.showError('Editing project failed!', error);
                     });
             };
 
-            $scope.addLabel = function (label) {
+            $scope.addLabel = function(label) {
                 $scope.project.editedLabels.push(label);
                 $scope.labelToAdd = '';
             };
 
-            $scope.removeLabel = function (label) {
+            $scope.removeLabel = function(label) {
                 var indexOfTheLabel = $scope.project.editedLabels.indexOf(label);
                 $scope.project.editedLabels.splice(indexOfTheLabel, 1);
             };
@@ -90,9 +90,9 @@ angular.module('issueTracker')
                 filter: $scope.labelToAdd ? $scope.labelToAdd : ''
             };
 
-            $scope.getLabels = function () {
+            $scope.getLabels = function() {
                 labelsService.getLabels(params)
-                    .then(function (response) {
+                    .then(function(response) {
                         $scope.labels = response.data;
                     });
             };

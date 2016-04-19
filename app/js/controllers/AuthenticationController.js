@@ -8,9 +8,10 @@ angular.module('issueTracker')
         'GRANT_TYPE',
         '$route',
         'notificationService',
-        function AuthenticationController($scope, authService, usersService, GRANT_TYPE, $route, notificationService, $rootScope) {
+        '$uibModal',
+        function AuthenticationController($scope, authService, usersService, GRANT_TYPE, $route, notificationService, $uibModal) {
 
-            $scope.login = function (user) {
+            $scope.login = function(user) {
                 user.grant_type = GRANT_TYPE;
                 authService.loginUser(user)
                     .then(function(response) {
@@ -28,9 +29,9 @@ angular.module('issueTracker')
                     });
             };
 
-            $scope.register = function (user) {
+            $scope.register = function(user) {
                 authService.registerUser(user)
-                    .then(function (result) {
+                    .then(function(result) {
                         var loginUserData = {
                             username: user.email,
                             password: user.password,
@@ -43,12 +44,12 @@ angular.module('issueTracker')
                     });
             };
 
-            $scope.changePassword = function (passwordInfo) {
+            $scope.changePassword = function(passwordInfo) {
                 authService.changePassword(passwordInfo)
-                    .then(function (result) {
+                    .then(function(result) {
                         notificationService.showInfo('Password changed successfully!');
                         $route.reload();
-                    }, function (error) {
+                    }, function(error) {
                         notificationService.showError("Password change error", error);
                     });
             };

@@ -1,0 +1,56 @@
+<div class="modal-header">
+    <h2 class="add-issue-title">Add project</h2>
+    <div class="inline-inputs">
+        <i class="fa fa-times-circle fa-lg close-modal text-right" aria-hidden="true" ng-click="closeModal()"></i>
+    </div>
+</div>
+
+<div class="modal-body">
+    <form class="form-horizontal well edit-project-well">
+        <div class="form-group text-left">
+            <label for="projectName" class="control-label">Name: </label>
+            <input type="text" class="form-control add-project-inline-inputs" id="projectName" ng-model="project.name">
+        </div>
+        <div class="form-group text-left">
+            <label for="projectDescription" class="control-label">Description: </label>
+            <textarea class="form-control modal-description" id="projectDescription"
+                      ng-model="project.description" cols="30" rows="10">
+            </textarea>
+        </div>
+        <div class="form-group text-left">
+            <label for="projectKey" class="control-label">Project Key: </label>
+            <input type="text" class="form-control add-project-inline-inputs" id="projectKey" ng-model="project.key">
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="leadSelect">Lead:</label>
+            <select name="leadSelect" class="form-control inline-input-select" id="leadSelect"
+                    ng-options="user as user.Username for user in users"
+                    ng-model="project.selectedLead">
+            </select>
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="projectPriorities">Priorities:</label>
+            <input type="text" class="form-control add-project-inline-inputs" id="projectPriorities" ng-model="project.priorities">
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label" for="addLabel">Add label:</label>
+            <input type="text" id="addLabel" ng-change="getLabels()" ng-model="labelToAdd"
+                   ng-model-options="modelOptions"
+                   uib-typeahead="label.Name for label in labels | filter:$viewValue | limitTo:10"
+                   class="form-control inline-input-label">
+            <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
+        </div>
+        <div class="form-group text-left">
+            <label class="control-label">Labels:</label>
+            <span class="tag label label-info inline-block-span"
+                  ng-repeat="label in project.labels track by $index">
+              <span class="text-span">{{label}}</span>
+              <a ng-click="removeLabel(label)"><i
+                      class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+            </span>
+        </div>
+        <button class="btn btn-primary" ng-click="addProject(project)">Add project</button>
+        <button class="btn btn-danger" ng-click="closeModal()">Cancel</button>
+    </form>
+</div>
+

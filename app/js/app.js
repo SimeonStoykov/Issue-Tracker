@@ -29,6 +29,14 @@ angular.module('issueTracker', [
                         requiresAdmin: true
                     }
                 })
+                .when('/projects/add', {
+                    templateUrl: 'views/projects/view-all-projects.html',
+                    controller: 'ViewAllProjectsController',
+                    access: {
+                        requiresAuthentication: true,
+                        requiresAdmin: true
+                    }
+                })
                 .when('/projects/:id', {
                     templateUrl: 'views/projects/view-project.html',
                     controller: 'ViewProjectController',

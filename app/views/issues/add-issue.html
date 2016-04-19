@@ -13,7 +13,7 @@
         </div>
         <div class="form-group text-left">
             <label for="issueDescription" class="control-label">Description: </label>
-            <textarea class="form-control add-issue-description" id="issueDescription"
+            <textarea class="form-control modal-description" id="issueDescription"
                       ng-model="issue.description" cols="30" rows="10">
             </textarea>
         </div>
@@ -44,7 +44,6 @@
                 <input type="text" class="form-control add-issue-due-date" uib-datepicker-popup="{{format}}"
                        ng-model="issue.dueDate" ng-model-options="dateOptions" is-open="calendar.isOpened"
                        datepicker-options="datePickerOptions" required="required" close-text="Close" placeholder="day-month-year"/>
-
                 <button type="button" class="btn btn-info" ng-click="openCalendar()">
                     <i class="glyphicon glyphicon-calendar calendar-icon"></i>
                 </button>
@@ -67,8 +66,8 @@
                       class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
             </span>
         </div>
-        <button class="btn btn-primary save-project-btn" ng-click="addIssue(issue)">Add issue</button>
-        <button class="btn btn-danger save-project-btn" ng-click="closeModal()">Cancel</button>
+        <button class="btn btn-primary add-issue-btn" ng-click="addIssue(issue)">Add issue</button>
+        <button class="btn btn-danger add-issue-btn" ng-click="closeModal()">Cancel</button>
     </form>
 </div>
 

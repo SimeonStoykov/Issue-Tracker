@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('issueTracker')
-    .controller('AddIssueModalController', [
+    .controller('AddIssueController', [
         '$scope',
         'projectsService',
         'usersService',
@@ -11,7 +11,7 @@ angular.module('issueTracker')
         '$routeParams',
         '$location',
         '$uibModalInstance',
-        function AddIssueModalController($scope, projectsService, usersService, labelsService, issuesService,
+        function AddIssueController($scope, projectsService, usersService, labelsService, issuesService,
                                          notificationService, $routeParams, $location, $uibModalInstance) {
             $scope.openedProjectId = $routeParams.id;
             $scope.issue = {
@@ -19,7 +19,7 @@ angular.module('issueTracker')
             };
 
             projectsService.getAllProjects()
-                .then(function (response) {
+                .then(function(response) {
                     $scope.projects = response.data;
 
                     $scope.issue.selectedProject = $scope.projects.filter(function (project) {
@@ -31,16 +31,16 @@ angular.module('issueTracker')
                     $scope.issue.priority = $scope.priorities[0];
 
                     usersService.getAllUsers()
-                        .then(function (response) {
+                        .then(function(response) {
                             $scope.users = response.data;
 
-                            $scope.issue.assignee = $scope.users.filter(function (user) {
+                            $scope.issue.assignee = $scope.users.filter(function(user) {
                                 return user.Id === $scope.issue.selectedProject.Lead.Id;
                             })[0];
                         });
                 });
 
-            $scope.getPrioritiesForProject = function (project) {
+            $scope.getPrioritiesForProject = function(project) {
                 $scope.priorities = project.Priorities;
                 $scope.issue.priority = $scope.priorities[0];
             };
@@ -57,24 +57,24 @@ angular.module('issueTracker')
                 filter: $scope.labelToAdd ? $scope.labelToAdd : ''
             };
 
-            $scope.getLabels = function () {
+            $scope.getLabels = function() {
                 labelsService.getLabels(params)
-                    .then(function (response) {
+                    .then(function(response) {
                         $scope.labels = response.data;
                     });
             };
 
-            $scope.addLabel = function (label) {
+            $scope.addLabel = function(label) {
                 $scope.issue.labels.push(label);
                 $scope.labelToAdd = '';
             };
 
-            $scope.removeLabel = function (label) {
+            $scope.removeLabel = function(label) {
                 var indexOfTheLabel = $scope.issue.labels.indexOf(label);
                 $scope.issue.labels.splice(indexOfTheLabel, 1);
             };
 
-            $scope.addIssue = function (issue) {
+            $scope.addIssue = function(issue) {
                 var labelsToAdd = issue.labels.map(function (label) {
                     return {
                         Name: label
@@ -91,14 +91,12 @@ angular.module('issueTracker')
                     Labels: labelsToAdd
                 };
 
-                console.log(issue.dueDate.toUTCString());
-
                 issuesService.addIssueToProject(issueData)
-                    .then(function (response) {
+                    .then(function(response) {
                         $uibModalInstance.close();
                         $location.path('/projects/' + issue.selectedProject.Id);
                         notificationService.showInfo('Issue added successfully!');
-                    }, function (error) {
+                    }, function(error) {
                         notificationService.showError('Adding issue failed!', error);
                     });
             };
@@ -111,7 +109,7 @@ angular.module('issueTracker')
                 startingDay: 1
             };
 
-            $scope.openCalendar = function () {
+            $scope.openCalendar = function() {
                 $scope.calendar.isOpened = true;
             };
 
@@ -123,7 +121,7 @@ angular.module('issueTracker')
                 timezone: 'UTC+00:00'
             };
 
-            $scope.closeModal = function () {
+            $scope.closeModal = function() {
                 $uibModalInstance.dismiss();
                 $location.path('/projects/' + $routeParams.id);
             };

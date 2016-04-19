@@ -18,8 +18,17 @@
   width: 35%;
 }
 
-.save-project-btn {
+.save-project-btn, .add-issue-btn {
   width: 19%;
+}
+
+.add-project-btn {
+  width: 38% !important;
+  margin-top: 20px !important;
+}
+
+.all-projects-header {
+  text-decoration: underline;
 }
 
 .change-password-field {
@@ -124,7 +133,12 @@
 
 .inline-input-select {
   display: inline-block !important;
-  width: 45% !important;
+  width: 70% !important;
+}
+
+.add-project-inline-inputs {
+  display: inline-block !important;
+  width: 80% !important;
 }
 
 .inline-block-span {
@@ -168,7 +182,7 @@
   padding-bottom: 20px !important;
 }
 
-.add-issue-description {
+.modal-description {
   display: inline-block !important;
   width: 80% !important;
   height: 100px !important;

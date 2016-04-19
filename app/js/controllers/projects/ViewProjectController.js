@@ -13,7 +13,7 @@ angular.module('issueTracker')
         function ViewProjectController($scope, $rootScope, projectsService, issuesService, $route, authService, usersService, $uibModal) {
 
             projectsService.getProjectById($route.current.params.id)
-                .then(function (response) {
+                .then(function(response) {
                     $scope.project = response.data;
                     $scope.isUserProjectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
                     $rootScope.isUserProjectLead = $scope.isUserProjectLead;
@@ -29,7 +29,7 @@ angular.module('issueTracker')
                     $scope.project.projectPriorities = $scope.project.Priorities.join(', ');
 
                     issuesService.getIssuesForProject($route.current.params.id)
-                        .then(function (response) {
+                        .then(function(response) {
                             $scope.issues = response.data;
                             var endIndex = $scope.paginationParams.pageNumber * $scope.paginationParams.pageSize;
                             var startIndex = 0;
@@ -38,7 +38,7 @@ angular.module('issueTracker')
                         });
 
                     usersService.getAllUsers()
-                        .then(function (response) {
+                        .then(function(response) {
                             $scope.users = response.data;
                             $scope.project.selectedUser = $scope.users.filter(function (user) {
                                 return user.Id === $scope.project.Lead.Id;
@@ -51,7 +51,7 @@ angular.module('issueTracker')
                 pageSize: 5
             };
 
-            $scope.pageChanged = function (newPage) {
+            $scope.pageChanged = function(newPage) {
                 var endIndex = newPage * $scope.paginationParams.pageSize;
                 var startIndex = endIndex - $scope.paginationParams.pageSize;
 
@@ -60,10 +60,10 @@ angular.module('issueTracker')
 
             $scope.isAdmin = authService.isAdmin();
 
-            $scope.openAddIssueModal = function () {
+            $scope.openAddIssueModal = function() {
                 $uibModal.open({
                     templateUrl: 'views/issues/add-issue.html',
-                    controller: 'AddIssueModalController',
+                    controller: 'AddIssueController',
                     backdrop: 'static',
                     keyboard: false
                 });

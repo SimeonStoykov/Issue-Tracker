@@ -4,7 +4,8 @@ angular.module('issueTracker')
     .controller('ViewAllProjectsController', [
         '$scope',
         'projectsService',
-        function ViewAllProjectsController($scope, projectsService) {
+        '$uibModal',
+        function ViewAllProjectsController($scope, projectsService, $uibModal) {
 
             $scope.projectsParams = {
                 pageNumber: 1,
@@ -29,6 +30,15 @@ angular.module('issueTracker')
                     }, function (error) {
                         notificationService.showError('Error getting projects!', error);
                     });
+            };
+
+            $scope.openAddProjectModal = function() {
+                $uibModal.open({
+                    templateUrl: 'views/projects/add-project.html',
+                    controller: 'AddProjectController',
+                    backdrop: 'static',
+                    keyboard: false
+                });
             };
         }
     ]);
