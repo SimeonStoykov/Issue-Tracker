@@ -11,7 +11,6 @@ angular.module('issueTracker')
         '$location',
         '$rootScope',
         function ViewIssueController($scope, issuesService, authService, projectsService, $route, notificationService) {
-
             issuesService.getIssueById($route.current.params.id)
                 .then(function(response) {
                     $scope.issue = response.data;
@@ -27,7 +26,7 @@ angular.module('issueTracker')
                                     $scope.projectIssues = response.data;
                                     $scope.userHaveIssueInTheProject = false;
                                     for (var i = 0; i < $scope.projectIssues.length; i++) {
-                                        if($scope.projectIssues[i].Assignee.Id === localStorage['currentUserId']) {
+                                        if ($scope.projectIssues[i].Assignee.Id === localStorage['currentUserId']) {
                                             $scope.userHaveIssueInTheProject = true;
                                             break;
                                         }
@@ -62,13 +61,13 @@ angular.module('issueTracker')
                 comment = {
                     Text: comment
                 };
-              issuesService.addCommentToIssue($route.current.params.id, comment)
-                  .then(function(response) {
-                      $route.reload();
-                      notificationService.showInfo('Comment added successfully!');
-                  }, function(error) {
-                      notificationService.showError('Adding comment failed!', error);
-                  });
+                issuesService.addCommentToIssue($route.current.params.id, comment)
+                    .then(function(response) {
+                        $route.reload();
+                        notificationService.showInfo('Comment added successfully!');
+                    }, function(error) {
+                        notificationService.showError('Adding comment failed!', error);
+                    });
             }
         }
     ]);

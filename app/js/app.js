@@ -1,4 +1,5 @@
 'use strict';
+
 angular.module('issueTracker', [
         'ngRoute',
         'angular-loading-bar',
@@ -48,16 +49,14 @@ angular.module('issueTracker', [
                     templateUrl: 'views/projects/edit-project.html',
                     controller: 'EditProjectController',
                     access: {
-                        requiresAuthentication: true,
-                        requiresAdminOrLead: true
+                        requiresAuthentication: true
                     }
                 })
                 .when('/projects/:id/add-issue', {
                     templateUrl: 'views/projects/view-project.html',
                     controller: 'ViewProjectController',
                     access: {
-                        requiresAuthentication: true,
-                        requiresAdminOrLead: true
+                        requiresAuthentication: true
                     }
                 })
                 .when('/issues/:id', {
@@ -71,8 +70,7 @@ angular.module('issueTracker', [
                     templateUrl: 'views/issues/edit-issue.html',
                     controller: 'EditIssueController',
                     access: {
-                        requiresAuthentication: true,
-                        requiresAdminOrLead: true
+                        requiresAuthentication: true
                     }
                 })
                 .when('/profile/password', {
@@ -103,13 +101,6 @@ angular.module('issueTracker', [
         '$route',
         'notificationService',
         function($rootScope, $location, authService, projectsService, $route, notificationService) {
-            //var previousRoute;
-            //
-            //$rootScope.$on('$locationChangeStart', function(evt, absNewUrl, absOldUrl) {
-            //    var hashIndex = absOldUrl.indexOf('#');
-            //    previousRoute = absOldUrl.substring(hashIndex + 1);
-            //});
-
             $rootScope.$on('$routeChangeStart', function(event, next) {
                 if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                     $location.path('/');

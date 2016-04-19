@@ -22,7 +22,7 @@ angular.module('issueTracker')
                 .then(function(response) {
                     $scope.projects = response.data;
 
-                    $scope.issue.selectedProject = $scope.projects.filter(function (project) {
+                    $scope.issue.selectedProject = $scope.projects.filter(function(project) {
                         return project.Id.toString() === $scope.openedProjectId;
                     })[0];
 

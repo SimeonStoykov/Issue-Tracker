@@ -13,23 +13,21 @@ angular.module('issueTracker')
                 filter: ''
             };
 
-            projectsService.getAllProjects($scope.projectsParams)
-                .then(function (response) {
-                    $scope.projects = response.data.Projects;
-                    $scope.totalProjectsCount = response.data.TotalCount;
-                }, function (error) {
-                    notificationService.showError('Error getting projects!', error);
-                });
-
-            $scope.pageChanged = function (newPage) {
-                $scope.projectsParams.pageNumber = newPage;
+            $scope.getAllProjects = function() {
                 projectsService.getAllProjects($scope.projectsParams)
-                    .then(function (response) {
+                    .then(function(response) {
                         $scope.projects = response.data.Projects;
                         $scope.totalProjectsCount = response.data.TotalCount;
-                    }, function (error) {
+                    }, function(error) {
                         notificationService.showError('Error getting projects!', error);
                     });
+            };
+
+            $scope.getAllProjects();
+
+            $scope.pageChanged = function(newPage) {
+                $scope.projectsParams.pageNumber = newPage;
+                $scope.getAllProjects();
             };
 
             $scope.openAddProjectModal = function() {

@@ -6,12 +6,11 @@ angular.module('issueTracker')
         'projectsService',
         'issuesService',
         function DashboardController($scope, projectsService, issuesService) {
-
             projectsService.getAffiliatedProjects()
                 .then(function(projects) {
                     $scope.affiliatedProjects = projects;
                 }, function(error) {
-                    notificationService.showError('Error getting affiliated projects', error);
+                    notificationService.showError('Error getting affiliated projects!', error);
                 });
 
             var params = {
@@ -22,19 +21,21 @@ angular.module('issueTracker')
 
             $scope.paginationParams = params;
 
-            issuesService.getCurrentUserIssues(params)
-                .then(function(response) {
-                    $scope.issues = response.data.Issues;
-                    $scope.totalUserIssuesCount = response.data.TotalPages * $scope.paginationParams.pageSize;
-                });
-
-            $scope.pageChanged = function(newPage) {
-                params.pageNumber = newPage;
+            $scope.getCurrentUserIssues = function() {
                 issuesService.getCurrentUserIssues(params)
                     .then(function(response) {
                         $scope.issues = response.data.Issues;
                         $scope.totalUserIssuesCount = response.data.TotalPages * $scope.paginationParams.pageSize;
+                    }, function(error) {
+                        notificationService.showError('Error getting your issues!', error);
                     });
+            };
+
+            $scope.getCurrentUserIssues();
+
+            $scope.pageChanged = function(newPage) {
+                params.pageNumber = newPage;
+                $scope.getCurrentUserIssues();
             };
         }
     ]);

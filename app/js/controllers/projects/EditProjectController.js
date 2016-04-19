@@ -17,6 +17,18 @@ angular.module('issueTracker')
                 .then(function(response) {
                     $scope.project = response.data;
 
+                    $scope.isUserPojectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
+
+                    if(!$scope.isUserPojectLead && !$scope.isAdmin) {
+                        $location.path('projects/' + $routeParams.id);
+                        notificationService.showError('You don\'t have rights to perform this action!');
+                    }
+
+                    localStorage['projectInfo'] = {
+                        isUserLead: $scope.isUserProjectLead,
+                        projectId: $routeParams.id
+                    };
+
                     $scope.project.editedLabels = $scope.project.Labels.map(function(label) {
                         return label.Name;
                     });

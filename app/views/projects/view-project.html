@@ -49,25 +49,37 @@
             </div>
         </div>
         <div class="col-md-7 project-page-issues">
-            <h3>Project Issues</h3>
+            <h3>
+                Project Issues
+                <span ng-if="allIssuesShown">(All issues)</span>
+                <span ng-if="!allIssuesShown">(My issues)</span>
+            </h3>
+
             <div>
-                <button class="btn btn-primary" ng-click="showMyIssues()">Show my issues</button>
-                <button class="btn btn-primary" ng-click="showAllIssues()"> Show all issues</button>
-                <label for="filterBy">Filter by: </label>
-                <select id="filterBy" ng-model="filterBy" class="form-group" ng-change="filterChanged()">
-                    <option selected disabled value="">Select option</option>
-                    <option selected value="title">Title</option>
-                    <option value="description">Description</option>
-                    <option value="dueDate">Due Date</option>
-                    <option value="assignee">Assignee</option>
-                </select>
-                <input type="text" ng-show="filterBy === 'title'" placeholder="Enter issue title..."
-                       ng-model="search.Title">
-                <input type="text" ng-show="filterBy === 'description'" placeholder="Enter issue description..."
-                       ng-model="search.Description">
-                <div date-picker date="search.DueDate" ng-show="filterBy === 'dueDate'"></div>
-                <input type="text" ng-show="filterBy === 'assignee'" placeholder="Enter issue assignee..."
-                       ng-model="search.Assignee.Username">
+                <button class="btn btn-primary" ng-click="showMyIssues()" ng-disabled="!allIssuesShown">Show my issues</button>
+                <button class="btn btn-primary" ng-click="showAllIssues()" ng-disabled="allIssuesShown"> Show all issues</button>
+                <div class="form-group text-left filter-block">
+                    <label for="filterBy">Filter by: </label>
+                    <select id="filterBy" ng-model="filterBy" class="form-control filter-group-inputs">
+                        <option selected disabled value="">Select option</option>
+                        <option selected value="title">Title</option>
+                        <option value="description">Description</option>
+                        <option value="dueDate">Due Date</option>
+                        <option value="assignee">Assignee</option>
+                    </select>
+                    <input type="text" ng-if="filterBy === 'title'" class=" filter-group-inputs filter-input-field"
+                           placeholder="Enter issue title..."
+                           ng-model="search.Title">
+                    <input type="text" ng-if="filterBy === 'description'" class=" filter-group-inputs filter-input-field"
+                           placeholder="Enter issue description..."
+                           ng-model="search.Description">
+                    <input type="text" ng-if="filterBy === 'dueDate'" class=" filter-group-inputs filter-input-field"
+                           placeholder="day-month-year"
+                           ng-model="search.DueDate">
+                    <input type="text" ng-if="filterBy === 'assignee'" class=" filter-group-inputs filter-input-field"
+                           placeholder="Enter issue assignee..."
+                           ng-model="search.Assignee.Username">
+                </div>
             </div>
             <table class="table table-striped table-hover project-page-issues-table">
                 <thead>
@@ -84,7 +96,7 @@
                         <a href="#/issues/{{issue.Id}}">{{issue.Title}}</a>
                     </td>
                     <td class="col-md-4">{{issue.Description}}</td>
-                    <td class="col-md-3">{{issue.DueDate | date:'dd-MM-yyyy'}}</td>
+                    <td class="col-md-3">{{issue.DueDate}}</td>
                     <td class="col-md-2">
                         {{issue.Assignee.Username}}
                     </td>

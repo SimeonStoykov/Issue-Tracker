@@ -3,21 +3,16 @@
 angular.module('issueTracker')
     .controller('ViewProjectController', [
         '$scope',
-        '$rootScope',
         'projectsService',
         'issuesService',
         '$route',
         'authService',
-        'usersService',
         '$uibModal',
-        '$filter',
-        function ViewProjectController($scope, $rootScope, projectsService, issuesService, $route, authService, usersService, $uibModal, $filter) {
-
+        function ViewProjectController($scope, projectsService, issuesService, $route, authService, $uibModal) {
             projectsService.getProjectById($route.current.params.id)
                 .then(function(response) {
                     $scope.project = response.data;
                     $scope.isUserProjectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
-                    $rootScope.isUserProjectLead = $scope.isUserProjectLead;
 
                     $scope.project.Priorities = $scope.project.Priorities.map(function(priority) {
                         return priority.Name;
@@ -28,26 +23,16 @@ angular.module('issueTracker')
                     issuesService.getIssuesForProject($route.current.params.id)
                         .then(function(response) {
                             $scope.issues = response.data;
-                            $scope.issues.forEach(function(issue) {
-                                $filter('date')(issue, 'dd-MM-yyyy');
+                            $scope.issues.map(function(issue) {
+                                var dateParts = issue.DueDate.substring(0, 10).split('-');
+                                issue.DueDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
                             });
-                        });
-
-                    usersService.getAllUsers()
-                        .then(function(response) {
-                            $scope.users = response.data;
-                            $scope.project.selectedUser = $scope.users.filter(function(user) {
-                                return user.Id === $scope.project.Lead.Id;
-                            })[0];
                         });
                 });
 
             $scope.paginationParams = {
                 pageNumber: 1,
                 pageSize: 5
-            };
-
-            $scope.pageChanged = function(newPage) {
             };
 
             $scope.isAdmin = authService.isAdmin();
@@ -68,8 +53,8 @@ angular.module('issueTracker')
             };
 
             $scope.showAllIssues = function() {
-                console.log($scope.search);
                 $scope.search = {};
+                $scope.allIssuesShown = true;
             };
 
             $scope.showMyIssues = function() {
@@ -77,7 +62,10 @@ angular.module('issueTracker')
                     Assignee: {
                         Username: localStorage['username']
                     }
-                }
+                };
+                $scope.allIssuesShown = false;
             };
+
+            $scope.allIssuesShown = false;
         }
     ]);

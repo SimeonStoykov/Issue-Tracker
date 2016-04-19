@@ -19,7 +19,8 @@
                 </div>
                 <div class="form-group text-left">
                     <label class="control-label" for="projectDescription">Description:</label>
-                    <textarea class="form-control project-edit-description" name="projectDescription" id="projectDescription"
+                    <textarea class="form-control project-edit-description" name="projectDescription"
+                              id="projectDescription"
                               ng-model="project.Description"></textarea>
                 </div>
                 <div class="form-group text-left">
@@ -38,7 +39,8 @@
                 </div>
                 <div class="form-group text-left">
                     <label class="control-label" for="priorities">Priorities:</label>
-                    <input type="text" id="priorities" class="form-control project-view-priorities" ng-model="project.projectPriorities">
+                    <input type="text" id="priorities" class="form-control project-view-priorities"
+                           ng-model="project.projectPriorities">
                 </div>
                 <div class="form-group text-left">
                     <label class="control-label" for="addLabel">Add label:</label>
@@ -50,9 +52,11 @@
                 </div>
                 <div class="form-group text-left">
                     <label class="control-label">Labels:</label>
-                    <span class="tag label label-info inline-block-span" ng-repeat="label in project.editedLabels track by $index">
+                    <span class="tag label label-info inline-block-span"
+                          ng-repeat="label in project.editedLabels track by $index">
                       <span class="text-span">{{label}}</span>
-                      <a ng-click="removeLabel(label)"><i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+                      <a ng-click="removeLabel(label)"><i
+                              class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
                     </span>
                 </div>
                 <button class="btn btn-primary save-project-btn" ng-click="editProject(project)">Save</button>

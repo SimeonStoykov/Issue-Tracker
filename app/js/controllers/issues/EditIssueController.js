@@ -10,8 +10,9 @@ angular.module('issueTracker')
         'usersService',
         'labelsService',
         '$location',
+        'authService',
         function EditIssueController($scope, issuesService, projectsService, $route, notificationService, usersService,
-                                     labelsService, $location) {
+                                     labelsService, $location, authService) {
             issuesService.getIssueById($route.current.params.id)
                 .then(function(response) {
                     $scope.issue = response.data;
@@ -23,8 +24,15 @@ angular.module('issueTracker')
                     $scope.issue.DueDate = new Date($scope.issue.DueDate);
 
                     projectsService.getProjectById($scope.issue.Project.Id)
-                        .then(function (response) {
+                        .then(function(response) {
                             $scope.project = response.data;
+
+                            $scope.isUserProjectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
+
+                            if(!$scope.isUserProjectLead && !$scope.isAdmin) {
+                                $location.path('issues/' + $route.current.params.id);
+                                notificationService.showError('You don\'t have rights to perform this action!');
+                            }
 
                             $scope.priorities = $scope.project.Priorities;
 
@@ -44,7 +52,6 @@ angular.module('issueTracker')
                 });
 
             $scope.changeIssueStatus = function(statusId) {
-
                 var params = {
                     statusid: statusId
                 };
@@ -111,5 +118,7 @@ angular.module('issueTracker')
                         notificationService.showError('Issue editing failed!', error);
                     });
             };
+
+            $scope.isAdmin = authService.isAdmin();
         }
     ]);

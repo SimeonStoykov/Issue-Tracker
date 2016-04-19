@@ -23,7 +23,6 @@
 }
 
 .add-project-btn {
-  width: 38% !important;
   margin-top: 20px !important;
 }
 
@@ -133,7 +132,30 @@
 
 .inline-input-select {
   display: inline-block !important;
-  width: 70% !important;
+  width: 46% !important;
+}
+
+.filter-input-field {
+  height: 38px;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+
+.filter-block {
+  width: 85% !important;
+  margin: 0 auto !important;
+  margin-top: 15px !important;
+}
+
+.filter-group-inputs {
+  display: inline-block !important;
+  width: 43% !important;
 }
 
 .add-project-inline-inputs {
