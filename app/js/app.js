@@ -123,7 +123,7 @@ angular.module('issueTracker', [
         'projectsService',
         '$route',
         'notificationService',
-        function ($rootScope, $location, authService, projectsService, $route, notificationService) {
+        function($rootScope, $location, authService, projectsService, $route, notificationService) {
             $rootScope.$on('$routeChangeStart', function (event, next) {
                 if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                     $location.path('/');
