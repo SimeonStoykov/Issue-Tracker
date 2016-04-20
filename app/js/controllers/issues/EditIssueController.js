@@ -79,7 +79,7 @@ angular.module('issueTracker')
 
             $scope.getLabels = function() {
                 labelsService.getLabels(params)
-                    .then(function (response) {
+                    .then(function(response) {
                         $scope.labels = response.data;
                     });
             };

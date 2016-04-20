@@ -5,7 +5,9 @@ angular.module('issueTracker')
         '$scope',
         'projectsService',
         'issuesService',
-        function DashboardController($scope, projectsService, issuesService) {
+        'INITIAL_PAGE_NUMBER',
+        'DEFAULT_PAGE_SIZE',
+        function DashboardController($scope, projectsService, issuesService, INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE) {
             projectsService.getAffiliatedProjects()
                 .then(function(projects) {
                     $scope.affiliatedProjects = projects;
@@ -13,16 +15,14 @@ angular.module('issueTracker')
                     notificationService.showError('Error getting affiliated projects!', error);
                 });
 
-            var params = {
-                pageNumber: 1,
-                pageSize: 5,
+            $scope.paginationParams = {
+                pageNumber: INITIAL_PAGE_NUMBER,
+                pageSize: DEFAULT_PAGE_SIZE,
                 orderBy: 'DueDate desc'
             };
 
-            $scope.paginationParams = params;
-
             $scope.getCurrentUserIssues = function() {
-                issuesService.getCurrentUserIssues(params)
+                issuesService.getCurrentUserIssues($scope.paginationParams)
                     .then(function(response) {
                         $scope.issues = response.data.Issues;
                         $scope.totalUserIssuesCount = response.data.TotalPages * $scope.paginationParams.pageSize;
@@ -34,7 +34,7 @@ angular.module('issueTracker')
             $scope.getCurrentUserIssues();
 
             $scope.pageChanged = function(newPage) {
-                params.pageNumber = newPage;
+                $scope.paginationParams.pageNumber = newPage;
                 $scope.getCurrentUserIssues();
             };
         }

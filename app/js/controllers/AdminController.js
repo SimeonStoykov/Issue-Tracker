@@ -3,14 +3,13 @@
 angular.module('issueTracker')
     .controller('AdminController', [
         '$scope',
+        '$route',
         'usersService',
         'notificationService',
-        '$route',
-        function AdminController($scope, usersService, notificationService, $route) {
+        function AdminController($scope, $route, usersService, notificationService) {
             usersService.getAllUsers()
                 .then(function(response) {
                     $scope.users = response.data;
-                    debugger;
                     $scope.users = $scope.users.filter(function(user) {
                         return user.isAdmin === false;
                     });

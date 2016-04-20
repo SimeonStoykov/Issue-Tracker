@@ -7,7 +7,9 @@ angular.module('issueTracker')
         'BASE_URL',
         'issuesService',
         'usersService',
-        function($http, $q, BASE_URL, issuesService, usersService) {
+        'INITIAL_PAGE_NUMBER',
+        'MAX_ITEMS_COUNT',
+        function($http, $q, BASE_URL, issuesService, usersService, INITIAL_PAGE_NUMBER, MAX_ITEMS_COUNT) {
 
             function getAllProjects(params) {
                 var deffered = $q.defer();
@@ -43,8 +45,8 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 var issuesParams = {
-                    pageNumber: 1,
-                    pageSize: 2147483647,
+                    pageNumber: INITIAL_PAGE_NUMBER,
+                    pageSize: MAX_ITEMS_COUNT,
                     orderBy: 'DueDate'
                 };
 
@@ -56,8 +58,8 @@ angular.module('issueTracker')
                         });
 
                         var projectsParams = {
-                            pageNumber: 1,
-                            pageSize: 2147483647,
+                            pageNumber: INITIAL_PAGE_NUMBER,
+                            pageSize: MAX_ITEMS_COUNT,
                             filter: 'Lead.Id = "' + localStorage['currentUserId'] + '"'
                         };
 

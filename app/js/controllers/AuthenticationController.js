@@ -3,14 +3,12 @@
 angular.module('issueTracker')
     .controller('AuthenticationController', [
         '$scope',
+        '$route',
         'authService',
         'usersService',
         'GRANT_TYPE',
-        '$route',
         'notificationService',
-        '$uibModal',
-        function AuthenticationController($scope, authService, usersService, GRANT_TYPE, $route, notificationService, $uibModal) {
-
+        function AuthenticationController($scope, $route, authService, usersService, GRANT_TYPE, notificationService) {
             $scope.login = function(user) {
                 user.grant_type = GRANT_TYPE;
                 authService.loginUser(user)
@@ -31,7 +29,7 @@ angular.module('issueTracker')
 
             $scope.register = function(user) {
                 authService.registerUser(user)
-                    .then(function(result) {
+                    .then(function() {
                         var loginUserData = {
                             username: user.email,
                             password: user.password,
@@ -39,14 +37,14 @@ angular.module('issueTracker')
                         };
                         notificationService.showInfo('Registration successful!');
                         $scope.login(loginUserData);
-                    }, function (error) {
+                    }, function(error) {
                         notificationService.showError("Registration error", error);
                     });
             };
 
             $scope.changePassword = function(passwordInfo) {
                 authService.changePassword(passwordInfo)
-                    .then(function(result) {
+                    .then(function() {
                         notificationService.showInfo('Password changed successfully!');
                         $route.reload();
                     }, function(error) {
@@ -54,7 +52,7 @@ angular.module('issueTracker')
                     });
             };
 
-            $scope.logout = function () {
+            $scope.logout = function() {
                 authService.logoutUser();
             };
 

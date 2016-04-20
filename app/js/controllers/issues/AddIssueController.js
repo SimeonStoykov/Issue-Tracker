@@ -11,8 +11,9 @@ angular.module('issueTracker')
         '$routeParams',
         '$location',
         '$uibModalInstance',
+        'DEFAULT_MODEL_OPTIONS',
         function AddIssueController($scope, projectsService, usersService, labelsService, issuesService,
-                                         notificationService, $routeParams, $location, $uibModalInstance) {
+                                         notificationService, $routeParams, $location, $uibModalInstance, DEFAULT_MODEL_OPTIONS) {
             $scope.openedProjectId = $routeParams.id;
             $scope.issue = {
                 labels: []
@@ -45,13 +46,7 @@ angular.module('issueTracker')
                 $scope.issue.priority = $scope.priorities[0];
             };
 
-            $scope.modelOptions = {
-                debounce: {
-                    default: 100,
-                    blur: 100
-                },
-                getterSetter: true
-            };
+            $scope.modelOptions = DEFAULT_MODEL_OPTIONS;
 
             var params = {
                 filter: $scope.labelToAdd ? $scope.labelToAdd : ''

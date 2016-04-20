@@ -3,7 +3,6 @@
 angular.module('issueTracker')
     .factory('notificationService', [
         function () {
-
             function showInfo(message) {
                 noty({
                         text: message,

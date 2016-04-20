@@ -12,7 +12,6 @@ angular.module('issueTracker')
         'authService',
         function EditProjectController($scope, projectsService, $routeParams, usersService, labelsService, $location,
                                        notificationService, authService) {
-
             projectsService.getProjectById($routeParams.id)
                 .then(function(response) {
                     $scope.project = response.data;
@@ -23,11 +22,6 @@ angular.module('issueTracker')
                         $location.path('projects/' + $routeParams.id);
                         notificationService.showError('You don\'t have rights to perform this action!');
                     }
-
-                    localStorage['projectInfo'] = {
-                        isUserLead: $scope.isUserProjectLead,
-                        projectId: $routeParams.id
-                    };
 
                     $scope.project.editedLabels = $scope.project.Labels.map(function(label) {
                         return label.Name;

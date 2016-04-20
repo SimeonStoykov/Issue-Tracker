@@ -43,7 +43,7 @@ angular.module('issueTracker')
 
             $scope.isAdmin = authService.isAdmin();
 
-            $scope.changeIssueStatus = function (statusId) {
+            $scope.changeIssueStatus = function(statusId) {
                 var params = {
                     statusid: statusId
                 };

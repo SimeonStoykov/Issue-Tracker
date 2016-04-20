@@ -10,7 +10,7 @@ angular.module('issueTracker', [
     .config([
         '$routeProvider',
         '$httpProvider',
-        function($routeProvider, $httpProvider) {
+        function ($routeProvider, $httpProvider) {
             $routeProvider
                 .when('/', {
                     templateUrl: 'views/home/home-dashboard.html',
@@ -98,6 +98,24 @@ angular.module('issueTracker', [
         }])
     .constant('BASE_URL', 'http://softuni-issue-tracker.azurewebsites.net/')
     .constant('GRANT_TYPE', 'password')
+    .constant('INITIAL_PAGE_NUMBER', 1)
+    .constant('DEFAULT_PAGE_SIZE', 5)
+    .constant('ALL_PROJECTS_PAGE_SIZE', 15)
+    .constant('DEFAULT_PROJECTS_FILTER', '')
+    .constant('DEFAULT_MODEL_OPTIONS', {
+        debounce: {
+            default: 100,
+            blur: 100
+        },
+        getterSetter: true
+    })
+    .constant('DEFAULT_DATE_FORMAT', 'dd-MM-yyyy')
+    .constant('DATE_PICKER_TIMEZONE', 'UTC+00:00')
+    .constant('DEFAULT_DATE_PICKER_OPTIONS', {
+        maxDate: new Date(2020, 5, 22),
+        startingDay: 1
+    })
+    .constant('MAX_ITEMS_COUNT', 2147483647)
     .run([
         '$rootScope',
         '$location',
@@ -105,8 +123,8 @@ angular.module('issueTracker', [
         'projectsService',
         '$route',
         'notificationService',
-        function($rootScope, $location, authService, projectsService, $route, notificationService) {
-            $rootScope.$on('$routeChangeStart', function(event, next) {
+        function ($rootScope, $location, authService, projectsService, $route, notificationService) {
+            $rootScope.$on('$routeChangeStart', function (event, next) {
                 if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                     $location.path('/');
                 } else if (next.access && next.access.requiresAdmin && !authService.isAdmin()) {

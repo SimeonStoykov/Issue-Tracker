@@ -5,32 +5,34 @@ angular.module('issueTracker')
         '$scope',
         'projectsService',
         '$uibModal',
-        function ViewAllProjectsController($scope, projectsService, $uibModal) {
-
+        'INITIAL_PAGE_NUMBER',
+        'ALL_PROJECTS_PAGE_SIZE',
+        'DEFAULT_PROJECTS_FILTER',
+        function ViewAllProjectsController($scope, projectsService, $uibModal, INITIAL_PAGE_NUMBER, ALL_PROJECTS_PAGE_SIZE, DEFAULT_PROJECTS_FILTER) {
             $scope.projectsParams = {
-                pageNumber: 1,
-                pageSize: 15,
-                filter: ''
+                pageNumber: INITIAL_PAGE_NUMBER,
+                pageSize: ALL_PROJECTS_PAGE_SIZE,
+                filter: DEFAULT_PROJECTS_FILTER
             };
 
-            $scope.getAllProjects = function() {
+            $scope.getAllProjects = function () {
                 projectsService.getAllProjects($scope.projectsParams)
-                    .then(function(response) {
+                    .then(function (response) {
                         $scope.projects = response.data.Projects;
                         $scope.totalProjectsCount = response.data.TotalCount;
-                    }, function(error) {
+                    }, function (error) {
                         notificationService.showError('Error getting projects!', error);
                     });
             };
 
             $scope.getAllProjects();
 
-            $scope.pageChanged = function(newPage) {
+            $scope.pageChanged = function (newPage) {
                 $scope.projectsParams.pageNumber = newPage;
                 $scope.getAllProjects();
             };
 
-            $scope.openAddProjectModal = function() {
+            $scope.openAddProjectModal = function () {
                 $uibModal.open({
                     templateUrl: 'views/projects/add-project.html',
                     controller: 'AddProjectController',
