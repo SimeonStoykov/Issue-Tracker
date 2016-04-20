@@ -3,14 +3,16 @@
 angular.module('issueTracker')
     .controller('ViewProjectController', [
         '$scope',
+        '$route',
+        '$uibModal',
         'projectsService',
         'issuesService',
-        '$route',
         'authService',
-        '$uibModal',
         'INITIAL_PAGE_NUMBER',
         'DEFAULT_PAGE_SIZE',
-        function ViewProjectController($scope, projectsService, issuesService, $route, authService, $uibModal, INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE) {
+        'DEFAULT_PROJECT_ISSUES_FILTER',
+        function ViewProjectController($scope, $route, $uibModal, projectsService, issuesService, authService,
+                                       INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PROJECT_ISSUES_FILTER) {
             projectsService.getProjectById($route.current.params.id)
                 .then(function (response) {
                     $scope.project = response.data;
@@ -29,7 +31,11 @@ angular.module('issueTracker')
                                 var dateParts = issue.DueDate.substring(0, 10).split('-');
                                 issue.DueDate = dateParts[2] + '-' + dateParts[1] + '-' + dateParts[0];
                             });
+                        }, function (error) {
+                            notificationService.showError('Getting project issues failed!', error);
                         });
+                }, function (error) {
+                    notificationService.showError('Getting project info failed!', error);
                 });
 
             $scope.paginationParams = {
@@ -48,11 +54,9 @@ angular.module('issueTracker')
                 });
             };
 
-            $scope.search = {
-                Assignee: {
-                    Username: localStorage['username']
-                }
-            };
+            $scope.search = DEFAULT_PROJECT_ISSUES_FILTER;
+
+            $scope.allIssuesShown = false;
 
             $scope.showAllIssues = function () {
                 $scope.search = {};
@@ -60,14 +64,8 @@ angular.module('issueTracker')
             };
 
             $scope.showMyIssues = function () {
-                $scope.search = {
-                    Assignee: {
-                        Username: localStorage['username']
-                    }
-                };
+                $scope.search = DEFAULT_PROJECT_ISSUES_FILTER;
                 $scope.allIssuesShown = false;
             };
-
-            $scope.allIssuesShown = false;
         }
     ]);

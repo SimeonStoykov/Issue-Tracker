@@ -3,15 +3,15 @@
 angular.module('issueTracker')
     .controller('AddIssueController', [
         '$scope',
+        '$routeParams',
+        '$location',
+        '$uibModalInstance',
         'projectsService',
         'usersService',
         'issuesService',
         'notificationService',
-        '$routeParams',
-        '$location',
-        '$uibModalInstance',
-        function AddIssueController($scope, projectsService, usersService, issuesService,
-                                    notificationService, $routeParams, $location, $uibModalInstance) {
+        function AddIssueController($scope, $routeParams, $location, $uibModalInstance, projectsService, usersService,
+                                    issuesService, notificationService) {
             $scope.openedProjectId = $routeParams.id;
             $scope.issue = {
                 labels: []
@@ -37,6 +37,8 @@ angular.module('issueTracker')
                                 return user.Id === $scope.issue.selectedProject.Lead.Id;
                             })[0];
                         });
+                }, function (error) {
+                    notificationService.showError('Failed to get all projects!', error);
                 });
 
             $scope.getPrioritiesForProject = function (project) {
@@ -63,7 +65,7 @@ angular.module('issueTracker')
                     };
 
                     issuesService.addIssueToProject(issueData)
-                        .then(function (response) {
+                        .then(function () {
                             $uibModalInstance.close();
                             $location.path('/projects/' + issue.selectedProject.Id);
                             notificationService.showInfo('Issue added successfully!');

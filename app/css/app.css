@@ -10,8 +10,13 @@
   background-color: #32a5e7 !important;
 }
 
-.change-password-content {
+.change-password-content,
+.make-admin-content {
   margin-top: 80px;
+}
+
+.make-admin-well {
+  padding: 20px 0 !important;
 }
 
 .change-password-btn {
@@ -137,12 +142,12 @@
 
 .inline-input-select-make-admin {
   display: inline-block !important;
-  width: 65% !important;
+  width: 60% !important;
 }
 
-.inline-input-select-edit-project {
-  display: inline-block !important;
-  width: 50% !important;
+.change-password-form {
+  padding: 20px !important;
+  padding-bottom: 0 !important;
 }
 
 .inline-input-select-add-issue {

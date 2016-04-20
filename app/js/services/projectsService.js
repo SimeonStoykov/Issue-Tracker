@@ -9,7 +9,7 @@ angular.module('issueTracker')
         'usersService',
         'INITIAL_PAGE_NUMBER',
         'MAX_ITEMS_COUNT',
-        function($http, $q, BASE_URL, issuesService, usersService, INITIAL_PAGE_NUMBER, MAX_ITEMS_COUNT) {
+        function ($http, $q, BASE_URL, issuesService, usersService, INITIAL_PAGE_NUMBER, MAX_ITEMS_COUNT) {
 
             function getAllProjects(params) {
                 var deffered = $q.defer();
@@ -19,9 +19,9 @@ angular.module('issueTracker')
                 };
 
                 $http.get(BASE_URL + 'Projects', config)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -32,9 +32,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.get(BASE_URL + 'Projects/' + id)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -51,9 +51,9 @@ angular.module('issueTracker')
                 };
 
                 issuesService.getCurrentUserIssues(issuesParams)
-                    .then(function(response) {
+                    .then(function (response) {
                         var issues = response.data.Issues;
-                        var notDistinctAffiliatedProjects = issues.map(function(issue) {
+                        var notDistinctAffiliatedProjects = issues.map(function (issue) {
                             return issue.Project;
                         });
 
@@ -64,7 +64,7 @@ angular.module('issueTracker')
                         };
 
                         getAllProjects(projectsParams)
-                            .then(function(projectsResponse) {
+                            .then(function (projectsResponse) {
                                 projectsResponse.data.Projects.forEach(function (project) {
                                     notDistinctAffiliatedProjects.push({
                                         Id: project.Id,
@@ -73,7 +73,7 @@ angular.module('issueTracker')
                                 });
 
                                 var flags = {};
-                                var affiliatedProjects = notDistinctAffiliatedProjects.filter(function(project) {
+                                var affiliatedProjects = notDistinctAffiliatedProjects.filter(function (project) {
                                     if (flags[project.Id]) {
                                         return false;
                                     }
@@ -83,7 +83,7 @@ angular.module('issueTracker')
 
                                 deffered.resolve(affiliatedProjects);
                             })
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -94,9 +94,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.put(BASE_URL + 'Projects/' + id, projectData)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -107,17 +107,17 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 getProjectById(projectId)
-                    .then(function(response) {
+                    .then(function (response) {
                         var project = response.data;
 
                         usersService.getCurrentUserInfo()
-                            .then(function(response) {
+                            .then(function (response) {
                                 console.log(response);
                             });
 
                         var isUserProjectLead = project.Lead.Id === localStorage['currentUserId'];
                         deffered.resolve(isUserProjectLead);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -128,9 +128,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.post(BASE_URL + 'Projects', projectData)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 

@@ -52,12 +52,16 @@
             <h3>
                 Project Issues
                 <span ng-if="allIssuesShown">(All issues)</span>
-                <span ng-if="!allIssuesShown">(My issues)</span>
+                <span ng-if="!allIssuesShown">(Your issues)</span>
             </h3>
 
             <div>
-                <button class="btn btn-primary" ng-click="showMyIssues()" ng-disabled="!allIssuesShown">Show my issues</button>
-                <button class="btn btn-primary" ng-click="showAllIssues()" ng-disabled="allIssuesShown"> Show all issues</button>
+                <button class="btn btn-primary" ng-click="showMyIssues()" ng-disabled="!allIssuesShown">
+                    Show your issues
+                </button>
+                <button class="btn btn-primary" ng-click="showAllIssues()" ng-disabled="allIssuesShown">
+                    Show all issues
+                </button>
                 <div class="form-group text-left filter-block">
                     <label for="filterBy">Filter by: </label>
                     <select id="filterBy" ng-model="filterBy" class="form-control filter-group-inputs">

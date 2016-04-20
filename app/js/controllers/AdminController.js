@@ -8,25 +8,26 @@ angular.module('issueTracker')
         'notificationService',
         function AdminController($scope, $route, usersService, notificationService) {
             usersService.getAllUsers()
-                .then(function(response) {
+                .then(function (response) {
                     $scope.users = response.data;
-                    $scope.users = $scope.users.filter(function(user) {
+                    $scope.users = $scope.users.filter(function (user) {
                         return user.isAdmin === false;
                     });
                     $scope.selectedUser = $scope.users ? $scope.users[0] : '';
-                }, function(error) {
+                }, function (error) {
                     notificationService.showError('Error taking users data', error);
                 });
 
-            $scope.makeAdmin = function() {
+            $scope.makeAdmin = function () {
                 var data = {
                     UserId: $scope.selectedUser.Id
                 };
+
                 usersService.makeAdmin(data)
-                    .then(function() {
+                    .then(function () {
                         notificationService.showInfo('User ' + $scope.selectedUser.Username + ' is now admin!');
                         $route.reload();
-                    }, function(error) {
+                    }, function (error) {
                         notificationService.showError('Error making user admin', error);
                     });
             }

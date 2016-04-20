@@ -30,7 +30,7 @@
                     </span>
                     <span ng-if="isAdmin">
                         {{project.selectedUser.Id}}
-                        <select name="usersSelect" ng-if="isAdmin" class="form-control inline-input-select-edit-project" id="lead"
+                        <select name="usersSelect" ng-if="isAdmin" class="form-control inline-input-select" id="lead"
                                 ng-options="user as user.Username for user in users"
                                 ng-model="project.selectedUser">
                         </select>

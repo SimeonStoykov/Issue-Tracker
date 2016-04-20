@@ -86,11 +86,9 @@ angular.module('issueTracker', [
                     }
                 })
                 .when('/logout', {
+                    templateUrl: 'views/home/home-dashboard.html',
                     controller: 'AuthenticationController',
-                    redirectTo: '/',
-                    access: {
-                        requiresAuthentication: false
-                    }
+                    redirectTo: '/'
                 })
                 .otherwise({redirectTo: '/'});
 
@@ -115,6 +113,11 @@ angular.module('issueTracker', [
         maxDate: new Date(2020, 5, 22),
         startingDay: 1
     })
+    .constant('DEFAULT_PROJECT_ISSUES_FILTER', {
+        Assignee: {
+            Username: localStorage['username']
+        }
+    })
     .constant('MAX_ITEMS_COUNT', 2147483647)
     .run([
         '$rootScope',
@@ -123,7 +126,7 @@ angular.module('issueTracker', [
         'projectsService',
         '$route',
         'notificationService',
-        function($rootScope, $location, authService, projectsService, $route, notificationService) {
+        function ($rootScope, $location, authService, projectsService, $route, notificationService) {
             $rootScope.$on('$routeChangeStart', function (event, next) {
                 if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                     $location.path('/');
@@ -132,4 +135,5 @@ angular.module('issueTracker', [
                     notificationService.showError('You don\'t have access to this action!');
                 }
             });
-        }]);
+        }
+    ]);

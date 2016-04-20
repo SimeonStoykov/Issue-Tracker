@@ -9,30 +9,30 @@ angular.module('issueTracker')
         'GRANT_TYPE',
         'notificationService',
         function AuthenticationController($scope, $route, authService, usersService, GRANT_TYPE, notificationService) {
-            $scope.login = function(user) {
+            $scope.login = function (user) {
                 if (user) {
                     user.grant_type = GRANT_TYPE;
                     authService.loginUser(user)
-                        .then(function(response) {
+                        .then(function (response) {
                             localStorage['accessToken'] = response.data.access_token;
                             localStorage['username'] = response.data.userName;
                             usersService.getCurrentUserInfo()
-                                .then(function(userInfo) {
+                                .then(function (userInfo) {
                                     localStorage['currentUserId'] = userInfo.data.Id;
                                     localStorage['isAdmin'] = userInfo.data.isAdmin;
                                     $route.reload();
                                     notificationService.showInfo('Login successful!');
                                 })
-                        }, function(error) {
+                        }, function (error) {
                             notificationService.showError("Login error", error);
                         });
                 }
             };
 
-            $scope.register = function(user) {
+            $scope.register = function (user) {
                 if (user) {
                     authService.registerUser(user)
-                        .then(function() {
+                        .then(function () {
                             var loginUserData = {
                                 username: user.email,
                                 password: user.password,
@@ -40,25 +40,25 @@ angular.module('issueTracker')
                             };
                             notificationService.showInfo('Registration successful!');
                             $scope.login(loginUserData);
-                        }, function(error) {
+                        }, function (error) {
                             notificationService.showError("Registration error", error);
                         });
                 }
             };
 
-            $scope.changePassword = function(passwordInfo) {
+            $scope.changePassword = function (passwordInfo) {
                 if (passwordInfo) {
                     authService.changePassword(passwordInfo)
-                        .then(function() {
+                        .then(function () {
                             notificationService.showInfo('Password changed successfully!');
                             $route.reload();
-                        }, function(error) {
+                        }, function (error) {
                             notificationService.showError("Password change error", error);
                         });
                 }
             };
 
-            $scope.logout = function() {
+            $scope.logout = function () {
                 authService.logoutUser();
             };
 

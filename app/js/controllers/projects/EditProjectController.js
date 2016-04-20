@@ -3,31 +3,30 @@
 angular.module('issueTracker')
     .controller('EditProjectController', [
         '$scope',
-        'projectsService',
         '$routeParams',
-        'usersService',
-        'labelsService',
         '$location',
+        'projectsService',
+        'usersService',
         'notificationService',
         'authService',
-        function EditProjectController($scope, projectsService, $routeParams, usersService, labelsService, $location,
-                                       notificationService, authService) {
+        function EditProjectController($scope, $routeParams, $location, projectsService, usersService, notificationService,
+                                       authService) {
             projectsService.getProjectById($routeParams.id)
-                .then(function(response) {
+                .then(function (response) {
                     $scope.project = response.data;
 
                     $scope.isUserPojectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
 
-                    if(!$scope.isUserPojectLead && !$scope.isAdmin) {
+                    if (!$scope.isUserPojectLead && !$scope.isAdmin) {
                         $location.path('projects/' + $routeParams.id);
                         notificationService.showError('You don\'t have rights to perform this action!');
                     }
 
-                    $scope.project.editedLabels = $scope.project.Labels.map(function(label) {
+                    $scope.project.editedLabels = $scope.project.Labels.map(function (label) {
                         return label.Name;
                     });
 
-                    $scope.project.Priorities = $scope.project.Priorities.map(function(priority) {
+                    $scope.project.Priorities = $scope.project.Priorities.map(function (priority) {
                         return priority.Name;
                     });
 
@@ -35,23 +34,31 @@ angular.module('issueTracker')
 
                     if ($scope.isAdmin) {
                         usersService.getAllUsers()
-                            .then(function(response) {
+                            .then(function (response) {
                                 $scope.users = response.data;
-                                $scope.project.selectedUser = $scope.users.filter(function(user) {
+                                $scope.project.selectedUser = $scope.users.filter(function (user) {
                                     return user.Id === $scope.project.Lead.Id;
                                 })[0];
+                            }, function (error) {
+                                notificationService.showError('Getting users data failed!', error);
                             });
                     }
+                }, function (error) {
+                    notificationService.showError('Getting project data failed!', error);
                 });
 
-            $scope.editProject = function(project) {
-                var prioritiesToAdd = project.projectPriorities.split(',').map(function(priority) {
-                    return {
-                        Name: priority.trim()
-                    };
-                });
+            $scope.editProject = function (project) {
+                var prioritiesToAdd = [];
 
-                var labelsToAdd = $scope.project.editedLabels.map(function(label) {
+                if (project.projectPriorities.length > 0) {
+                    prioritiesToAdd = project.projectPriorities.split(',').map(function (priority) {
+                        return {
+                            Name: priority.trim()
+                        };
+                    });
+                }
+
+                var labelsToAdd = $scope.project.editedLabels.map(function (label) {
                     return {
                         Name: label
                     };
@@ -66,40 +73,11 @@ angular.module('issueTracker')
                 };
 
                 projectsService.editProject($routeParams.id, projectToEdit)
-                    .then(function(response) {
+                    .then(function () {
                         $location.path("projects/" + $routeParams.id);
                         notificationService.showInfo('Project edited successfully!');
-                    }, function(error) {
+                    }, function (error) {
                         notificationService.showError('Editing project failed!', error);
-                    });
-            };
-
-            $scope.addLabel = function(label) {
-                $scope.project.editedLabels.push(label);
-                $scope.labelToAdd = '';
-            };
-
-            $scope.removeLabel = function(label) {
-                var indexOfTheLabel = $scope.project.editedLabels.indexOf(label);
-                $scope.project.editedLabels.splice(indexOfTheLabel, 1);
-            };
-
-            $scope.modelOptions = {
-                debounce: {
-                    default: 100,
-                    blur: 100
-                },
-                getterSetter: true
-            };
-
-            var params = {
-                filter: $scope.labelToAdd ? $scope.labelToAdd : ''
-            };
-
-            $scope.getLabels = function() {
-                labelsService.getLabels(params)
-                    .then(function(response) {
-                        $scope.labels = response.data;
                     });
             };
 

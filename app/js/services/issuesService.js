@@ -5,15 +5,15 @@ angular.module('issueTracker')
         '$http',
         '$q',
         'BASE_URL',
-        function($http, $q, BASE_URL) {
+        function ($http, $q, BASE_URL) {
 
             function getIssueById(issueId) {
                 var deffered = $q.defer();
 
                 $http.get(BASE_URL + 'Issues/' + issueId)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -24,9 +24,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.get(BASE_URL + 'Projects/' + projectId + '/Issues')
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -41,9 +41,9 @@ angular.module('issueTracker')
                 };
 
                 $http.get(BASE_URL + 'Issues/me', config)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -54,9 +54,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.post(BASE_URL + 'Issues', issue)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -71,9 +71,9 @@ angular.module('issueTracker')
                 };
 
                 $http.put(BASE_URL + 'Issues/' + issueId + '/changestatus', null, config)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -84,9 +84,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.put(BASE_URL + 'Issues/' + issueId, issue)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -97,9 +97,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.get(BASE_URL + 'Issues/' + issueId + '/comments')
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -110,9 +110,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.post(BASE_URL + 'Issues/' + issueId + '/comments', comment)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 

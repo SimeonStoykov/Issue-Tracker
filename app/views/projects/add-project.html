@@ -19,11 +19,6 @@
             </textarea>
         </div>
         <div class="form-group text-left">
-            <label for="projectKey" class="control-label">Project Key: </label>
-            <input type="text" class="form-control add-project-inline-inputs" id="projectKey" ng-model="project.key"
-                   required="required">
-        </div>
-        <div class="form-group text-left">
             <label class="control-label" for="leadSelect">Lead:</label>
             <select name="leadSelect" class="form-control inline-input-select-add-project" id="leadSelect"
                     ng-options="user as user.Username for user in users"
@@ -40,4 +35,3 @@
         <button class="btn btn-danger" ng-click="closeModal()">Cancel</button>
     </form>
 </div>
-
