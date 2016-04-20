@@ -3,7 +3,6 @@
 <div class="container-fluid">
     <div class="row project-page">
         <h2>Edit project</h2>
-
         <div class="col-md-6 col-md-offset-3 edit-project-block">
             <form class="form-horizontal well edit-project-well">
                 <div class="form-group text-left">
@@ -42,26 +41,9 @@
                     <input type="text" id="priorities" class="form-control project-view-priorities"
                            ng-model="project.projectPriorities">
                 </div>
-                <div class="form-group text-left">
-                    <label class="control-label" for="addLabel">Add label:</label>
-                    <input type="text" id="addLabel" ng-change="getLabels()" ng-model="labelToAdd"
-                           ng-model-options="modelOptions"
-                           uib-typeahead="label.Name for label in labels | filter:$viewValue | limitTo:10"
-                           class="form-control inline-input-label">
-                    <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
-                </div>
-                <div class="form-group text-left">
-                    <label class="control-label">Labels:</label>
-                    <span class="tag label label-info inline-block-span"
-                          ng-repeat="label in project.editedLabels track by $index">
-                      <span class="text-span">{{label}}</span>
-                      <a ng-click="removeLabel(label)"><i
-                              class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
-                    </span>
-                </div>
+                <div add-labels-form labels="project.editedLabels"></div>
                 <button class="btn btn-primary save-project-btn" ng-click="editProject(project)">Save</button>
             </form>
-
         </div>
     </div>
 </div>

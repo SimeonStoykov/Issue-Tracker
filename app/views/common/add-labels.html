@@ -1,0 +1,19 @@
+<div>
+    <div class="form-group text-left">
+        <label class="control-label" for="addLabel">Add label:</label>
+        <input type="text" id="addLabel" ng-change="getLabels()" ng-model="labelToAdd"
+               ng-model-options="modelOptions"
+               uib-typeahead="label.Name for label in availableLabels | filter:$viewValue | limitTo:10"
+               class="form-control inline-input-label">
+        <button class="btn btn-success" ng-click="addLabel(labelToAdd)">Add</button>
+    </div>
+    <div class="form-group text-left">
+        <label class="control-label">Labels:</label>
+    <span class="tag label label-info inline-block-span"
+          ng-repeat="label in labels track by $index">
+      <span class="text-span">{{label}}</span>
+      <a ng-click="removeLabel(label)"><i
+              class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+    </span>
+    </div>
+</div>

@@ -5,25 +5,23 @@ angular.module('issueTracker')
         '$scope',
         'projectsService',
         'usersService',
-        'labelsService',
         'issuesService',
         'notificationService',
         '$routeParams',
         '$location',
         '$uibModalInstance',
-        'DEFAULT_MODEL_OPTIONS',
-        function AddIssueController($scope, projectsService, usersService, labelsService, issuesService,
-                                         notificationService, $routeParams, $location, $uibModalInstance, DEFAULT_MODEL_OPTIONS) {
+        function AddIssueController($scope, projectsService, usersService, issuesService,
+                                    notificationService, $routeParams, $location, $uibModalInstance) {
             $scope.openedProjectId = $routeParams.id;
             $scope.issue = {
                 labels: []
             };
 
             projectsService.getAllProjects()
-                .then(function(response) {
+                .then(function (response) {
                     $scope.projects = response.data;
 
-                    $scope.issue.selectedProject = $scope.projects.filter(function(project) {
+                    $scope.issue.selectedProject = $scope.projects.filter(function (project) {
                         return project.Id.toString() === $scope.openedProjectId;
                     })[0];
 
@@ -32,46 +30,23 @@ angular.module('issueTracker')
                     $scope.issue.priority = $scope.priorities[0];
 
                     usersService.getAllUsers()
-                        .then(function(response) {
+                        .then(function (response) {
                             $scope.users = response.data;
 
-                            $scope.issue.assignee = $scope.users.filter(function(user) {
+                            $scope.issue.assignee = $scope.users.filter(function (user) {
                                 return user.Id === $scope.issue.selectedProject.Lead.Id;
                             })[0];
                         });
                 });
 
-            $scope.getPrioritiesForProject = function(project) {
+            $scope.getPrioritiesForProject = function (project) {
                 $scope.priorities = project.Priorities;
                 $scope.issue.priority = $scope.priorities[0];
             };
 
-            $scope.modelOptions = DEFAULT_MODEL_OPTIONS;
-
-            var params = {
-                filter: $scope.labelToAdd ? $scope.labelToAdd : ''
-            };
-
-            $scope.getLabels = function() {
-                labelsService.getLabels(params)
-                    .then(function(response) {
-                        $scope.labels = response.data;
-                    });
-            };
-
-            $scope.addLabel = function(label) {
-                $scope.issue.labels.push(label);
-                $scope.labelToAdd = '';
-            };
-
-            $scope.removeLabel = function(label) {
-                var indexOfTheLabel = $scope.issue.labels.indexOf(label);
-                $scope.issue.labels.splice(indexOfTheLabel, 1);
-            };
-
-            $scope.addIssue = function(issue) {
+            $scope.addIssue = function (issue) {
                 if (issue.title && issue.description && issue.dueDate) {
-                    var labelsToAdd = issue.labels.map(function(label) {
+                    var labelsToAdd = issue.labels.map(function (label) {
                         return {
                             Name: label
                         };
@@ -88,17 +63,17 @@ angular.module('issueTracker')
                     };
 
                     issuesService.addIssueToProject(issueData)
-                        .then(function(response) {
+                        .then(function (response) {
                             $uibModalInstance.close();
                             $location.path('/projects/' + issue.selectedProject.Id);
                             notificationService.showInfo('Issue added successfully!');
-                        }, function(error) {
+                        }, function (error) {
                             notificationService.showError('Adding issue failed!', error);
                         });
                 }
             };
 
-            $scope.closeModal = function() {
+            $scope.closeModal = function () {
                 $uibModalInstance.dismiss();
                 $location.path('/projects/' + $routeParams.id);
             };

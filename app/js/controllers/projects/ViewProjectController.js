@@ -12,7 +12,7 @@ angular.module('issueTracker')
         'DEFAULT_PAGE_SIZE',
         function ViewProjectController($scope, projectsService, issuesService, $route, authService, $uibModal, INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE) {
             projectsService.getProjectById($route.current.params.id)
-                .then(function(response) {
+                .then(function (response) {
                     $scope.project = response.data;
                     $scope.isUserProjectLead = $scope.project.Lead.Id === localStorage['currentUserId'];
 
@@ -54,12 +54,12 @@ angular.module('issueTracker')
                 }
             };
 
-            $scope.showAllIssues = function() {
+            $scope.showAllIssues = function () {
                 $scope.search = {};
                 $scope.allIssuesShown = true;
             };
 
-            $scope.showMyIssues = function() {
+            $scope.showMyIssues = function () {
                 $scope.search = {
                     Assignee: {
                         Username: localStorage['username']
