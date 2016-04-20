@@ -1,6 +1,6 @@
 <div class="comments-panel">
     <h3>Comments</h3>
-    <div class="panel panel-primary" ng-repeat="comment in comments">
+    <div class="panel panel-primary" dir-paginate="comment in comments | itemsPerPage: commentsPaginationParams.pageSize">
         <div class="panel-heading">
             <h3 class="panel-title">
                 {{comment.Author.Username}}
@@ -11,4 +11,6 @@
             {{comment.Text}}
         </div>
     </div>
+    <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+    </dir-pagination-controls>
 </div>
