@@ -4,8 +4,7 @@ angular.module('issueTracker', [
         'ngRoute',
         'angular-loading-bar',
         'angularUtils.directives.dirPagination',
-        'ui.bootstrap',
-        '720kb.datepicker'
+        'ui.bootstrap'
     ])
     .config([
         '$routeProvider',
