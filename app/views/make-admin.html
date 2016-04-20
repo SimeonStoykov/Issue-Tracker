@@ -1,0 +1,20 @@
+<div ng-include="'views/common/navbar.html'"></div>
+
+<div class="container-fluid">
+    <div class="row change-password-content">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="well bs-component">
+                <form class="form-horizontal" name="changePasswordForm">
+                    <fieldset style="padding: 20px">
+                        <label class="control-label" for="usersSelect">Users:</label>
+                        <select name="usersSelect" class="form-control inline-input-select-make-admin" id="usersSelect"
+                                ng-options="user as user.Username for user in users"
+                                ng-model="selectedUser">
+                        </select>
+                        <button class="btn btn-success" ng-click="makeAdmin()">Make admin</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

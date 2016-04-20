@@ -5,9 +5,6 @@ angular.module('issueTracker', [
         'angular-loading-bar',
         'angularUtils.directives.dirPagination',
         'ui.bootstrap',
-        'ngMaterial',
-        'ngAnimate',
-        'ngAria',
         '720kb.datepicker'
     ])
     .config([
@@ -78,6 +75,14 @@ angular.module('issueTracker', [
                     controller: 'AuthenticationController',
                     access: {
                         requiresAuthentication: true
+                    }
+                })
+                .when('/make-admin', {
+                    templateUrl: 'views/make-admin.html',
+                    controller: 'AdminController',
+                    access: {
+                        requiresAuthentication: true,
+                        requiresAdmin: true
                     }
                 })
                 .when('/logout', {

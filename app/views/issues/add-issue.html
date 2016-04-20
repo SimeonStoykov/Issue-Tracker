@@ -19,21 +19,21 @@
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="projectSelect">Project:</label>
-            <select name="usersSelect" class="form-control inline-input-select" id="projectSelect"
+            <select name="projectSelect" class="form-control inline-input-select-add-issue" id="projectSelect"
                     ng-options="project as project.Name for project in projects"
                     ng-model="issue.selectedProject" ng-change="getPrioritiesForProject(issue.selectedProject)">
             </select>
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="assigneeSelect">Assignee:</label>
-            <select name="assigneeSelect" class="form-control inline-input-select" id="assigneeSelect"
+            <select name="assigneeSelect" class="form-control inline-input-select-add-issue" id="assigneeSelect"
                     ng-options="user as user.Username for user in users"
                     ng-model="issue.assignee">
             </select>
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="prioritySelect">Priority:</label>
-            <select name="prioritySelect" class="form-control inline-input-select" id="prioritySelect"
+            <select name="prioritySelect" class="form-control inline-input-select-add-issue" id="prioritySelect"
                     ng-options="priority as priority.Name for priority in priorities"
                     ng-model="issue.priority">
             </select>

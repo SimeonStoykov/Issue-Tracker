@@ -135,6 +135,26 @@
   width: 46% !important;
 }
 
+.inline-input-select-make-admin {
+  display: inline-block !important;
+  width: 65% !important;
+}
+
+.inline-input-select-edit-project {
+  display: inline-block !important;
+  width: 50% !important;
+}
+
+.inline-input-select-add-issue {
+  display: inline-block !important;
+  width: 70% !important;
+}
+
+.inline-input-select-add-project {
+  display: inline-block !important;
+  width: 75% !important;
+}
+
 .filter-input-field {
   height: 38px;
   padding: 8px 12px;
