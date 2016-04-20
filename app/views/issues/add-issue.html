@@ -9,12 +9,12 @@
     <form class="form-horizontal well edit-project-well">
         <div class="form-group text-left">
             <label for="issueTitle" class="control-label">Title: </label>
-            <input type="text" class="form-control inline-inputs" id="issueTitle" ng-model="issue.title">
+            <input type="text" class="form-control inline-inputs" id="issueTitle" ng-model="issue.title" required="required">
         </div>
         <div class="form-group text-left">
             <label for="issueDescription" class="control-label">Description: </label>
             <textarea class="form-control modal-description" id="issueDescription"
-                      ng-model="issue.description" cols="30" rows="10">
+                      ng-model="issue.description" cols="30" rows="10" required="required">
             </textarea>
         </div>
         <div class="form-group text-left">
@@ -40,7 +40,7 @@
         </div>
         <div class="form-group text-left">
             <label class="control-label">Due Date:</label>
-            <div date-picker date="issue.dueDate"></div>
+            <div date-picker date="issue.dueDate" required="required"></div>
         </div>
         <div class="form-group text-left">
             <label class="control-label" for="addLabel">Add label:</label>

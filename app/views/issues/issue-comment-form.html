@@ -2,6 +2,7 @@
     <label for="commentForm" class="text-left comment-text-label">Text:</label>
     <textarea name="commentForm" id="commentForm" class="form-control comment-textarea"
               placeholder="Write your comment here..."
-              ng-model="commentText"></textarea>
-    <button class="btn btn-success add-comment-btn" ng-click="addComment(commentText)">Add comment</button>
+              ng-model="comment.Text" required="required">
+    </textarea>
+    <button class="btn btn-success add-comment-btn" ng-click="addComment(comment)">Add comment</button>
 </form>

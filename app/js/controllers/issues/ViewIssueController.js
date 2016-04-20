@@ -58,16 +58,15 @@ angular.module('issueTracker')
             };
 
             $scope.addComment = function(comment) {
-                comment = {
-                    Text: comment
-                };
-                issuesService.addCommentToIssue($route.current.params.id, comment)
-                    .then(function(response) {
-                        $route.reload();
-                        notificationService.showInfo('Comment added successfully!');
-                    }, function(error) {
-                        notificationService.showError('Adding comment failed!', error);
-                    });
+                if (comment) {
+                    issuesService.addCommentToIssue($route.current.params.id, comment)
+                        .then(function() {
+                            $route.reload();
+                            notificationService.showInfo('Comment added successfully!');
+                        }, function(error) {
+                            notificationService.showError('Adding comment failed!', error);
+                        });
+                }
             }
         }
     ]);

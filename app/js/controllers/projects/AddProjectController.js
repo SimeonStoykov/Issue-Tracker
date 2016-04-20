@@ -53,35 +53,37 @@ angular.module('issueTracker')
             };
 
             $scope.addProject = function(project) {
-                var labelsToAdd = project.labels.map(function(label) {
-                    return {
-                        Name: label
-                    };
-                });
-
-                var prioritiesToAdd = project.priorities.split(',').map(function(priority) {
-                    return {
-                        Name: priority.trim()
-                    }
-                });
-
-                var projectData = {
-                    Name: project.name,
-                    Description: project.description,
-                    ProjectKey: project.key,
-                    LeadId: project.selectedLead.Id,
-                    Priorities: prioritiesToAdd,
-                    Labels: labelsToAdd
-                };
-
-                projectsService.addNewProject(projectData)
-                    .then(function(response) {
-                        $uibModalInstance.close();
-                        $location.path('/projects');
-                        notificationService.showInfo('Project added successfully!');
-                    }, function(error) {
-                        notificationService.showError('Adding project failed!', error);
+                if(project.name && project.description && project.key && project.priorities) {
+                    var labelsToAdd = project.labels.map(function(label) {
+                        return {
+                            Name: label
+                        };
                     });
+
+                    var prioritiesToAdd = project.priorities.split(',').map(function(priority) {
+                        return {
+                            Name: priority.trim()
+                        }
+                    });
+
+                    var projectData = {
+                        Name: project.name,
+                        Description: project.description,
+                        ProjectKey: project.key,
+                        LeadId: project.selectedLead.Id,
+                        Priorities: prioritiesToAdd,
+                        Labels: labelsToAdd
+                    };
+
+                    projectsService.addNewProject(projectData)
+                        .then(function(response) {
+                            $uibModalInstance.close();
+                            $location.path('/projects');
+                            notificationService.showInfo('Project added successfully!');
+                        }, function(error) {
+                            notificationService.showError('Adding project failed!', error);
+                        });
+                }
             };
 
             $scope.closeModal = function() {

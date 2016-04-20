@@ -70,30 +70,32 @@ angular.module('issueTracker')
             };
 
             $scope.addIssue = function(issue) {
-                var labelsToAdd = issue.labels.map(function (label) {
-                    return {
-                        Name: label
-                    };
-                });
-
-                var issueData = {
-                    Title: issue.title,
-                    Description: issue.description,
-                    DueDate: issue.dueDate,
-                    ProjectId: issue.selectedProject.Id,
-                    AssigneeId: issue.assignee.Id,
-                    PriorityId: issue.priority.Id,
-                    Labels: labelsToAdd
-                };
-
-                issuesService.addIssueToProject(issueData)
-                    .then(function(response) {
-                        $uibModalInstance.close();
-                        $location.path('/projects/' + issue.selectedProject.Id);
-                        notificationService.showInfo('Issue added successfully!');
-                    }, function(error) {
-                        notificationService.showError('Adding issue failed!', error);
+                if (issue.title && issue.description && issue.dueDate) {
+                    var labelsToAdd = issue.labels.map(function(label) {
+                        return {
+                            Name: label
+                        };
                     });
+
+                    var issueData = {
+                        Title: issue.title,
+                        Description: issue.description,
+                        DueDate: issue.dueDate,
+                        ProjectId: issue.selectedProject.Id,
+                        AssigneeId: issue.assignee.Id,
+                        PriorityId: issue.priority.Id,
+                        Labels: labelsToAdd
+                    };
+
+                    issuesService.addIssueToProject(issueData)
+                        .then(function(response) {
+                            $uibModalInstance.close();
+                            $location.path('/projects/' + issue.selectedProject.Id);
+                            notificationService.showInfo('Issue added successfully!');
+                        }, function(error) {
+                            notificationService.showError('Adding issue failed!', error);
+                        });
+                }
             };
 
             $scope.closeModal = function() {
