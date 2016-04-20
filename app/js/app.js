@@ -100,7 +100,7 @@ angular.module('issueTracker', [
     .constant('GRANT_TYPE', 'password')
     .constant('INITIAL_PAGE_NUMBER', 1)
     .constant('DEFAULT_PAGE_SIZE', 5)
-    .constant('ALL_PROJECTS_PAGE_SIZE', 15)
+    .constant('PROJECTS_PAGE_SIZE', 15)
     .constant('DEFAULT_PROJECTS_FILTER', '')
     .constant('DEFAULT_MODEL_OPTIONS', {
         debounce: {

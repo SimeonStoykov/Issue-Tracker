@@ -6,12 +6,12 @@ angular.module('issueTracker')
         'projectsService',
         '$uibModal',
         'INITIAL_PAGE_NUMBER',
-        'ALL_PROJECTS_PAGE_SIZE',
+        'PROJECTS_PAGE_SIZE',
         'DEFAULT_PROJECTS_FILTER',
-        function ViewAllProjectsController($scope, projectsService, $uibModal, INITIAL_PAGE_NUMBER, ALL_PROJECTS_PAGE_SIZE, DEFAULT_PROJECTS_FILTER) {
+        function ViewAllProjectsController($scope, projectsService, $uibModal, INITIAL_PAGE_NUMBER, PROJECTS_PAGE_SIZE, DEFAULT_PROJECTS_FILTER) {
             $scope.projectsParams = {
                 pageNumber: INITIAL_PAGE_NUMBER,
-                pageSize: ALL_PROJECTS_PAGE_SIZE,
+                pageSize: PROJECTS_PAGE_SIZE,
                 filter: DEFAULT_PROJECTS_FILTER
             };
 
