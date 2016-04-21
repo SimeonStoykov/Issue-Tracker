@@ -1,0 +1,25 @@
+<div>
+    <div class="form-group text-left filter-block">
+        <label for="filterBy">Filter by: </label>
+        <select id="filterBy" ng-model="filterBy" class="form-control filter-group-inputs" ng-change="changeFilter()">
+            <option value="myIssues">Show my issues</option>
+            <option value="allIssues">Show all issues</option>
+            <option value="title">Title</option>
+            <option value="description">Description</option>
+            <option value="dueDate">Due Date</option>
+            <option value="assignee">Assignee</option>
+        </select>
+        <input type="text" ng-if="filterBy === 'title'" class=" filter-group-inputs filter-input-field"
+               placeholder="Enter issue title..."
+               ng-model="search.Title">
+        <input type="text" ng-if="filterBy === 'description'" class=" filter-group-inputs filter-input-field"
+               placeholder="Enter issue description..."
+               ng-model="search.Description">
+        <input type="text" ng-if="filterBy === 'dueDate'" class=" filter-group-inputs filter-input-field"
+               placeholder="day-month-year"
+               ng-model="search.DueDate">
+        <input type="text" ng-if="filterBy === 'assignee'" class=" filter-group-inputs filter-input-field"
+               placeholder="Enter issue assignee..."
+               ng-model="search.Assignee.Username">
+    </div>
+</div>

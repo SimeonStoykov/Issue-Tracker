@@ -10,9 +10,8 @@ angular.module('issueTracker')
         'authService',
         'INITIAL_PAGE_NUMBER',
         'DEFAULT_PAGE_SIZE',
-        'DEFAULT_PROJECT_ISSUES_FILTER',
         function ViewProjectController($scope, $route, $uibModal, projectsService, issuesService, authService,
-                                       INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_PROJECT_ISSUES_FILTER) {
+                                       INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE) {
             projectsService.getProjectById($route.current.params.id)
                 .then(function (response) {
                     $scope.project = response.data;
@@ -52,20 +51,6 @@ angular.module('issueTracker')
                     backdrop: 'static',
                     keyboard: false
                 });
-            };
-
-            $scope.search = DEFAULT_PROJECT_ISSUES_FILTER;
-
-            $scope.allIssuesShown = false;
-
-            $scope.showAllIssues = function () {
-                $scope.search = {};
-                $scope.allIssuesShown = true;
-            };
-
-            $scope.showMyIssues = function () {
-                $scope.search = DEFAULT_PROJECT_ISSUES_FILTER;
-                $scope.allIssuesShown = false;
             };
         }
     ]);
