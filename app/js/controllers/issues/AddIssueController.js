@@ -47,7 +47,7 @@ angular.module('issueTracker')
             };
 
             $scope.addIssue = function (issue) {
-                if (issue.title && issue.description && issue.dueDate) {
+                if (issue.title && issue.description && issue.dueDate && issue.priority) {
                     var labelsToAdd = issue.labels.map(function (label) {
                         return {
                             Name: label

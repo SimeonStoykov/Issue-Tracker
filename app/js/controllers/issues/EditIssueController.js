@@ -5,11 +5,12 @@ angular.module('issueTracker')
         '$scope',
         '$route',
         '$location',
+        'authService',
         'issuesService',
         'projectsService',
         'usersService',
         'notificationService',
-        function EditIssueController($scope, $route, $location, issuesService, projectsService, usersService, notificationService) {
+        function EditIssueController($scope, $route, $location, authService, issuesService, projectsService, usersService, notificationService) {
             issuesService.getIssueById($route.current.params.id)
                 .then(function (response) {
                     $scope.issue = response.data;
@@ -86,5 +87,7 @@ angular.module('issueTracker')
                         notificationService.showError('Issue editing failed!', error);
                     });
             };
+
+            $scope.isAdmin = authService.isAdmin();
         }
     ]);

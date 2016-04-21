@@ -1,8 +1,17 @@
-<form class="add-comment">
-    <label for="commentForm" class="text-left comment-text-label">Text:</label>
-    <textarea name="commentForm" id="commentForm" class="form-control comment-textarea"
-              placeholder="Write your comment here..."
-              ng-model="comment.Text" required="required">
-    </textarea>
-    <button class="btn btn-success add-comment-btn" ng-click="addComment(comment)">Add comment</button>
+<form class="add-comment" name="addCommentForm">
+    <div class="form-group text-left"
+         ng-class="{ 'has-error' : addCommentForm.commentText.$invalid && addCommentForm.commentText.$dirty }">
+        <label for="commentForm" class="text-left control-label comment-text-label">Text:</label>
+        <textarea name="commentText" id="commentForm" class="form-control comment-textarea"
+                  placeholder="Write your comment here..."
+                  ng-model="comment.Text" required="required">
+        </textarea>
+        <p ng-show="addCommentForm.commentText.$error.required && addCommentForm.commentText.$dirty" class="help-block">
+            Text is required
+        </p>
+    </div>
+    <button class="btn btn-success add-comment-btn" ng-click="addComment(comment)"
+            ng-disabled="addCommentForm.$invalid && addCommentForm.$dirty">
+        Add comment
+    </button>
 </form>

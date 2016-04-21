@@ -48,37 +48,38 @@ angular.module('issueTracker')
                 });
 
             $scope.editProject = function (project) {
-                var prioritiesToAdd = [];
+                if (project.Name && project.Description && project.projectPriorities) {
 
-                if (project.projectPriorities.length > 0) {
-                    prioritiesToAdd = project.projectPriorities.split(',').map(function (priority) {
+                    var prioritiesToAdd = project.projectPriorities.split(',').map(function (priority) {
                         return {
                             Name: priority.trim()
                         };
                     });
-                }
 
-                var labelsToAdd = $scope.project.editedLabels.map(function (label) {
-                    return {
-                        Name: label
-                    };
-                });
-
-                var projectToEdit = {
-                    Name: project.Name,
-                    Description: project.Description,
-                    priorities: prioritiesToAdd,
-                    labels: labelsToAdd,
-                    LeadId: project.selectedUser.Id
-                };
-
-                projectsService.editProject($routeParams.id, projectToEdit)
-                    .then(function () {
-                        $location.path("projects/" + $routeParams.id);
-                        notificationService.showInfo('Project edited successfully!');
-                    }, function (error) {
-                        notificationService.showError('Editing project failed!', error);
+                    var labelsToAdd = $scope.project.editedLabels.map(function (label) {
+                        return {
+                            Name: label
+                        };
                     });
+
+                    var selectedLeadId = $scope.isAdmin ? project.selectedUser.Id : project.Lead.Id;
+
+                    var projectToEdit = {
+                        Name: project.Name,
+                        Description: project.Description,
+                        priorities: prioritiesToAdd,
+                        labels: labelsToAdd,
+                        LeadId: selectedLeadId
+                    };
+
+                    projectsService.editProject($routeParams.id, projectToEdit)
+                        .then(function () {
+                            $location.path("projects/" + $routeParams.id);
+                            notificationService.showInfo('Project edited successfully!');
+                        }, function (error) {
+                            notificationService.showError('Editing project failed!', error);
+                        });
+                }
             };
 
             $scope.isAdmin = authService.isAdmin();

@@ -1,8 +1,15 @@
-<p class="input-group date-input-group">
-    <input type="text" class="form-control add-issue-due-date" uib-datepicker-popup="{{format}}"
-           ng-model="date" ng-model-options="dateOptions" is-open="calendar.isOpened"
-           datepicker-options="datePickerOptions" required="required" close-text="Close" placeholder="day-month-year"/>
-    <button type="button" class="btn btn-info" ng-click="openCalendar()">
-        <i class="glyphicon glyphicon-calendar calendar-icon"></i>
-    </button>
-</p>
+<form name="datePickerForm" class="date-picker-form" ng-class="{ 'has-error' : datePickerForm.datePicker.$invalid && datePickerForm.datePicker.$dirty }">
+    <label class="control-label">Due Date *</label>
+    <p class="input-group date-input-group">
+        <input type="text" class="form-control add-issue-due-date" uib-datepicker-popup="{{format}}"
+               ng-model="date" ng-model-options="dateOptions" is-open="calendar.isOpened"
+               datepicker-options="datePickerOptions" required="required" name="datePicker"
+               close-text="Close" placeholder="day-month-year"/>
+        <button type="button" class="btn btn-info" ng-click="openCalendar()">
+            <i class="glyphicon glyphicon-calendar calendar-icon"></i>
+        </button>
+    </p>
+    <p ng-show="datePickerForm.datePicker.$invalid && datePickerForm.datePicker.$dirty" class="help-block text-left">
+        Invalid date or date format
+    </p>
+</form>

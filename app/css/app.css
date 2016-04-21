@@ -104,6 +104,7 @@
 
 .add-comment-btn {
   margin: 10px;
+  margin-top: 0;
 }
 
 .all-projects-label {
@@ -248,7 +249,12 @@
 
 .add-issue-due-date {
   display: inline-block !important;
-  width: 38% !important;
+  width: 46% !important;
+}
+
+.date-picker-form {
+  display: inline-block !important;
+  width: 80% !important;
 }
 
 .edit-issue-due-date {
@@ -345,6 +351,8 @@ img { max-width: 100%; }
 
 .help-block {
   color: #b22f2c !important;
+  margin-bottom: 0 !important;
+  text-align: center;
 }
 
 ::-moz-selection { background: #19b9e7; color: #fff; text-shadow: none; }

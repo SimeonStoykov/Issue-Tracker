@@ -4,7 +4,7 @@
     <div class="row project-page">
         <h2>Edit project</h2>
         <div class="col-md-6 col-md-offset-3 edit-project-block">
-            <form class="form-horizontal well edit-project-well">
+            <form class="form-horizontal well edit-project-well" name="editProjectForm">
                 <div class="form-group text-left">
                     <span class="project-key-font-size"><strong>{{project.ProjectKey}}</strong></span>
                 </div>
@@ -12,18 +12,26 @@
                     <label>Project key:</label>
                     {{project.ProjectKey}}
                 </div>
-                <div class="form-group text-left">
-                    <label class="control-label" for="projectName">Name:</label>
-                    <input type="text" id="projectName" class="form-control inline-inputs" ng-model="project.Name">
+                <div class="form-group text-left" ng-class="{ 'has-error' : editProjectForm.projectName.$invalid && editProjectForm.projectName.$dirty }">
+                    <label class="control-label" for="projectName">Name *</label>
+                    <input type="text" id="projectName" class="form-control inline-inputs" ng-model="project.Name"
+                           required="required" name="projectName">
+                    <p ng-show="editProjectForm.projectName.$error.required && editProjectForm.projectName.$dirty" class="help-block">
+                        Name is required
+                    </p>
                 </div>
-                <div class="form-group text-left">
-                    <label class="control-label" for="projectDescription">Description:</label>
+                <div class="form-group text-left" ng-class="{ 'has-error' : editProjectForm.projectDescription.$invalid && editProjectForm.projectDescription.$dirty }">
+                    <label class="control-label" for="projectDescription">Description *</label>
                     <textarea class="form-control project-edit-description" name="projectDescription"
                               id="projectDescription"
-                              ng-model="project.Description"></textarea>
+                              ng-model="project.Description" required="required">
+                    </textarea>
+                    <p ng-show="editProjectForm.projectDescription.$error.required && editProjectForm.projectDescription.$dirty" class="help-block">
+                        Description is required
+                    </p>
                 </div>
                 <div class="form-group text-left">
-                    <label class="control-label" for="lead">Lead id:</label>
+                    <label class="control-label" for="lead">Lead id *</label>
                     <span ng-if="!isAdmin">
                         {{project.Lead.Id}}
                         <strong>({{project.Lead.Username}})</strong>
@@ -32,17 +40,26 @@
                         {{project.selectedUser.Id}}
                         <select name="usersSelect" ng-if="isAdmin" class="form-control inline-input-select" id="lead"
                                 ng-options="user as user.Username for user in users"
-                                ng-model="project.selectedUser">
+                                ng-model="project.selectedUser" required="required">
                         </select>
                     </span>
                 </div>
-                <div class="form-group text-left">
-                    <label class="control-label" for="priorities">Priorities:</label>
+                <div class="form-group text-left" ng-class="{ 'has-error' : editProjectForm.projectPriorities.$invalid && editProjectForm.projectPriorities.$dirty }">
+                    <label class="control-label" for="priorities">Priorities *</label>
                     <input type="text" id="priorities" class="form-control project-view-priorities"
-                           ng-model="project.projectPriorities">
+                           ng-model="project.projectPriorities" required="required" name="projectPriorities">
+                    <p ng-show="editProjectForm.projectPriorities.$error.required && editProjectForm.projectPriorities.$dirty" class="help-block">
+                        Priorities are required
+                    </p>
                 </div>
                 <div add-labels-form labels="project.editedLabels"></div>
-                <button class="btn btn-primary save-project-btn" ng-click="editProject(project)">Save</button>
+                <p class="text-left">
+                    <strong><i>* required fields</i></strong>
+                </p>
+                <button class="btn btn-primary save-project-btn" ng-click="editProject(project)"
+                        ng-disabled="editProjectForm.$invalid && editProjectForm.$dirty">
+                    Save changes
+                </button>
             </form>
         </div>
     </div>
