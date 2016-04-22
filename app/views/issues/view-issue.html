@@ -60,6 +60,9 @@
             </div>
 
             <div issue-comments></div>
+            <p ng-if="comments.length === 0" class="no-comments-label">
+                <strong>No comments for this issue!</strong>
+            </p>
             <div issue-comment-form ng-if="isUserProjectLead || userHaveIssueInTheProject"></div>
         </div>
 
@@ -74,6 +77,9 @@
                     </button>
                 </li>
             </ul>
+            <p ng-if="issue.AvailableStatuses.length === 0">
+                <strong>No available statuses!</strong>
+            </p>
         </div>
     </div>
 </div>

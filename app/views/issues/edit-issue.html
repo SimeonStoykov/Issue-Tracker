@@ -79,6 +79,9 @@
                     </button>
                 </li>
             </ul>
+            <p ng-if="issue.AvailableStatuses.length === 0">
+                <strong>No available statuses!</strong>
+            </p>
         </div>
     </div>
 </div>

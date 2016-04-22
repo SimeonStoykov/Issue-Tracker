@@ -50,8 +50,9 @@
         <div class="col-md-7 project-page-issues">
             <h3>Project Issues</h3>
 
+
             <div project-issues-filter></div>
-            <table class="table table-striped table-hover project-page-issues-table">
+            <table class="table table-striped table-hover project-page-issues-table" ng-if="issues.length > 0">
                 <thead>
                 <tr>
                     <th class="text-center">Title</th>
@@ -74,8 +75,12 @@
                 </tbody>
             </table>
 
-            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" boundary-links="true">
+            <dir-pagination-controls on-page-change="pageChanged(newPageNumber)" boundary-links="true" ng-if="issues.length > 0">
             </dir-pagination-controls>
+
+            <p ng-if="issues.length === 0" class="no-issues-for-project-label">
+                <strong>No issues for this project!</strong>
+            </p>
 
         </div>
     </div>
