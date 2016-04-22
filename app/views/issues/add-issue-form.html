@@ -1,0 +1,51 @@
+<form name="addIssueForm" class="form-horizontal well styled-well">
+    <div class="form-group text-left" ng-class="{ 'has-error' : addIssueForm.issueTitle.$invalid && addIssueForm.issueTitle.$dirty }">
+        <label for="issueTitle" class="control-label">Title *</label>
+        <input name="issueTitle" type="text" class="form-control inline-inputs" id="issueTitle"
+               ng-model="issue.title" required="required">
+        <p ng-show="addIssueForm.issueTitle.$error.required && addIssueForm.issueTitle.$dirty" class="help-block">
+            Title is required
+        </p>
+    </div>
+    <div class="form-group text-left" ng-class="{ 'has-error' : addIssueForm.issueDescription.$invalid && addIssueForm.issueDescription.$dirty }">
+        <label for="issueDescription" class="control-label">Description *</label>
+            <textarea class="form-control modal-description" id="issueDescription" name="issueDescription"
+                      ng-model="issue.description" cols="30" rows="10" required="required">
+            </textarea>
+        <p ng-show="addIssueForm.issueDescription.$error.required && addIssueForm.issueDescription.$dirty" class="help-block">
+            Description is required
+        </p>
+    </div>
+    <div class="form-group text-left">
+        <label class="control-label" for="projectSelect">Project *</label>
+        <select name="projectSelect" class="form-control inline-input-select-add-issue" id="projectSelect"
+                ng-options="project as project.Name for project in projects"
+                ng-model="issue.selectedProject" ng-change="getPrioritiesForProject(issue.selectedProject)" required="required">
+        </select>
+    </div>
+    <div class="form-group text-left">
+        <label class="control-label" for="assigneeSelect">Assignee *</label>
+        <select name="assigneeSelect" class="form-control inline-input-select-add-issue" id="assigneeSelect"
+                ng-options="user as user.Username for user in users"
+                ng-model="issue.assignee" required="required">
+        </select>
+    </div>
+    <div class="form-group text-left">
+        <label class="control-label" for="prioritySelect">Priority *</label>
+        <select name="prioritySelect" class="form-control inline-input-select-add-issue" id="prioritySelect"
+                ng-options="priority as priority.Name for priority in priorities"
+                ng-model="issue.priority" required="required">
+        </select>
+    </div>
+    <div class="form-group text-left">
+        <div date-picker date="issue.dueDate"></div>
+    </div>
+    <div add-labels-form labels="issue.labels"></div>
+    <p class="text-left">
+        <strong><i>* required fields</i></strong>
+    </p>
+    <button class="btn btn-primary add-issue-btn" ng-click="addIssue(issue)" ng-disabled="addIssueForm.$invalid && addIssueForm.$dirty">
+        Add issue
+    </button>
+    <button type="button" class="btn btn-danger add-issue-btn" ng-click="closeModal()">Cancel</button>
+</form>

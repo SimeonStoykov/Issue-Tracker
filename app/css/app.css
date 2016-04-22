@@ -54,6 +54,14 @@
   padding: 0 !important;
 }
 
+.comment-words-wrap {
+  word-wrap: break-word !important;
+}
+
+.remove-label:hover {
+  cursor: pointer;
+}
+
 .project-page, .view-issue-page {
   margin-top: 45px;
 }
@@ -78,6 +86,10 @@
 
 .project-key-font-size {
   font-size: 19px;
+}
+
+.view-content {
+  height: 100% !important;
 }
 
 .no-comments-label {
@@ -233,7 +245,7 @@
   color: red;
 }
 
-.edit-project-well {
+.styled-well {
   padding: 25px 35px !important;
   padding-bottom: 20px !important;
 }
