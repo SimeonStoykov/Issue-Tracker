@@ -13,24 +13,23 @@ angular.module('issueTracker')
                 );
             }
 
-            function showError(message, serverError) {
-                var errors = [];
-                if (serverError && serverError.data && serverError.data.error_description) {
-                    errors.push(serverError.data.error_description);
+            function showError(message, error) {
+                var allErrors = [];
+                if (error && error.data && error.data.error_description) {
+                    allErrors.push(error.data.error_description);
                 }
-                if (serverError && serverError.data && serverError.data.ModelState) {
-                    var modelStateErrors = serverError.data.ModelState;
-                    for (var property in modelStateErrors) {
-                        var errorMessages = modelStateErrors[property];
+                if (error && error.data && error.data.ModelState) {
+                    var modelErrors = error.data.ModelState;
+                    for (var key in modelErrors) {
+                        var modelErrorsMessages = modelErrors[key];
 
-                        for (var i = 0; i < errorMessages.length; i++) {
-                            var currentError = errorMessages[i];
-                            errors.push(currentError);
-                        }
+                        modelErrorsMessages.forEach(function (currentError) {
+                            allErrors.push(currentError);
+                        });
                     }
                 }
-                if (errors.length > 0) {
-                    message = message + "<br/>" + errors.join("<br />");
+                if (allErrors.length > 0) {
+                    message += "<br />" + allErrors.join("<br />");
                 }
                 noty({
                         text: message,
