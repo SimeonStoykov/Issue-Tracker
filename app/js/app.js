@@ -112,20 +112,13 @@ angular.module('issueTracker', [
         maxDate: new Date(2020, 5, 22),
         startingDay: 1
     })
-    .constant('DEFAULT_PROJECT_ISSUES_FILTER', {
-        Assignee: {
-            Username: localStorage['username']
-        }
-    })
     .constant('MAX_ITEMS_COUNT', 2147483647)
     .run([
         '$rootScope',
         '$location',
         'authService',
-        'projectsService',
-        '$route',
         'notificationService',
-        function ($rootScope, $location, authService, projectsService, $route, notificationService) {
+        function ($rootScope, $location, authService, notificationService) {
             $rootScope.$on('$routeChangeStart', function (event, next) {
                 if (next.access && next.access.requiresAuthentication && !authService.isAuthenticated()) {
                     $location.path('/');

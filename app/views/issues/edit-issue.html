@@ -6,68 +6,7 @@
 
         <div class="col-md-8">
             <h3>Issue Info</h3>
-            <form name="editIssueForm">
-                <div class="form-group text-left">
-                    <span class="project-key-font-size"><strong>{{issue.IssueKey}}</strong></span>
-                </div>
-                <div class="form-group text-left" ng-class="{ 'has-error' : editIssueForm.issueTitle.$invalid && editIssueForm.issueTitle.$dirty }">
-                    <label for="title" class="control-label">Title *</label>
-                    <input id="title" class="form-control inline-inputs" type="text" name="issueTitle" ng-model="issue.Title" required="required">
-                    <p ng-show="editIssueForm.issueTitle.$error.required && editIssueForm.issueTitle.$dirty" class="help-block">
-                        Title is required
-                    </p>
-                </div>
-
-                <div class="form-group text-left" ng-class="{ 'has-error' : editIssueForm.issueDescription.$invalid && editIssueForm.issueDescription.$dirty }">
-                    <label for="description" class="control-label">Description *</label>
-                    <textarea class="form-control edit-issue-description" name="issueDescription" id="description" ng-model="issue.Description" required="required">
-                    </textarea>
-                    <p ng-show="editIssueForm.issueDescription.$error.required && editIssueForm.issueDescription.$dirty" class="help-block">
-                        Description is required
-                    </p>
-                </div>
-
-                <div class="form-group text-left">
-                    <label class="control-label" for="assigneeSelect">Assignee *</label>
-                    (current id: {{issue.assignee.Id}})
-                    <select name="assigneeSelect" class="form-control inline-input-select" id="assigneeSelect"
-                            ng-options="user as user.Username for user in users"
-                            ng-model="issue.assignee">
-                    </select>
-                </div>
-
-                <div class="form-group text-left">
-                    <label class="control-label" for="prioritySelect">Priority *</label>
-                    <select name="prioritySelect" class="form-control inline-input-select" id="prioritySelect"
-                            ng-options="priority as priority.Name for priority in priorities"
-                            ng-model="issue.priority">
-                    </select>
-                </div>
-
-                <div class="form-group text-left">
-                    <div date-picker date="issue.DueDate"></div>
-                </div>
-
-                <div class="text-left">
-                    <label>Author:</label>
-                    {{issue.Author.Username}}
-                </div>
-                <div class="text-left">
-                    <label>Project:</label>
-                    {{issue.Project.Name}}
-                </div>
-                <div class="text-left">
-                    <label>Status:</label>
-                    {{issue.Status.Name}}
-                </div>
-                <div add-labels-form labels="issue.labels"></div>
-                <p class="text-left">
-                    <strong><i>* required fields</i></strong>
-                </p>
-                <button class="btn btn-primary" ng-click="editIssue(issue)" ng-disabled="editIssueForm.$invalid && editIssueForm.$dirty">
-                    Save changes
-                </button>
-            </form>
+            <div edit-issue-form></div>
         </div>
         <div class="col-md-4 project-page-issues">
             <h3>Available Statuses</h3>

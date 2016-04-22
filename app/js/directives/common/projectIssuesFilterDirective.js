@@ -8,17 +8,24 @@ angular.module('issueTracker')
                 templateUrl: 'views/projects/project-issues-filter.html',
                 controller: [
                     '$scope',
-                    'DEFAULT_PROJECT_ISSUES_FILTER',
-                    function ($scope, DEFAULT_PROJECT_ISSUES_FILTER) {
+                    function ($scope) {
                         $scope.filterBy = 'myIssues';
-                        $scope.search = DEFAULT_PROJECT_ISSUES_FILTER;
+                        $scope.search = {
+                            Assignee: {
+                                Username: localStorage['username']
+                            }
+                        };
 
                         $scope.changeFilter = function () {
                             $scope.search = {};
                             if ($scope.filterBy === 'myIssues') {
-                                $scope.search = DEFAULT_PROJECT_ISSUES_FILTER;
+                                $scope.search = {
+                                    Assignee: {
+                                        Username: localStorage['username']
+                                    }
+                                }
                             }
-                        }
+                        };
                     }
                 ]
             }
