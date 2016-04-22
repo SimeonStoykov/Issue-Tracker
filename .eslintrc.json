@@ -2,6 +2,7 @@
 	"extends": "angular",
     "rules" : {
 	    "angular/di": [2,"array"],
+		"angular/controller-as": 0,
 		"comma-dangle": ["error", "never"],
 		"no-cond-assign": "error",
 		"no-dupe-args": "error",

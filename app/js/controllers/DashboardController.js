@@ -8,7 +8,8 @@ angular.module('issueTracker')
         'INITIAL_PAGE_NUMBER',
         'DEFAULT_PAGE_SIZE',
         'PROJECTS_PAGE_SIZE',
-        function DashboardController($scope, projectsService, issuesService, INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE, PROJECTS_PAGE_SIZE) {
+        function DashboardController($scope, projectsService, issuesService, INITIAL_PAGE_NUMBER, DEFAULT_PAGE_SIZE,
+                                     PROJECTS_PAGE_SIZE) {
             projectsService.getAffiliatedProjects()
                 .then(function (projects) {
                     $scope.affiliatedProjects = projects;
