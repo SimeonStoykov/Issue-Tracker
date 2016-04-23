@@ -11,9 +11,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.get(BASE_URL + 'Users/me')
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -24,9 +24,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.get(BASE_URL + 'Users')
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
@@ -37,9 +37,9 @@ angular.module('issueTracker')
                 var deffered = $q.defer();
 
                 $http.put(BASE_URL + 'Users/makeadmin', data)
-                    .then(function(result) {
+                    .then(function (result) {
                         deffered.resolve(result);
-                    }, function(error) {
+                    }, function (error) {
                         deffered.reject(error);
                     });
 
